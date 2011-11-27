@@ -1,0 +1,243 @@
+
+.legs {
+/* 	background: transparent url('../imgs/pack2_classic_onlymonsters.png')
+		no-repeat;
+ */	background-repeat:no-repeat;
+	background-color : transparent;
+ 	left: 170px;
+	top: 510px;
+	overflow: hidden;
+	position: absolute;
+	height: 480px;
+	width: 480px;
+}
+
+.bodies {
+/* 	background: transparent url('../imgs/pack2_classic_onlymonsters.png')
+		no-repeat;
+ */		background-repeat:no-repeat;
+	background-color : transparent;
+ left: 170px;
+	top: 260px;
+	overflow: hidden;
+	position: absolute;
+	height: 450px;
+	width: 450px;
+}
+
+.xtras {
+/* 	background: transparent url('../imgs/pack2_classic_onlymonsters.png') no-repeat;
+ */	left: 175px;
+	background-repeat:no-repeat;
+	background-color : transparent;
+ overflow: hidden;
+	position: absolute;
+	height: 380px;
+	width: 380px;
+	top: 20px;
+}
+
+.heads {
+/* 	background: transparent url('../imgs/pack2_classic_onlymonsters.png')
+		no-repeat;
+ */	background-repeat:no-repeat;
+	background-color : transparent;
+	left: 170px;
+	overflow: hidden;
+	position: absolute;
+	height: 380px;
+	width: 380px;
+	top: 20px;
+}
+
+.bkgds {
+/* 	background: transparent url('../imgs/pack2_classic_onlybkgds.jpg')
+		no-repeat;
+ */		background-repeat:no-repeat;
+	background-color : transparent;
+ 	overflow: hidden;
+	position: absolute;
+	height: 1024px;
+	width: 768px;
+}
+
+#wrapper_cycle_xtras {
+	height: 1024px;
+	position: absolute;
+	width: 768px;
+	z-index: 11; //
+	overflow: hidden;
+}
+
+#cycle_xtras {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+#cycle_xtras ul {
+	float: left;
+	width: 768px;
+	margin: 0;
+	padding: 0;
+}
+
+#cycle_xtras li {
+	height: 1024px;
+	position: absolute;
+	width: 768px;
+	list-style: none;
+}
+
+#cycle_xtras li a {
+	display: block;
+}
+
+#cycle_xtras li img {
+	display: block;
+}
+
+#wrapper_cycle_heads {
+	height: 1024px;
+	position: absolute;
+	width: 768px;
+	z-index: 10; //
+	overflow: hidden;
+}
+
+#cycle_heads {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+#cycle_heads ul {
+	float: left;
+	width: 768px;
+	margin: 0;
+	padding: 0;
+}
+
+#cycle_heads li {
+	height: 1024px;
+	position: absolute;
+	width: 768px;
+	list-style: none;
+}
+
+#cycle_heads li a {
+	display: block;
+}
+
+#cycle_heads li img {
+	display: block;
+}
+
+#wrapper_cycle_bodies {
+	height: 1024px;
+	position: absolute;
+	width: 768px;
+	z-index: 9; //
+	overflow: hidden;
+}
+
+#cycle_bodies {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+#cycle_bodies ul {
+	float: left;
+	width: 768px;
+	margin: 0;
+	padding: 0;
+}
+
+#cycle_bodies li {
+	height: 1024px;
+	position: absolute;
+	width: 768px;
+	list-style: none;
+}
+
+#cycle_bodies li a {
+	display: block;
+}
+
+#cycle_bodies li img {
+	display: block;
+}
+
+#wrapper_cycle_legs {
+	height: 1024px;
+	position: absolute;
+	width: 768px;
+	z-index: 8; //
+	overflow: hidden;
+}
+
+#cycle_legs {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+#cycle_legs ul {
+	float: left;
+	width: 768px;
+	margin: 0;
+	padding: 0;
+}
+
+#cycle_legs li {
+	height: 1024px;
+	position: absolute;
+	width: 768px;
+	list-style: none;
+}
+
+#cycle_legs li a {
+	display: block;
+}
+
+#cycle_legs li img {
+	display: block;
+}
+
+#wrapper_cycle_bkgds {
+	height: 1024px;
+	position: absolute;
+	width: 768px;
+	z-index: 7; //
+	overflow: hidden;
+}
+
+#cycle_bkgds {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+#cycle_bkgds ul {
+	float: left;
+	width: 768px;
+	margin: 0;
+	padding: 0;
+}
+
+#cycle_bkgds li {
+	height: 1024px;
+	position: absolute;
+	width: 768px;
+	list-style: none;
+}
+
+#cycle_bkgds li a {
+	display: block;
+}
+
+#cycle_bkgds li img {
+	display: block;
+}
+

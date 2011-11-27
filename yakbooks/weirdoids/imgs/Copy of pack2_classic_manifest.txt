@@ -1,0 +1,41 @@
+{"pack":
+	{
+		"bands": [{
+			"divname":"xtras",
+			"background": "transparent url('../imgs/pack1_xtras.png') no-repeat",
+			"left": "175px",
+			"overflow": "hidden",
+			"position": "absolute",
+			"height": "380px",
+			"width": "380px",
+			"top": "50px"}],
+		"images": [{
+			"text": "head_1" , "width":380, "height":300, "x":0, "y":0},
+			{"text":"head_2", "width":380, "height":300, "x":380, "y":0},
+			{"text": "head_3", "width":380, "height":300, "x":760, "y":0},
+			{"text": "head_4", "width":380, "height":300, "x":1140, "y":0},
+			{"text": "head_5", "width":380, "height":300, "x":1520, "y":0},
+			{"text": "head_6", "width":380, "height":300, "x":1900, "y":0},
+			{"text":"body_1", "width":380, "height":400, "x":0, "y":300},
+			{"text":"body_2", "width":380, "height":400, "x":380, "y":300},
+			{"text":"body_3", "width":380, "height":400, "x":760, "y":300},
+			{"text":"body_4", "width":380, "height":400, "x":1140, "y":300},
+			{"text":"body_5", "width":380, "height":400, "x":1520, "y":300},
+			{"text":"body_6", "width":380, "height":400, "x":1900, "y":300},
+			{"text":"legs_1", "width":380, "height":400, "x":0, "y":700},
+			{"text":"legs_2", "width":380, "height":400, "x":380, "y":700},
+			{"text":"legs_3", "width":380, "height":400, "x":760, "y":700},
+			{"text":"legs_4", "width":380, "height":400, "x":1140, "y":700},
+			{"text":"legs_5", "width":380, "height":400, "x":1520, "y":700},
+			{"text":"legs_6", "width":380, "height":400, "x":1900, "y":700},
+			{"text":"extras_1", "width":380, "height":300, "x":0, "y":1100},
+			{"text":"extras_2", "width":380, "height":300, "x":380, "y":1100},
+			{"text":"extras_3", "width":380, "height":300, "x":760, "y":1100},
+			{"text":"extras_4", "width":380, "height":300, "x":1140, "y":1100},
+			{"text":"extras_5", "width":380, "height":300, "x":1520, "y":1100},
+			{"text":"extras_6", "width":380, "height":300, "x":1900, "y":1100},
+			{"text":"bkgd_1", "width":768, "height":1024, "x":2280, "y":0},
+			{"text":"bkgd_2", "width":768, "height":1024, "x":2280, "y":768}]
+	}
+}
+

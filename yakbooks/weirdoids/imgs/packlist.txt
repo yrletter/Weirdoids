@@ -1,0 +1,26 @@
+{
+    "packs": [
+        {
+            "id": "original",
+            "thumbnail": "imgs/pack1_thumbnail.png",
+             "packstyles": "css/packs.css",
+            "manifest": "imgs/pack1_original_manifest.txt",
+            "heading1": "Original Weirdoids",
+            "heading2": "Free starter set",
+            "cost_str": "Free",
+            "cost": "0",
+            "listorder": 0
+        },
+        {
+            "id": "classic",
+            "thumbnail": "imgs/pack2_thumbnail.png",
+             "packstyles": "css/packs.css",
+            "manifest": "imgs/pack2_classic_manifest.txt",
+            "heading1": "Monster Mash",
+            "heading2": "Create your own ghoulish monster!",
+            "cost_str": "Free",
+            "cost": "0.99",
+            "listorder": 1
+        }
+    ]
+}
