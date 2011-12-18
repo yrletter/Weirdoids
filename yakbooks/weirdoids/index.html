@@ -6,7 +6,7 @@
 <meta name="Description" content="" />
 
 <meta name="viewport"
-	content="height=1024px,width=device-width,initial-scale=1.0,maximum-scale=1.0">
+	content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="apple-touch-icon" href="imgs/apple-touch-icon.png" />
@@ -19,10 +19,14 @@
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 
-<link rel="stylesheet"
-	href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
-<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+<!--  link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" /-->
+<!-- script src="http://code.jquery.com/jquery-1.6.4.min.js"></script-->
+<!-- script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script-->
+
+<link rel="stylesheet" href="css/jquery.mobile-1.0.min.css" />
+<script src="script/jquery-1.6.4.min.js"></script>
+<script src="script/jquery.mobile-1.0.min.js"></script>
 
 <script src="script/jquery-ui-1.8.16.custom.min.js"
 	type="text/javascript"></script>
@@ -36,6 +40,7 @@
 
 
 <script src="script/site.js" type="text/javascript"></script>
+<script src="script/loadPack.js" type="text/javascript"></script>
 <script src="script/weirdoids.js" type="text/javascript"></script>
 
 
@@ -50,8 +55,9 @@
 
 
 		<div id="home" data-role="page">
-
-			<div id="btn_build">
+		<div id="homediv" style="max-height:1024px; height:100%; width:100%; position:absolute; max-width:768px;">
+	</div>	
+		<div id="btn_build">
 				<a href="#" id="bldbtn" data-role="button">BUILD</a>
 			</div>
 
@@ -62,7 +68,6 @@
 			<div id="btn_packs">
 				<a href="#packs" data-role="button">PACKS</a>
 			</div>
-
 		</div>
 
 		<div id="build" data-role="page">
@@ -73,7 +78,7 @@
 			</div>
 
 
-			<div data-role="header" class="nav-glyphish-example">
+			<div data-role="header" class="nav-glyphish-example" id="buildhdr">
 				<div id="banks-nav-bar" data-role="navbar"
 					class="nav-glyphish-example" data-grid="d">
 					<ul>
@@ -99,7 +104,7 @@
 
 
 
-			<div id="band_wrapper">
+			<div id="band_wrapper" style="height:100%; width:100%; postion:absolute;">
 				<div id="btn_prev_head" class="browser-nav-btn">
 					<a href="#" id="prev_heads"></a>
 				</div>
@@ -132,38 +137,13 @@
 
 			<div id="myModal" class="reveal-modal">
 				<h1>Purchase Pack</h1>
-				<form id="form_pay">
+				
 
 
-					<label for="firstName">First Name</label> <input id="firstName"
-						name="firstName" type="text" style="width: 300px;" /> <label
-						for="lastName" style="float: right">Last Name</label> <input
-						id="lastName" name="lastName_r" type="text" style="width: 300px;" />
 					<p>
 					<p>
-					<form
-						action="https://authorize.payments-sandbox.amazon.com/pba/paypipeline"
-						method="post">
-						<input type="hidden" name="immediateReturn" value="1"> <input
-							type="hidden" name="collectShippingAddress" value="0"> <input
-							type="hidden" name="signatureVersion" value="2"> <input
-							type="hidden" name="signatureMethod" value="HmacSHA256">
-						<input type="hidden" name="accessKey" value="11SEM03K88SD016FS1G2">
-						<input type="hidden" name="referenceId" value="Weirdoid Pack">
-						<input type="hidden" name="amount" value="USD 0.99"> <input
-							type="hidden" name="signature"
-							value="fVOfMKqPEhqWitnMLcIIuUXYpYrTiBr/7W4Wu8JVgEo="> <input
-							type="hidden" name="isDonationWidget" value="0"> <input
-							type="hidden" name="description" value="Weirdoid Pack"> <input
-							type="hidden" name="amazonPaymentsAccountId"
-							value="ZZRTFWJYXBHQ68BD9L82K8G93FPNFLC4SFE6L6"> <input
-							type="hidden" name="processImmediate" value="1"> <input
-							type="hidden" name="cobrandingStyle" value="logo"> <input
-							type="image"
-							src="http://g-ecx.images-amazon.com/images/G/01/asp/beige_small_paynow_withmsg_whitebg.gif"
-							border="0">
-					</form>
-				</form>
+					<p>
+					
 				<a class="close-reveal-modal">&#215;</a>
 			</div>
 		</div>
@@ -179,7 +159,7 @@
 			<!-- /header -->
 
 			<div data-role="content">
-
+				
 
 				<div class="ui-grid-b" id="vaultGrid" data-scroll="true"></div>
 				<!-- /grid-a -->
@@ -191,52 +171,29 @@
 		</div>
 
 		<div id="previewpage" data-role="page">
-			<div data-role="header">
+			<div data-role="header" data-position="inline">
 				<h1>My Weirdoid</h1>
-				<a href="#home">Done</a>
+				<a href="#vault" id="saveInVaultBtn">Done</a>
+				<a href="#" data-rel="back" data-icon="delete" id="cancelsave">Cancel</a>
 			</div>
 			<!-- /header -->
 
 			<div data-role="content">
+				<div>
+					<canvas id="preview-canvas" height="300"></canvas>
+				</div>
 				<form id="form1">
 
-					<div id="listwrapper" style="max-height: 600px ! important;"
-						data-scroll="true">
-
-
-
-						<div style="height: 500px; width: 650px; overflow: hidden">
-
-							<div
-								style="height: 500px; width: 300px; overflow: auto; float: left">
-
-								<ul data-role="listview" id="firstnamelist" data-theme="a"
-									data-inset="true"></ul>
-
-
-							</div>
-
-							<div id="lastnamelistdiv"
-								style="height: 500px; width: 300px; overflow: auto; float: right; margin: 0 0 0 30px;">
-
-								<ul data-role="listview" id="lastnamelist" data-theme="a"
-									data-inset="true"></ul>
-
-							</div>
-
-						</div>
-
-
-					</div>
 
 					<div class="ui-grid-a" id="nameGrid" style="padding: 20px 10px;">
 						<div class="ui-block-a">
-							<label for="firstName">First Name</label> <input id="firstName"
-								name="firstName" type="text" />
+							<label for="select-choice-0">First Name</label> <select
+								name="select-choice-0" id="select-choice-firstname">
+							</select>
 						</div>
 						<div class="ui-block-b">
-							<label for="lastName">Last Name</label> <input
-								id="lastName" name="lastName_r" type="text" />
+							<label for="select-choice-1">Last Name</label> <select
+								name="select-choice-1" id="select-choice-lastname"></select>
 						</div>
 
 					</div>
