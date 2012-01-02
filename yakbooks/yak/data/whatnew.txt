@@ -1,0 +1,185 @@
+[
+    {
+        "icon": "img/app_weirdoids.png",
+        "banner_image": "img/feature_weirdoids.jpg",
+        "name": "Weirdoids",
+        "id": 1,
+        "cost_str": "Free",
+        "cost": 0,
+        "item_type" : "game",
+        "is_featured_priority" : "top",
+        "release_date" : "01/01/2012",
+        "description": "Accusamus terry richardson tattooed, ea nostrud keffiyeh cardigan proident american apparel fixie mixtape vegan brunch gluten-free magna. Four loko fugiat consectetur, DIY irure locavore sed excepteur laborum mollit tattooed. Et echo park nesciunt raw denim, fixie art party viral est nisi non. Pitchfork.",
+        "snapshots": [
+            {
+                "url": "img/feature_weirdoids.jpg",
+                "classnm": ""
+            },
+            {
+                "url": "img/feature_sagetrail.jpg",
+                "classnm": ""
+            },
+            {
+                "url": "img/feature_weirdoids.jpg",
+                "classnm": ""
+            },
+            {
+                "url": "img/feature_sagetrail.jpg",
+                "classnm": ""
+            },
+            {
+                "url": "img/feature_sagetrail.jpg",
+                "classnm": ""
+            }
+        ]
+    },
+    {
+        "icon": "img/app_sophisticrits.png",
+        "banner_image": "img/feature_weirdoids.jpg",
+        "name": "Sophisticrits",
+        "id": 2,
+        "cost_str": "99 cents",
+        "cost": 0.99,
+        "item_type" : "book",
+        "is_featured_priority" : "top",
+        "release_date" : "01/01/2012",
+        "description": "Accusamus terry richardson tattooed, ea nostrud keffiyeh cardigan proident american apparel fixie mixtape vegan brunch gluten-free magna. Four loko fugiat consectetur, DIY irure locavore sed excepteur laborum mollit tattooed. Et echo park nesciunt raw denim, fixie art party viral est nisi non. Pitchfork.",
+        "snapshots": [
+            {
+                "url": "img/feature_weirdoids.jpg",
+                "classnm": ""
+            },
+            {
+                "url": "img/feature_sagetrail.jpg",
+                "classnm": ""
+            },
+            {
+                "url": "img/feature_weirdoids.jpg",
+                "classnm": ""
+            },
+            {
+                "url": "img/feature_sagetrail.jpg",
+                "classnm": ""
+            },
+            {
+                "url": "img/feature_sagetrail.jpg",
+                "classnm": ""
+            }
+        ]
+    },
+    {
+        "icon": "img/app_sagetrail.png",
+         "banner_image": "img/feature_sagetrail.jpg",
+        "name": "The Sage Trail",
+        "id": 3,
+        "cost_str": "99 cents",
+        "cost": 0.99,
+        "item_type" : "book",
+        "is_featured_priority" : "top",
+        "release_date" : "01/01/2012",
+        "description": "Accusamus terry richardson tattooed, ea nostrud keffiyeh cardigan proident american apparel fixie mixtape vegan brunch gluten-free magna. Four loko fugiat consectetur, DIY irure locavore sed excepteur laborum mollit tattooed. Et echo park nesciunt raw denim, fixie art party viral est nisi non. Pitchfork.",
+        "snapshots": [
+            {
+                "url": "img/feature_weirdoids.jpg",
+                "classnm": ""
+            },
+            {
+                "url": "img/feature_sagetrail.jpg",
+                "classnm": ""
+            }
+        ]
+    },
+    {
+        "icon": "img/app_tophatapple.png",
+        "banner_image": "img/feature_weirdoids.jpg",
+        "name": "Top Hat Apple",
+        "id": 4,
+        "cost_str": "99 cents",
+        "cost": 0.99,
+        "item_type" : "book",
+        "is_featured_priority" : "high",
+        "release_date" : "01/01/2012",
+        "item_type" : "book",
+        "is_featured_priority" : "top",
+        "release_date" : "01/01/2012",
+        "description": "Accusamus terry richardson tattooed, ea nostrud keffiyeh cardigan proident american apparel fixie mixtape vegan brunch gluten-free magna. Four loko fugiat consectetur, DIY irure locavore sed excepteur laborum mollit tattooed. Et echo park nesciunt raw denim, fixie art party viral est nisi non. Pitchfork.",
+        "snapshots": [ ]
+    },
+    {
+        "icon": "img/app_weirdoids.png",
+        "name": "Weirdoids2",
+        "id": 5,
+        "cost_str": "99 cents",
+        "cost": 0.99,
+        "item_type" : "game",
+        "is_featured_priority" : "low",
+        "release_date" : "09/01/2011",
+        "description": "Accusamus terry richardson tattooed, ea nostrud keffiyeh cardigan proident american apparel fixie mixtape vegan brunch gluten-free magna. Four loko fugiat consectetur, DIY irure locavore sed excepteur laborum mollit tattooed. Et echo park nesciunt raw denim, fixie art party viral est nisi non. Pitchfork.",
+                "snapshots": [ ]
+        
+    },
+    {
+        "icon": "img/app_sophisticrits.png",
+          "banner_image": "img/feature_sagetrail.jpg",
+        "name": "Sophisticrits2",
+        "id": 6,
+        "cost_str": "99 cents",
+        "cost": 0.99,
+        "item_type" : "book",
+        "is_featured_priority" : "hig",
+        "release_date" : "11/01/2011",
+        "description": "Accusamus terry richardson tattooed, ea nostrud keffiyeh cardigan proident american apparel fixie mixtape vegan brunch gluten-free magna. Four loko fugiat consectetur, DIY irure locavore sed excepteur laborum mollit tattooed. Et echo park nesciunt raw denim, fixie art party viral est nisi non. Pitchfork.",
+        "snapshots": [
+            {
+                "url": "img/feature_weirdoids.jpg","classnm": ""
+            },
+            {
+                "url": "img/feature_sagetrail.jpg","classnm": ""
+            }
+        ]
+    },
+    {
+        "icon": "img/app_weirdoids.png",
+         "banner_image": "img/feature_weirdoids.jpg",
+        "name": "Weirdoids3",
+        "id": 7,
+        "cost_str": "99 cents",
+        "cost": 0.99,
+        "item_type" : "game",
+        "is_featured_priority" : "low",
+        "release_date" : "01/01/2011",
+        "description": "Accusamus terry richardson tattooed, ea nostrud keffiyeh cardigan proident american apparel fixie mixtape vegan brunch gluten-free magna. Four loko fugiat consectetur, DIY irure locavore sed excepteur laborum mollit tattooed. Et echo park nesciunt raw denim, fixie art party viral est nisi non. Pitchfork.",
+        "snapshots": [
+            {
+                "url": "img/feature_weirdoids.jpg",
+                "classnm": ""
+            },
+            {
+                "url": "img/feature_sagetrail.jpg",
+                "classnm": ""
+            }
+        ]
+    },
+    {
+        "icon": "img/app_sophisticrits.png",
+         "banner_image": "img/feature_sagetrail.jpg",
+        "name": "Sophisticrits3",
+        "id": 8,
+        "cost_str": "99 cents",
+        "cost": 0.99,
+        "item_type" : "book",
+        "is_featured_priority" : "high",
+        "release_date" : "06/01/2011",
+        "description": "Accusamus terry richardson tattooed, ea nostrud keffiyeh cardigan proident american apparel fixie mixtape vegan brunch gluten-free magna. Four loko fugiat consectetur, DIY irure locavore sed excepteur laborum mollit tattooed. Et echo park nesciunt raw denim, fixie art party viral est nisi non. Pitchfork.",
+        "snapshots": [
+            {
+                "url": "img/feature_weirdoids.jpg",
+                "classnm": ""
+            },
+            {
+                "url": "img/feature_weirdoids.jpg",
+                "classnm": ""
+            }
+        ]
+    }
+]

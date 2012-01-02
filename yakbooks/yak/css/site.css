@@ -1,0 +1,332 @@
+body {
+	margin: 0;
+	padding: 0;
+	width: 1024px;
+	
+	font-family: Arial, sans-serif;
+}
+.ui-body-c {
+	background: transparent url('../img/bkgd_texture.jpg') repeat;
+	color: #FFFFFF;
+	text-shadow: 0 1px 0 #333333;
+}
+.ui-content {
+    padding: 0;
+}
+.ui-body-c .ui-link {
+	color: #fff !important;
+}
+input.ui-input-text, textarea.ui-input-text {
+	background-color: #fff;
+	color: #666;
+	text-shadow: 0 1px 0 #fff;
+}
+label.ui-input-text {
+	text-align: right;
+	vertical-align: middle !important;
+	width: 15%;
+}
+.ui-checkbox input, .ui-radio input {
+	margin: 0;
+}
+h1 {
+	font-size: 30px;
+	margin: 0;
+	padding: 0;
+	color: #fff;
+}
+h2 {
+	font-size: 18px;
+	margin: 0 0 10px 0;
+	padding: 0;
+	color: #fff;
+}
+p {
+	color: #fff;
+}
+a {
+	text-decoration: none;
+}
+.featuredapps {
+	height: 220px;
+	padding: 20px;
+	text-align: center;
+}
+.featuredapps ul {
+	margin: 0;
+	padding: 0;
+}
+.featuredapps li {
+	list-style: none;
+	display: inline-block;
+	width: 200px;
+	margin-right: 40px;
+}
+
+
+#sectionbar {
+	height: 60px;
+	line-height: 60px;
+	padding-left: 20px;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.3);
+	-moz-box-shadow: 2px 2px 2px rgba(0,0,0,.3);
+	background: #835f3a url('../img/bkgd_stripevert.png') repeat-x;	
+}
+#sectionbar img {
+	width:40px;
+	height: 40px;
+	float: left;
+	margin-top: 10px;
+}
+#sectionbar h1 {
+	float: left;
+}
+.new {
+	background-color: #e9a733 !important;
+}
+.books {
+	background-color: #b0c956 !important;
+}
+.games {
+	background-color: #38b0d2 !important;
+}
+.norm {
+	height: 40px !important;
+	line-height: 40px !important;
+}
+
+#content {
+	margin-left: 200px;
+	width: 824px;
+}
+.content {
+	margin: 20px;
+}
+
+#description {
+	width: 550px;
+	display: inline-block;
+	vertical-align: top;
+}
+#footer {
+	position: absolute;
+	bottom: 10px;
+	text-align: center;
+	width: 200px;
+}
+#footer ul {
+	margin: 0;
+	padding: 0;
+}
+#footer li {
+	list-style: none;
+	display: block;
+}
+#ss_ctr {
+	width: 740px;
+	background-color: #7a522c;
+	padding: 20px;
+	box-shadow: inset 2px 2px 2px rgba(0,0,0,.5);	
+	-moz-box-shadow: inset 2px 2px 2px rgba(0,0,0,.5);
+}
+#screenshots {
+	overflow: hidden;
+	width: 740px;
+	height: 400px;
+	margin:0;
+	padding: 0;
+}
+#screenshots ul {
+	margin: 0;
+	padding: 0;
+}
+#screenshots li {
+	list-style: none;
+	display: inline-block;
+}
+#cyclebook {
+	overflow: hidden;
+	width: 824px;
+	height: 400px;
+	margin:0;
+	padding: 0;
+}
+#cyclebook ul {
+	margin: 0;
+	padding: 0;
+}
+#cyclebook li {
+	list-style: none;
+	display: inline-block;
+}
+
+#leftnav {
+	position: fixed;
+	width: 200px;
+	background: #cb4a38 url('../img/bkgd_stripes.jpg') repeat-y;
+	color: #fff;
+	height: 100%;
+	z-index: 200;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.3);
+	-moz-box-shadow: 2px 2px 2px rgba(0,0,0,.3);
+}
+
+#btn_login {
+	
+}
+#btn_new {
+	position: absolute;
+	    top: 200px;
+}
+#btn_books {
+	position: absolute;
+	    top: 280px;
+}
+#btn_games {
+	position: absolute;
+	    top: 360px;
+}
+.apps {
+	margin: 0;
+	padding: 0;
+}
+.apps ul {
+	margin: 0;
+	padding: 0;
+}
+.apps li {
+	list-style: none;
+	display: inline-block;
+	width: 130px;
+	//height: 160px;
+	//background-color: #000;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+.apps img {
+	width: 130px;
+	height: 130px;
+}
+.apps a {
+	text-decoration: none;
+	display: block;
+}
+
+#apphdr {
+	width: 200px;
+	display: inline-block;
+	margin-right: 20px;
+	height: 270px;
+}
+#apphdr img {
+	width: 200px;
+	height: 200px;
+
+}
+#apphdr li img {
+	height: 100px;
+	width: 100px;
+}
+.signup {
+	margin: 0;
+	padding: 0;
+}
+.signup ul {
+	margin: 0;
+	padding: 0;
+}
+.signup li {
+	list-style: none;
+	display: inline-block;
+	width: 300px;
+	margin-right: 40px;
+	margin-bottom: 40px;
+	text-align: center;
+}
+.signup img {
+	width: 300px;
+	height: 300px;
+}
+
+
+.signupkid ul {
+	margin: 0;
+	padding: 0;
+}
+.signupkid li {
+	list-style: none;
+	display: inline-block;
+	width: 300px;
+	margin-right: 40px;
+	margin-bottom: 40px;
+	text-align: center;
+}
+.signupkid img {
+	width: 300px;
+	height: 300px;
+}
+
+.loggedaccount img {
+	width: 100px;
+	height: 100px;
+}
+
+.login {
+	margin: 0;
+	padding: 0;
+}
+.login ul {
+	margin: 0;
+	padding: 0;
+}
+.login li {
+	list-style: none;
+	display: inline-block;
+	width: 300px;
+	margin-right: 40px;
+	margin-bottom: 40px;
+	text-align: center;
+}
+.login a {
+	text-decoration: none;
+	display: block;
+}
+
+.login img {
+	width: 300px;
+	height: 300px;
+}
+
+.avatars {
+	margin: 0;
+	padding: 0;
+	overflow-y: scroll;
+	width: 740px;
+	background-color: #7a522c;
+	padding: 20px;
+	height: 210px;
+	box-shadow: inset 2px 2px 2px rgba(0,0,0,.5);	
+	-moz-box-shadow: inset 2px 2px 2px rgba(0,0,0,.5);
+}
+.avatars ul {
+	margin: 0;
+	padding: 0;
+}
+.avatars li {
+	list-style: none;
+	display: inline-block;
+	width: 100px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+.avatars a {
+	text-decoration: none;
+	display: block;
+}
+
+.avatars img {
+	width: 100px;
+	height: 100px;
+}

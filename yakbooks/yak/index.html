@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Yak</title>
+<meta name="viewport"
+	content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon" href="imgs/apple-touch-icon.png" />
+
+<!--link rel="stylesheet" href="css/jquery.mobile-1.0.css" /-->
+
+
+<link rel="stylesheet" href="css/yaktheme.min.css" />
+
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
+
+
+<link rel="stylesheet" href="css/site.css" />
+
+
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+
+<script type="text/javascript" src="script/yak.js"></script>
+<script type="text/javascript" src="script/whatsnew.js"></script>
+<script type="text/javascript" src="script/dateselectors.js"></script>
+<script type="text/javascript" src="script/site.js"></script>
+<script src="script/jquery.cycle.all.js" type="text/javascript"></script>
+
+
+</head>
+<body>
+
+	<div id="leftnav">
+
+		<a href="#new"> <img src="img/logo_yak.png" alt="Yak" /> </a>
+
+		<div id="btn_new">
+			<a href="#new" data-role="button" data-icon="star"><img
+				src="img/btn_whatsnew.png" alt="" /> </a>
+		</div>
+
+		<div id="btn_books">
+			<a href="#books" data-role="button" data-icon="star"><img
+				src="img/btn_books.png" alt="" /> </a>
+		</div>
+
+		<div id="btn_games">
+			<a href="#games" data-role="button" data-icon="star"><img
+				src="img/btn_games.png" alt="" /> </a>
+		</div>
+
+		<div id="footer">
+			<ul>
+				<li><a href="#myaccount" class="loggedaccount"><img
+						src="img/app_weirdoids.png" /> </a>
+				</li>
+				<li><a href="#signuppg"><img src="img/btn_signup_sm.png" />
+				</a>
+				</li>
+				<li><a href="#loginaccount"><img src="img/btn_login_sm.png" />
+				</a>
+				</li>
+			</ul>
+		</div>
+
+	</div>
+
+	<div id="new" data-role="page">
+
+		<div id="content" data-role="content">
+
+			<div>
+				<div id="cyclebook">
+				</div>
+			</div>
+			<!--
+			  <div class="nav"><a id="prev2" href="#">Prev</a> <a id="next2" href="#">Next</a></div>
+			-->
+			<div id="sectionbar" class="new">
+				<img src="img/icon_star.png" />
+				<h1>New Releases</h1>
+			</div>
+
+			<div class="content">
+
+				<ul class="apps" id="whatsnewlist">
+				</ul>
+			</div>
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+	<div id="loginpg" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+			<div id="sectionbar" class="new">
+				<img src="img/icon_star.png" />
+				<h1>Choose Your Account</h1>
+			</div>
+
+			<div class="content">
+
+				<ul class="login">
+					<li><a href="#loginaccount"><img
+							src="img/app_weirdoids.png" />yrletter</a>
+					</li>
+					<li><a href="#loginaccount"><img
+							src="img/app_sophisticrits.png" />jlbrowni</a>
+					</li>
+					<li><a href="#loginaccount"><img
+							src="img/app_sagetrail.png" />newcombannie</a>
+					</li>
+					<li><a href="#loginaccount"><img
+							src="img/app_tophatapple.png" />bkeenan99</a>
+					</li>
+					<li><a href="#loginaccount"><img
+							src="img/app_weirdoids.png" />yrletter</a>
+					</li>
+					<li><a href="#loginaccount"><img
+							src="img/app_sophisticrits.png" />jlbrowni</a>
+					</li>
+					<li><a href="#loginaccount"><img
+							src="img/app_sagetrail.png" />newcombannie</a>
+					</li>
+					<li><a href="#loginaccount"><img
+							src="img/app_weirdoids.png" />bkeenan99</a>
+					</li>
+					<li><a href="#loginaccount"><img
+							src="img/app_weirdoids.png" />yrletter</a>
+					</li>
+					<li><a href="#loginaccount"><img
+							src="img/app_sophisticrits.png" />jlbrowni</a>
+					</li>
+					<li><a href="#loginaccount"><img
+							src="img/app_sagetrail.png" />newcombannie</a>
+					</li>
+					<li><a href="#loginaccount"><img
+							src="img/app_weirdoids.png" />bkeenan99</a>
+					</li>
+				</ul>
+			</div>
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+	<div id="loginaccount" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+
+				<h1>Log In</h1>
+			</div>
+
+			<div class="content">
+
+
+				<div>
+					<form id="loginform" action="">
+						<fieldset>
+
+							<div data-role="fieldcontain">
+								<label for="username">Username</label> <input type="text"
+									name="login" id="username" value="ddd" /> <label class="error"
+									for="username" id="username_error">This field is
+									required.</label>
+							</div>
+
+							<div data-role="fieldcontain">
+								<label for="password">Password</label> <input type="password"
+									name="password" id="password" value="ddd" /><label
+									class="error" for="password" id="password_error">This
+									field is required.</label>
+							</div>
+							<div>
+								<div id="btn_login">
+									<a href="#" data-transition="fade"><img
+										src="img/btn_login.png" alt="" /> </a>
+								</div>
+
+
+
+							</div>
+
+						</fieldset>
+					</form>
+				</div>
+				<hr />
+				<div>
+					Don't have a login? <a href="#signuppg">Sign Up</a>
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+	<div id="signuppg" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>Sign Up</h1>
+			</div>
+
+
+			<div class="content">
+
+				<ul class="signup">
+					<li><a href="#signupkidpg"><img
+							src="img/app_weirdoids.png" />Kid</a>
+					</li>
+					<li><a href="#signupgrownuppg"><img
+							src="img/app_sophisticrits.png" />Grown Up</a>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+		<!-- /content -->
+
+	</div>
+
+	<div id="signupkidpg" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>Sign Up</h1>
+			</div>
+
+
+			<div class="content">
+
+				<h1>Hello!</h1>
+
+				<form id="signup_kid_form" action="">
+					<fieldset>
+						<div data-role="fieldcontain">
+							<label for="child_name">Your First Name</label> <input
+								type="text" name="name" id="child_name" value="" /> <label
+								class="error" for="child_name" id="child_name_error">This
+								field is required.</label>
+						</div>
+
+
+
+
+						<div>
+							Choose an Avatar
+							<ul class="avatars" id="avatarlist">
+							</ul>
+						</div>
+					
+						<label class="error" for="avatarlist" id="avatar_error">You must select an avatar.</label>
+					
+						<div id="btn_signup_kid">
+							<a href="#" data-transition="fade"><img
+								src="img/btn_signup.png" alt="" /> </a>
+						</div>
+
+					</fieldset>
+				</form>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+	<div id="signupkidpg2" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>Sign Up</h1>
+			</div>
+
+
+			<div class="content">
+
+				<h1>Hello!</h1>
+
+				<form id="signup_kid_form2" action="">
+					<fieldset>
+
+						<div data-role="fieldcontain">
+							<label for="child_yakname">First Name</label> <input type="text"
+								name="child_yakname" id="child_yakname" value="kidname" /> <label class="error"
+								for="child_yakname" id="child_yakname_error">This field
+								is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="child_yaklogin">Yak Login</label> <input type="text"
+								name="child_yaklogin" id="child_yaklogin" value="yaklogin@yak.com" /> <label
+								class="error" for="child_yaklogin" id="child_yaklogin_error">This
+								field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="child_parent_email">Parent's Email</label> <input
+								type="text" name="child_parent_email" id="child_parent_email" value="ddd@ddd.com" /> <label
+								class="error" for="child_parent_email"
+								id="child_parent_email_error">This field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="child_password">Password</label> <input
+								type="password" name="child_password" id="child_password" value="xxx" />
+							<label class="error" for="child_password"
+								id="child_password_error">This field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="child_cpassword">Re-enter Password</label> <input
+								type="password" name="child_cpassword" id="child_cpassword" value="xxx" />
+							<label class="error" for="child_cpassword"
+								id="child_cpassword_error">This field is required.</label>
+						</div>
+
+
+						<div data-role="fieldcontain">
+							<fieldset data-role="controlgroup">
+								<legend>Date of Birth:</legend>
+
+								 <select
+									name="select-choice-month" id="select-choice-month-kid2" class="monthselect">
+									
+								</select> <label for="select-choice-day-kid2">Day</label> <select
+									name="select-choice-day" id="select-choice-day-kid2" class="dayselect">
+								</select> <label for="select-choice-year-kid2">Year</label> <select
+									name="select-choice-year" id="select-choice-year-kid2" class="childyearselect" >
+								</select>
+							</fieldset>
+
+						<input type="hidden" name="child_birthday" id="child_birthday"
+							value=""> 
+						<label class="error"	for="child_birthday" id="child_birthday_error">Invalid date.</label>
+						<input type="hidden" name="child_fname" id="child_hidden_fname"	value=""> 
+						<input type="hidden" name="avatar" id="avatar" value=""> 
+
+
+							<div data-role="fieldcontain">
+								<fieldset data-role="controlgroup" data-type="horizontal">
+									<legend>Gender</legend>
+									<input type="radio" name="child_gender" id="child_gender_boy"
+										value="boy" /> <label for="child_gender">Boy</label> <input
+										type="radio" name="child_gender" id="child_gender_girl"
+										value="girl" /> <label for="child_gender">Girl</label>
+								</fieldset>
+							</div>
+
+							<div data-role="fieldcontain">
+								<label for="child_email">Email</label> <input type="text" name="child_email"
+									id="child_email" value="kid@ddd.com" /> <label class="error"
+									for="child_email" id="child_email_error">This field is required.</label>
+							</div>
+						</div>
+
+						<div id="btn_signup_kid2">
+							<a href="#" data-transition="fade"><img
+								src="img/btn_signup.png" alt="" /> </a>
+						</div>
+
+					</fieldset>
+				</form>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+	<div id="signupkidpg3" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>Sign Up</h1>
+			</div>
+
+
+			<div class="content">
+
+				<h1>You are registered</h1>
+
+				<form id="signup_kid_form3" action="">
+					<fieldset>I think that's it</fieldset>
+				</form>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+
+
+	<div id="signupgrownuppg" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>Sign Up</h1>
+			</div>
+
+
+			<div class="content">
+
+				<h1>Hey there old timer!</h1>
+
+				<form id="signup_adult_form" action="">
+					<fieldset>
+						<div data-role="fieldcontain">
+							<label for="email">Email</label> <input type="text" name="email"
+								id="email" value="ddd@ddd.com" /> <label class="error"
+								for="email" id="email_error">This field is required.</label>
+						</div>
+
+
+						<div data-role="fieldcontain">
+							<label for="adult_password">Password</label> <input
+								type="password" name="password" id="adult_password" value="d" />
+							<label class="error" for="adult_password"
+								id="adult_password_error">This field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="adult_cpassword">Password</label> <input
+								type="password" name="cpassword" id="adult_cpassword" value="d" />
+							<label class="error" for="adult_cpassword"
+								id="adult_cpassword_error">This field is required.</label>
+						</div>
+						<div data-role="fieldcontain"
+							class="ui-field-contain ui-body ui-br">
+							<fieldset data-role="controlgroup"
+								class="ui-corner-all ui-controlgroup ui-controlgroup-vertical">
+								<div class="ui-controlgroup-label" data-role="heading">Agree
+									to the terms:</div>
+								<div class="ui-controlgroup-controls">
+
+									<div class="ui-checkbox">
+										<input type="checkbox" class="custom" id="agree_terms"
+											name="agree_terms"><label for="agree_terms"
+											data-theme="c"
+											class="ui-btn ui-btn-icon-left ui-corner-top ui-corner-bottom ui-controlgroup-last ui-checkbox-on ui-btn-up-c">
+											<span class="ui-btn-text">I agree</span> </label>
+									</div>
+
+								</div>
+							</fieldset>
+						</div>
+
+						<div class="error" id="agree_terms_error">This field is
+							required.</div>
+
+
+						<div id="btn_signup_adult">
+							<a href="#" data-role="button" data-inline="true">Sign Up</a>
+						</div>
+					</fieldset>
+				</form>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+	<div id="signupgrownuppg2" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>Sign Up</h1>
+			</div>
+
+
+			<div class="content">
+
+				<h1>Who is your child?</h1>
+
+				<form id="signup_adult_form2" action="">
+					<fieldset>
+
+						<div data-role="fieldcontain">
+							<label for="child_fname">First Name</label> <input type="text"
+								name="child_fname" id="child_fname" value="ddd" /> <label
+								class="error" for="child_fname" id="child_fname_error">This
+								field is required.</label>
+						</div>
+
+
+
+						<div data-role="fieldcontain">
+							<label for="child_lname">Last Name</label> <input type="text"
+								name="child_lname" id="child_lname" value="ddd" /> <label
+								class="error" for="child_lname" id="child_lname_error">This
+								field is required.</label>
+						</div>
+
+
+						<div data-role="fieldcontain">
+							<label for="child_yakname">Yak Screen Name</label> <input
+								type="text" name="child_yakname" id="child_yakname" value="ddd" />
+							<label class="error" for="child_yakname" id="child_yakname_error">This
+								field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="child_yaklogin">Yak Login Name</label> <input
+								type="text" name="child_yaklogin" id="child_yaklogin"
+								value="dddd" /> <label class="error" for="child_yaklogin"
+								id="child_yaklogin_error">This field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<fieldset data-role="controlgroup">
+								<legend>Date of Birth:</legend>
+
+								<label for="select-choice-month2">Month</label> <select
+									name="select-choice-month" id="select-choice-month2" class="monthselect">
+								</select> <label for="select-choice-day2">Day</label> <select
+									name="select-choice-day" id="select-choice-day2" class="dayselect">
+								</select> <label for="select-choice-year2">Year</label> <select
+									name="select-choice-year" id="select-choice-year2" class="yearselect">
+								</select>
+							</fieldset>
+
+						</div>
+
+						<input type="hidden" name="child_bday_date" id="child_bday_date"
+							value="English">
+
+						<div data-role="fieldcontain">
+							<label for="child_email">Child Email (optional)</label> <input
+								type="text" name="child_email" id="child_email" value="" /> <label
+								class="error" for="child_email" id="child_email_error">Invalid
+								email address.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<fieldset data-role="controlgroup" data-type="horizontal">
+								<legend>Gender</legend>
+								<input type="radio" name="child_gender" id="child_gender_boy_rb"
+									value="1" checked /> <label for="child_gender_boy_rb">Boy</label>
+								<input type="radio" name="child_gender"
+									id="child_gender_girl_rb" value="0" /> <label
+									for="child_gender_girl_rb">Girl</label>
+							</fieldset>
+						</div>
+
+						<a href="#" data-role="button">Add Another Child</a>
+
+						<div id="btn_signup_adult2">
+							<a href="#" data-transition="fade"><img
+								src="img/btn_signup.png" alt="" /> </a>
+						</div>
+					</fieldset>
+				</form>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+
+	<div id="signupgrownuppg3" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>Sign Up</h1>
+			</div>
+
+
+			<div class="content">
+
+				<h1>Verify</h1>
+
+				<form id="signup_adult_form3" action="">
+					<fieldset>
+
+						<div data-role="fieldcontain">
+							<label for="parent_fname">First Name</label> <input type="text"
+								name="parent_fname" id="parent_fname" value="ddd" /> <label
+								class="error" for="parent_fname" id="parent_fname_error">This
+								field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="parent_lname">Last Name</label> <input type="text"
+								name="parent_lname" id="parent_lname" value="ddd" /> <label
+								class="error" for="parent_lname" id="parent_lname_error">This
+								field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="parent_phone">Phone Number</label> <input type="text"
+								name="parent_phone" id="parent_phone" value="ddd" /> <label
+								class="error" for="parent_phone" id="parent_phone_error">This
+								field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="parent_address1">Address</label> <input type="text"
+								name="parent_address1" id="parent_address1" value="ddd" /> <label
+								class="error" for="parent_address1" id="parent_address1_error">This
+								field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="parent_city">City</label> <input type="text"
+								name="parent_city" id="parent_city" value="ddd" /> <label
+								class="error" for="parent_city" id="parent_city_error">This
+								field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="parent_state" class="select">Your state:</label> <select
+								name="parent_state" id="parent_state" class="stateselect">
+							</select>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="parent_postal">Zip</label> <input type="text"
+								name="parent_postal" id="parent_postal" value="02154" /> <label
+								class="error" for="parent_postal" id="parent_postal_error">This
+								field is required.</label>
+						</div>
+
+
+						<h1>Verify with your Credit Card</h1>
+
+						<div data-role="fieldcontain">
+							<fieldset data-role="controlgroup" data-type="horizontal"
+								id="parent_cc_type">
+								<legend>Card Type</legend>
+								<input type="radio" name="parent_cc_type" id="visa" value="visa" />
+								<label for="visa">Visa</label> <input type="radio"
+									name="parent_cc_type" id="mastercard" value="mastercard" /> <label
+									for="mastercard">Mastercard</label> <input type="radio"
+									name="parent_cc_type" id="americanexpress"
+									value="americanexpress" /> <label for="americanexpress">American
+									Express</label>
+
+							</fieldset>
+						</div>
+
+						<h1>Expiration Date</h1>
+
+						<label for="cc_exp_date_choice_month" class="select">Month</label>
+						<select name="cc_exp_date_choice_month"
+							id="parent_cc_expiration_date_month" class="monthselect" >
+						</select> <label for="cc_exp_date_choice_year" class="select">Year</label>
+						<select name="cc_exp_date_choice_year"
+							id="parent_cc_expiration_date_year" class="ccyearselect">
+						</select><label class="error" id="parent_cc_expiration_date_error">Invalid
+							expiration date.</label> <input type="hidden"
+							name="parent_cc_expiration_date" id="parent_cc_expiration_date"
+							value="">
+
+						<div data-role="fieldcontain">
+							<label for="parent_cc_cvv">CVV</label> <input type="text"
+								name="parent_cc_cvv" id="parent_cc_cvv" value="" /> <label
+								class="error" for="parent_cc_cvv" id="parent_cc_cvv_error">This
+								field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="parent_cc_number">Credit Card #</label> <input
+								type="text" name="parent_cc_number" id="parent_cc_number"
+								value="" /> <label class="error" for="parent_cc_number"
+								id="parent_cc_number_error">This field is required.</label>
+						</div>
+
+
+						<div id="btn_signup_adult_verify">
+							<a href="#" data-transition="fade"><img
+								src="img/btn_signup.png" alt="" /> </a>
+						</div>
+					</fieldset>
+				</form>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+
+	<div id="signupgrownuppg4" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>Sign Up</h1>
+			</div>
+
+
+			<div class="content">
+
+				<h1>The credit card was billed $1, you can use it on Yak.</h1>
+
+				<form id="signup_adult_form4" action="">
+					<fieldset>I think that's it</fieldset>
+				</form>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+
+
+	<div id="myaccount" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>My Account</h1>
+			</div>
+
+			<div class="content">
+
+				<h1>This is my account page</h1>
+
+				Account Page
+
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+
+	<div id="books" data-role="page">
+
+		<div id="content" data-role="content">
+
+			<div id="sectionbar" class="books">
+				<img src="img/icon_book.png" />
+				<h1>Books</h1>
+			</div>
+
+			<div id="sectionbar" class="norm">
+
+				<h2>Featured Books</h2>
+			</div>
+
+			<div class="content">
+				<ul class="featuredapps" id="featuredbookslist">
+				</ul>
+			</div>
+
+			<div id="sectionbar" class="norm">
+				<h2>All Books</h2>
+			</div>
+
+			<div class="content">
+
+				<ul class="apps" id="bookslist">
+					</ul>
+			</div>
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+
+	<div id="games" data-role="page">
+
+		<div id="content" data-role="content">
+
+			<div id="sectionbar" class="games">
+				<img src="img/icon_games.png" />
+				<h1>Games</h1>
+			</div>
+
+			<div id="sectionbar" class="norm">
+				<h2>Featured Games</h2>
+			</div>
+
+			<div class="content">
+				<ul class="featuredapps" id="featuredgameslist">
+					</ul>
+			</div>
+
+			<div id="sectionbar" class="norm">
+				<h2>All Games</h2>
+			</div>
+
+			<div class="content">
+
+				<ul class="apps" id="gameslist">
+				</ul>
+			</div>
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+	<div id="detail" data-role="page">
+
+
+
+		<div id="content" data-role="content">
+
+			<div data-role="header">
+				<h1 id="detail_h1"></h1>
+				<a href="#new" data-rel="back">Back</a>
+			</div>
+			<!-- /header -->
+
+			<div class="content">
+
+
+				<div id="apphdr">
+					<img src="img/app_weirdoids.png" id="detail_icon"/>
+					<div id="btn_buy">
+						<a href="#" data-role="button" data-icon="star" id="detail_cost_str">Free</a>
+					</div>
+				</div>
+
+				<div id="detail_description">
+					<h1 id="detail_h1"></h1>
+					<p></p>
+				</div>
+
+				<div id="ss_ctr">
+					<div id="screenshots">
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		<!-- /content -->
+
+	</div>
+	<!-- /page -->
+
+	<div data-role="page" id="error_dialog" data-rel="dialog"
+		data-theme="d" data-transition="pop">
+		<h1>Server Error</h1>
+		<div id="error_dialog_message"></div>
+		<div id="error_dialog_details"></div>
+	</div>
+
+</body>
+</html>
