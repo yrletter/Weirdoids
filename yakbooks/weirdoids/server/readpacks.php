@@ -33,8 +33,10 @@ AND p.packfamilyid = f.packfamilyid
 order by f.listorder, p.listorder";
 $result=mysql_query($qry);
 
+
 if (!$result) {
-	echo "Could not successfully run query ($qry) from DB: " . mysql_error();
+	//echo "Could not successfully run query ($qry) from DB: " . mysql_error();
+	echo mysql_errno($link)." ". mysql_error($link);
 	exit;
 }
 
@@ -83,6 +85,8 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 
 $p = array('packs'=> $family['packs']);
+
+header('Content-Type: application/json');
 
 echo json_encode($p);
 

@@ -26,7 +26,7 @@
 
 <link rel="stylesheet" href="css/jquery.mobile-1.0.min.css" />
 <script src="script/jquery-1.6.4.min.js"></script>
-<script src="script/jquery.mobile-1.0.min.js"></script>
+<script src="script/jquery.mobile-1.0.js"></script>
 
 <script src="script/jquery-ui-1.8.16.custom.min.js"
 	type="text/javascript"></script>
@@ -37,45 +37,46 @@
 <link href="css/rstyles.css" rel="stylesheet" type="text/css" />
 
 
+<script src="script/json2.js" type="text/javascript"></script>
 
 
 <script src="script/site.js" type="text/javascript"></script>
-<script src="script/loadPack.js" type="text/javascript"></script>
+<script src="script/loadPack2.js" type="text/javascript"></script>
 <script src="script/weirdoids.js" type="text/javascript"></script>
+<script src="script/my_facebook.js" type="text/javascript"></script>
+
 
 
 
 </head>
 
 <body>
-
+	<div id="fb-root"></div>
 	<div id="wrapper">
 
-
-
-
 		<div id="home" data-role="page">
-		<div id="homediv" style="max-height:1024px; height:100%; width:100%; position:absolute; max-width:768px;">
-	</div>	
-		<div id="btn_build">
-				<a href="#" id="bldbtn" data-role="button">BUILD</a>
-			</div>
+			<div id="homediv1"
+				style="max-height: 1024px; height: 100%; width: 100%; position: absolute; max-width: 768px;">
+				<img id="homebg" alt="alt" src="imgs/bkgd_home.jpg" class="bg">
+				<div id="btn_build">
+					<!--a href="#" id="bldbtn" data-role="button" ></a-->
+					<input id="bldbtn" type="image" src="imgs/btn_build.jpg"
+						alt="Build" />
+				</div>
+				<div id="btn_vault">
+					<input id="vaultbtn" type="image" src="imgs/btn_vault.jpg"
+						alt="Vault" />
+				</div>
 
-			<div id="btn_vault">
-				<a href="#vault" data-role="button">VAULT</a>
-			</div>
-
-			<div id="btn_packs">
-				<a href="#packs" data-role="button">PACKS</a>
+				<div id="btn_packs">
+					<input id="packsbtn" type="image" src="imgs/btn_packs.jpg"
+						alt="Packs" />
+				</div>
 			</div>
 		</div>
 
 		<div id="build" data-role="page">
 
-
-			<div id="btn_done">
-				<a href="#previewpage" data-role="button">DONE </a>
-			</div>
 
 
 			<div data-role="header" class="nav-glyphish-example" id="buildhdr">
@@ -83,20 +84,15 @@
 					class="nav-glyphish-example" data-grid="d">
 					<ul>
 						<li><a href="#" id="headbtn" data-iconpos="notext"
-							data-icon="custom"></a>
-						</li>
+							data-icon="custom"></a></li>
 						<li><a href="#" id="bodybtn" data-iconpos="notext"
-							data-icon="custom"></a>
-						</li>
+							data-icon="custom"></a></li>
 						<li><a href="#" id="legbtn" data-iconpos="notext"
-							data-icon="custom"></a>
-						</li>
+							data-icon="custom"></a></li>
 						<li><a href="#" id="xtrabtn" data-iconpos="notext"
-							data-icon="custom"></a>
-						</li>
+							data-icon="custom"></a></li>
 						<li><a href="#" id="bkgdbtn" data-iconpos="notext"
-							data-icon="custom"></a>
-						</li>
+							data-icon="custom"></a></li>
 					</ul>
 				</div>
 			</div>
@@ -104,7 +100,8 @@
 
 
 
-			<div id="band_wrapper" style="height:100%; width:100%; postion:absolute;">
+			<div id="band_wrapper"
+				style="height: 100%; width: 100%; postion: absolute;">
 				<div id="btn_prev_head" class="browser-nav-btn">
 					<a href="#" id="prev_heads"></a>
 				</div>
@@ -114,6 +111,10 @@
 
 				<div id="bands"></div>
 			</div>
+			<div id="btn_done">
+				<input id="donebtn" type="image" src="imgs/btn_done.jpg" alt="Done" />
+			</div>
+
 
 
 
@@ -123,7 +124,7 @@
 			<h1>Select a Pack</h1>
 
 			<div id="preview">
-				<ul data-role="listview" id="packlist" data-theme="e">
+				<ul id="packlist" data-theme="e">
 
 				</ul>
 				<p></p>
@@ -133,18 +134,19 @@
 					<a href="#" data-reveal-id="myModal" data-role="button">Click
 						to Buy</a>
 				</div>
+
 			</div>
 
 			<div id="myModal" class="reveal-modal">
 				<h1>Purchase Pack</h1>
-				
 
 
-					<p>
-					<p>
-					<p>
-					
-				<a class="close-reveal-modal">&#215;</a>
+
+				<p>
+				<p>
+				<p>
+
+					<a class="close-reveal-modal">&#215;</a>
 			</div>
 		</div>
 
@@ -159,7 +161,7 @@
 			<!-- /header -->
 
 			<div data-role="content">
-				
+
 
 				<div class="ui-grid-b" id="vaultGrid" data-scroll="true"></div>
 				<!-- /grid-a -->
@@ -173,16 +175,19 @@
 		<div id="previewpage" data-role="page">
 			<div data-role="header" data-position="inline">
 				<h1>My Weirdoid</h1>
-				<a href="#vault" id="saveInVaultBtn">Done</a>
-				<a href="#" data-rel="back" data-icon="delete" id="cancelsave">Cancel</a>
+				<a href="#vault" id="saveInVaultBtn" class="savebtns">Done</a> <a
+					href="#" data-rel="back" data-icon="delete" id="cancelsave">Cancel</a>
 			</div>
 			<!-- /header -->
 
 			<div data-role="content">
-				<div>
-					<canvas id="preview-canvas" height="300"></canvas>
+				<div style="position: relative; height: 300px;">
+					<canvas id="preview-canvas"
+						style="position: absolute; left: 0; top: 0; z-index: 1; height: 300px;"></canvas>
+					<canvas id="preview-canvas-background"
+						style="position: absolute; left: 0; top: 0; z-index: 0; height: 300px;"></canvas>
 				</div>
-				<form id="form1">
+				<form id="form1" style="position: relative;">
 
 
 					<div class="ui-grid-a" id="nameGrid" style="padding: 20px 10px;">
@@ -198,14 +203,146 @@
 
 					</div>
 					<!-- /grid-a -->
-
+					<div>
+						<div id="need_to_login_message" class="online-only">Want to
+							share your Weirdoid or save it? You need to log in first.</div>
+						<a href="#" data-role="button" class="logged-in-only savebtns"
+							id="saveInVaultBtn" data-inline="true">Save</a> <a
+							href="#loginaccount" data-role="button" class="online-only"
+							id="goto_loginaccount" data-inline="true">Log In</a> <a
+							href="#" data-role="button" class="online-only"
+							id="btn_share_on_fb" data-inline="true">Share on Facebook</a>
+					</div>
+					<div id="imgs" style="max-height: 0px; height: 0px; width: 0px;"></div>
 				</form>
 			</div>
 			<!-- /content -->
 
 		</div>
+
+		<div id="loginaccount" data-role="page" data-rel="dialog">
+
+			<!-- start header -->
+			<div data-role="header">
+				<h1>Log In to Yak</h1>
+				<a href="#" data-rel="back" data-icon="back" class="ui-btn-right">Back</a>
+			</div>
+			<!-- end header -->
+
+			<div id="content" data-role="content" class="content">
+
+
+				<div>
+					<form id="loginform" action="">
+						<fieldset>
+
+							<div data-role="fieldcontain">
+								<label for="username">Username</label> <input type="text"
+									name="login" id="username" value="ddd" /> <label class="error"
+									for="username" id="username_error">This field is
+									required.</label>
+							</div>
+
+							<div data-role="fieldcontain">
+								<label for="password">Password</label> <input type="password"
+									name="password" id="password" value="ddd" /><label
+									class="error" for="password" id="password_error">This
+									field is required.</label>
+							</div>
+
+							<div>
+								<a href="#" data-role="button" id="btn_login" data-inline="true">Log
+									In</a>
+							</div>
+							<a href="#" id="btn_forgot_pwd" data-inline="true">Forgot
+								Your Password?</a> <a href="#fblogin" data-role="button"
+								id="btn_login_with_fb" data-inline="true">Log in with
+								Facebook</a>
+
+						</fieldset>
+					</form>
+				</div>
+				<hr />
+				<div>
+					Don't have a login? <a href="#signuppg">Sign Up</a>
+				</div>
+			</div>
+			<!-- /content -->
+		</div>
+		<!-- /login -->
+
+		<div id="fblogin" data-role="page">
+
+			<!-- start header -->
+			<div data-role="header">
+				<h1>Log In to Facebook</h1>
+				<a href="#" data-rel="back" data-icon="back" class="ui-btn-right">Back</a>
+			</div>
+			<!-- end header -->
+
+			<div id="content" data-role="content" class="content">
+
+				<button id="fb-auth" data-role="button">Login</button>
+				<div id="loader" style="display: none">
+					<img src="imgs/gfx_gears.png" alt="loading" />
+				</div>
+				<br />
+				<div id="user-info"></div>
+				<br />
+				<div id="debug"></div>
+
+				<div id="other" style="display: none">
+					<a href="#" onclick="showStream(); return false;">Publish Wall
+						Post</a> | <a href="#" onclick="share(); return false;">Share With
+						Your Friends</a> | <a href="#"
+						onclick="graphStreamPublish(); return false;">Publish Stream
+						Using Graph API</a> | <a href="#" onclick="fqlQuery(); return false;">FQL
+						Query Example</a> <br />
+					<textarea id="status" cols="50" rows="5">Write your status here and click 'Status Set Using Legacy Api Call'</textarea>
+					<br /> <a href="#" onclick="setStatus(); return false;">Status
+						Set Using Legacy Api Call</a>
+				</div>
+			</div>
+			<!-- end content -->
+		</div>
+		<!-- end fblogin -->
+		<div id="share_on_fb" data-role="page">
+
+			<!-- start header -->
+			<div data-role="header">
+				<h1>Share on Facebook</h1>
+				<a href="#" data-rel="back" data-icon="back" class="ui-btn-right">Back</a>
+			</div>
+			<!-- end header -->
+
+			<div id="content" data-role="content" class="content">
+
+				<button id="fb-auth" data-role="button">Login</button>
+				<div id="loader" style="display: none">
+					<img src="imgs/gfx_gears.png" alt="loading" />
+				</div>
+				<br />
+				<div id="user-info"></div>
+				<br />
+				<div id="debug"></div>
+
+				<div id="other" style="display: none">
+					<a href="#" onclick="showStream(); return false;">Publish Wall
+						Post</a> | <a href="#" onclick="share(); return false;">Share With
+						Your Friends</a> | <a href="#"
+						onclick="graphStreamPublish(); return false;">Publish Stream
+						Using Graph API</a> | <a href="#" onclick="fqlQuery(); return false;">FQL
+						Query Example</a> <br />
+					<textarea id="status" cols="50" rows="5">Write your status here and click 'Status Set Using Legacy Api Call'</textarea>
+					<br /> <a href="#" onclick="setStatus(); return false;">Status
+						Set Using Legacy Api Call</a>
+				</div>
+			</div>
+			<!-- end content -->
+		</div>
 	</div>
 
+	<!-- wrapper -->
 
 </body>
 </html>

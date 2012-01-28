@@ -1,7 +1,7 @@
 body {
 	margin: 0;
 	padding: 0;
-	width: 1024px;
+	width: 100%;
 	
 	font-family: Arial, sans-serif;
 }
@@ -29,6 +29,15 @@ label.ui-input-text {
 .ui-checkbox input, .ui-radio input {
 	margin: 0;
 }
+.ui-content .ui-listview {
+	margin: 0;
+}
+.ui-listview .ui-li-icon {
+    left: 5px;
+    max-height: 30px;
+    max-width: 30px;
+    top: 0.3em;
+}
 h1 {
 	font-size: 30px;
 	margin: 0;
@@ -47,8 +56,48 @@ p {
 a {
 	text-decoration: none;
 }
+#accountbar {
+	background: #9b3023 url('../img/bkgd_stripevert.png') repeat-x;
+	    height: 50px;
+	    position: absolute;
+	    top: 0;
+	    width: 100%;
+	    z-index: 199;
+	    color: #fff;
+	    box-shadow: 2px 2px 2px rgba(0,0,0,.3);
+	    -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.3);
+}
+#accountpanel {
+	line-height: 30px;
+	    margin-left: 220px;
+	    margin-right: 20px;
+	    margin-top: 10px;
+}
+
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.center {
+	text-align: center;
+}
+.paymenticon {
+	display: inline-block;
+	    vertical-align: top;
+	    width: 15%;
+}
+.paymenticon img {
+	width: 100px;
+	height: 100px;
+}
+.paymentinfo {
+	display: inline-block;
+	   width: 70%;
+}
 .featuredapps {
-	height: 220px;
+	
 	padding: 20px;
 	text-align: center;
 }
@@ -70,7 +119,7 @@ a {
 	padding-left: 20px;
 	box-shadow: 2px 2px 2px rgba(0,0,0,.3);
 	-moz-box-shadow: 2px 2px 2px rgba(0,0,0,.3);
-	background: #835f3a url('../img/bkgd_stripevert.png') repeat-x;	
+	background: #835f3a url('../img/bkgd_stripevert.png') repeat-x;
 }
 #sectionbar img {
 	width:40px;
@@ -81,13 +130,13 @@ a {
 #sectionbar h1 {
 	float: left;
 }
-.new {
+.orange {
 	background-color: #e9a733 !important;
 }
-.books {
+.green {
 	background-color: #b0c956 !important;
 }
-.games {
+.blue {
 	background-color: #38b0d2 !important;
 }
 .norm {
@@ -97,7 +146,8 @@ a {
 
 #content {
 	margin-left: 200px;
-	width: 824px;
+	margin-top: 50px;
+	//width: 824px;
 }
 .content {
 	margin: 20px;
@@ -146,10 +196,12 @@ a {
 }
 #cyclebook {
 	overflow: hidden;
-	width: 824px;
+	width: 100%;
+	margin: 0 auto;
 	height: 400px;
-	margin:0;
 	padding: 0;
+	background-color: #000;
+	text-align: center;
 }
 #cyclebook ul {
 	margin: 0;
@@ -268,8 +320,8 @@ a {
 }
 
 .loggedaccount img {
-	width: 100px;
-	height: 100px;
+	width: 30px;
+	height: 30px;
 }
 
 .login {
@@ -329,4 +381,13 @@ a {
 .avatars img {
 	width: 100px;
 	height: 100px;
+}
+
+#detail_description {
+	display: inline-block;
+	    vertical-align: top;
+	    width: 60%;
+}
+#myaccount li {
+	list-style: none;
 }

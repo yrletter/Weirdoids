@@ -20,12 +20,20 @@ try {
 
 	$bands = file_get_contents('../imgs/p1_bands.txt');
 	if ($bands == FALSE)
-		throw new Exception("Could not read bands");
+	throw new Exception("Could not read bands");
 
-	$istatus["errorcode"] = 0;
-	$istatus["errormsg"] = "Pack band details found.";
-	$istatus["bands"]	= $bands;
-	echo json_encode($istatus);
+	$parsedText = str_replace(chr(10), "", $bands);
+	$parsedText = str_replace('\"', '"', $parsedText);
+	$parsedText = str_replace(chr(9), "", $parsedText);
+		//$bands = str_replace(chr(13), "", $parsedText);
+		$bands = preg_replace('/\s\s+/', ' ', $parsedText);
+	//echo $bands;
+	
+	echo $bands;
+	//$istatus["errorcode"] = 0;
+	//$istatus["errormsg"] = "Pack band details found.";
+	//$istatus["bands"]	= $bands;
+	//echo json_encode($istatus);
 	exit();
 }
 catch (Exception $e)

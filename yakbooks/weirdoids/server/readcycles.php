@@ -21,25 +21,41 @@ $errmsg_arr = array();
 //Validation error flag
 $errflag = false;
 
+$istatus = array();
+
+header('Content-Type: application/json');
+
 //Connect to mysql server
 $link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
 if(!$link) {
-	die('Failed to connect to server: ' . mysql_error());
+	$istatus["errorcode"] = 1;
+	$istatus["errormsg"] = "Failed to connect to server: ".mysql_errno($link). " ".mysql_error($link);
+	echo json_encode($istatus);
+	die();
 }
 
 //Select database
 $db = mysql_select_db(DB_DATABASE);
 if(!$db) {
-	die("Unable to select database");
+	$istatus["errorcode"] = 1;
+	$istatus["errormsg"] = "Unable to select database: ".mysql_errno($link). " ".mysql_error($link);
+	echo json_encode($istatus);
+	die();
 }
 
-$cycleid = 1;
+$cycleid = 2;
 $packfamilyid = 1;
+//echo $_GET["cycleid"];
+//echo  'req ' . $_REQUEST["cycleid"];
 
 if(isset($_REQUEST["cycleid"]))
-	$cyleid = $_REQUEST["cycleid"];
+{
+	//echo 'found '. $_GET["cycleid"];
+	$cycleid = $_REQUEST["cycleid"];
+
+}
 if(isset($_REQUEST["packfamilyid"]))
-	$packfamilyid = $_REQUEST["packfamilyid"];
+$packfamilyid = $_REQUEST["packfamilyid"];
 
 //Create query
 // pass in the packid
@@ -73,23 +89,38 @@ and ct.cycletypeid = c.cycletypeid
 and c.packid = '%s'
 and ct.packfamilyid = '%s'
 and ci.cycleid = c.cycleid
-and i.cycleimageid = ci.cycleimageid
+and i.src = ci.src
 order by c.cycleid, ci.listorder ;";
 
 
 $sql = sprintf($qry, mysql_real_escape_string($cycleid), mysql_real_escape_string($packfamilyid));
 
+//echo $sql;
+
 $result=mysql_query($sql);
 
 if (!$result) {
-	echo "Could not successfully run query ($qry) from DB: " . mysql_error();
-	exit;
+	if (mysql_error($link)) {
+		//Login failed
+		//header("location: login-failed.php");
+		$istatus["errorcode"] = 1;
+		$istatus["errormsg"] = "Error: Reading packlist failed ".mysql_errno($link). " ".mysql_error($link);
+		echo json_encode($istatus);
+		die();
+	} else {
+		$istatus["errorcode"] = 1;
+		$istatus["errormsg"] = "Unknown error reading cycles: Pack#: ".$packfamilyid.' Cycle#: '.$cycleid;
+		echo json_encode($istatus);
+		die();
+	}
 }
 
 if (mysql_num_rows($result) == 0) {
-	echo "No rows found, nothing to print so am exiting";
-	exit;
-}
+		$istatus["errorcode"] = 1;
+		$istatus["errormsg"] = "No data found for cycles: Pack#: ".$packfamilyid.' Cycle#: '.$cycleid;
+		echo json_encode($istatus);
+		die();
+	}
 //Check whether the query was successful or not
 
 
@@ -112,7 +143,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		$cycle['divname'] = $row["divname"];
 		$cycle['left'] = $row["left"];
 		$cycle['height'] = $row["height"];
-		$cycle['width'] = $row["width"];		
+		$cycle['width'] = $row["width"];
 		$cycle['top'] = $row["top"];
 		$cycle['zindex'] = $row["zindex"];
 		$cycle['images'] = array();
@@ -124,7 +155,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	$image['id'] = $row["cycleimageid"];
 	//$image['id'] = $row["packname"];
 	$image['src'] = "imgs/".$row["src"];
-	$image['dataurl'] = $row["dataurl"];
+	$image['dataurl'] = " ";//$row["dataurl"];
 	//echo $image['src']."<br>";
 	array_push($cycle['images'],$image);
 	$first_row = 0;
@@ -134,8 +165,10 @@ while ($row = mysql_fetch_assoc($result)) {
 array_push($cycles,$cycle);
 
 $p = array('bands'=> $cycles);
-
-echo json_encode($p);
+$istatus["errorcode"] = 0;
+$istatus["errormsg"] = "Found user";
+$istatus["bands"] = $p;
+echo json_encode($istatus);
 
 mysql_free_result($result);
 

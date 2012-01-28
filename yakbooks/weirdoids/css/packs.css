@@ -1,70 +1,18 @@
 
-.legs {
-/* 	background: transparent url('../imgs/pack2_classic_onlymonsters.png')
-		no-repeat;
- */	background-repeat:no-repeat;
-	background-color : transparent;
- 	left: 170px;
-	top: 510px;
+
+
+.cycle_base {
+	position: absolute;
+	width: 100%;
+	z-index: 11; //
 	overflow: hidden;
-	position: absolute;
-	height: 480px;
-	width: 480px;
 }
-
-.bodies {
-/* 	background: transparent url('../imgs/pack2_classic_onlymonsters.png')
-		no-repeat;
- */		background-repeat:no-repeat;
-	background-color : transparent;
- left: 170px;
-	top: 260px;
-	overflow: hidden;
-	position: absolute;
-	height: 450px;
-	width: 450px;
-}
-
-.xtras {
-/* 	background: transparent url('../imgs/pack2_classic_onlymonsters.png') no-repeat;
- */	left: 175px;
-	background-repeat:no-repeat;
-	background-color : transparent;
- overflow: hidden;
-	position: absolute;
-	height: 380px;
-	width: 380px;
-	top: 20px;
-}
-
-.heads {
-/* 	background: transparent url('../imgs/pack2_classic_onlymonsters.png')
-		no-repeat;
- */	background-repeat:no-repeat;
-	background-color : transparent;
-	left: 170px;
-	overflow: hidden;
-	position: absolute;
-	height: 380px;
-	width: 380px;
-	top: 20px;
-}
-
-.bkgds {
-/* 	background: transparent url('../imgs/pack2_classic_onlybkgds.jpg')
-		no-repeat;
- */		background-repeat:no-repeat;
-	background-color : transparent;
- 	overflow: hidden;
-	position: absolute;
-	height: 1024px;
-	width: 768px;
-}
-
+		
 #wrapper_cycle_xtras {
-	height: 1024px;
 	position: absolute;
-	width: 768px;
+	height: 100%;
+	width: 100%;
+	max-width: 768px;
 	z-index: 11; //
 	overflow: hidden;
 }
@@ -73,19 +21,24 @@
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	max-width: 768px;
 }
 
 #cycle_xtras ul {
 	float: left;
-	width: 768px;
+	width: 100%;
+	height: 100%;
+	max-width: 768px;
 	margin: 0;
 	padding: 0;
 }
 
 #cycle_xtras li {
-	height: 1024px;
 	position: absolute;
-	width: 768px;
+	width: 100%;
+	max-width: 768px;
 	list-style: none;
 }
 
@@ -98,9 +51,10 @@
 }
 
 #wrapper_cycle_heads {
-	height: 1024px;
 	position: absolute;
-	width: 768px;
+	height: 100%;
+	width: 100%;
+	max-width: 768px;
 	z-index: 10; //
 	overflow: hidden;
 }
@@ -109,11 +63,16 @@
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	max-width: 768px;
 }
 
 #cycle_heads ul {
 	float: left;
-	width: 768px;
+	width: 100%;
+	height: 100%;
+	max-width: 768px;
 	margin: 0;
 	padding: 0;
 }
@@ -134,9 +93,10 @@
 }
 
 #wrapper_cycle_bodies {
-	height: 1024px;
 	position: absolute;
-	width: 768px;
+	height: 100%;
+	width: 100%;
+	max-width: 768px;
 	z-index: 9; //
 	overflow: hidden;
 }
@@ -145,11 +105,16 @@
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	max-width: 768px;
 }
 
 #cycle_bodies ul {
 	float: left;
-	width: 768px;
+	width: 100%;
+	height: 100%;
+	max-width: 768px;
 	margin: 0;
 	padding: 0;
 }
@@ -170,9 +135,10 @@
 }
 
 #wrapper_cycle_legs {
-	height: 1024px;
 	position: absolute;
-	width: 768px;
+	height: 100%;
+	width: 100%;
+	max-width: 768px;
 	z-index: 8; //
 	overflow: hidden;
 }
@@ -181,11 +147,16 @@
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	max-width: 768px;
 }
 
 #cycle_legs ul {
 	float: left;
-	width: 768px;
+	width: 100%;
+	height: 100%;
+	max-width: 768px;
 	margin: 0;
 	padding: 0;
 }
@@ -206,9 +177,10 @@
 }
 
 #wrapper_cycle_bkgds {
-	height: 1024px;
 	position: absolute;
-	width: 768px;
+	height: 100%;
+	width: 100%;
+	max-width: 768px;
 	z-index: 7; //
 	overflow: hidden;
 }
@@ -221,7 +193,9 @@
 
 #cycle_bkgds ul {
 	float: left;
-	width: 768px;
+	width: 100%;
+	height: 100%;
+	max-width: 768px;
 	margin: 0;
 	padding: 0;
 }

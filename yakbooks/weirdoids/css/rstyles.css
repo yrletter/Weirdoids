@@ -8,7 +8,8 @@ body {
 	margin: 0;
 	padding: 0;
 	max-height: 1024px;
-	width: 768px;
+	width: 100%;
+	height: auto%;
 }
 .floatrightonly
 {
@@ -22,14 +23,15 @@ margin: 0 0 0 100px;
 }
 .ui-mobile,
 .ui-mobile body {
-height: 100% !important;
-		min-height: 100% !important;
+height: auto;
+width: 100%;
+	
 }
 #wrapper {
-	width: 768px;
-	min-height: 768px;
+	width: 100%;
 	height: 100%;
-	//overflow: hidden;
+	min-height: 700px;
+	overflow: hidden;
 	position: absolute;
 }
 
@@ -52,6 +54,7 @@ height: 100% !important;
 .browser-nav-btn {
 	
 	}
+	
 	
 #btn_next_head {
 	background: transparent url('../imgs/btn_next_head.png') no-repeat;
@@ -102,119 +105,26 @@ height: 100% !important;
 }
 
 #bands {
-	z-index: 100;
-	height: 100% !important;
-		min-height: 100% !important;
+	z-index: 50;
+width: 100%;
+position: relative;
+height:100%;
 }
 
 #band_wrapper {
 	width: 100%;
-	max-height 1024px;
-height: 100% !important;
-		min-height: 100% !important;}
-
-#btn_prev_legs {
-	background: transparent url('../imgs/btn_prev_legs.png') no-repeat;
-	position: absolute;
-	left: 0;
-	width: 50px;
-	height: 100px;
-	z-index: 100;
-	top: 300px;
+	height: 100%;
+	position: relative;
 }
 
-#btn_prev_legs a {
-	display: block;
-	width: 50px;
-	height: 100px;
-}
-
-#btn_next_legs {
-	background: transparent url('../imgs/btn_next_legs.png') no-repeat;
-	position: absolute;
-	right: 0;
-	width: 50px;
-	height: 100px;
-	z-index: 100;
-	top: 300px;
-}
-
-#btn_next_legs a {
-	display: block;
-	width: 50px;
-	height: 100px;
-}
-
-#btn_prev_bkgds {
-	background: transparent url('../imgs/btn_prev_legs.png') no-repeat;
-	position: absolute;
-	left: 0;
-	width: 50px;
-	height: 100px;
-	z-index: 100;
-	top: 400px;
-}
-
-#btn_prev_bkgds a {
-	display: block;
-	width: 50px;
-	height: 100px;
-}
-
-#btn_next_bkgds {
-	background: transparent url('../imgs/btn_next_legs.png') no-repeat;
-	position: absolute;
-	right: 0;
-	width: 50px;
-	height: 100px;
-	z-index: 100;
-	top: 400px;
-}
-
-#btn_next_bkgds a {
-	display: block;
-	width: 50px;
-	height: 100px;
-}
-
-#btn_prev_xtras {
-	background: transparent url('../imgs/btn_prev_legs.png') no-repeat;
-	position: absolute;
-	left: 0;
-	width: 50px;
-	height: 100px;
-	z-index: 100;
-	top: 500px;
-}
-
-#btn_prev_xtras a {
-	display: block;
-	width: 50px;
-	height: 100px;
-}
-
-#btn_next_xtras {
-	background: transparent url('../imgs/btn_next_legs.png') no-repeat;
-	position: absolute;
-	right: 0;
-	width: 50px;
-	height: 100px;
-	z-index: 100;
-	top: 500px;
-}
-
-#btn_next_xtras a {
-	display: block;
-	width: 50px;
-	height: 100px;
-}
 
 #btn_done {
-	background-color: #445564;
 	position: absolute;
 	right: 0;
-	z-index: 100;
+	z-index: 2000;
 	top: 450px;
+	width: 200px;
+	height: 75px;
 }
 
 #btn_name {
@@ -223,12 +133,6 @@ height: 100% !important;
 	right: 0;
 	z-index: 100;
 	top: 850px;
-}
-
-#btn_next_legs a {
-	display: block;
-	width: 50px;
-	height: 100px;
 }
 
 
@@ -240,13 +144,6 @@ height: 100% !important;
 #wrapper_nav li {
 	list-style: none;
 	display: inline-block;
-}
-
-.nav_icon {
-	background: transparent url('../imgs/nav_icons.png') no-repeat;
-	width: 150px;
-	height: 80px;
-	overflow: hidden;
 }
 
 .nav_btn {
@@ -296,43 +193,64 @@ height: 100% !important;
 }
 
 #build {
- height:100% ! important;
-    min-height: 100% ! important;	}
+	height: 100%;
+   width: 100%;
+    	}
 	
 #home {
-	background: transparent url('../imgs/bkgd_home.jpg') no-repeat;
-/* 	width: 768px;
-	height: 1024px;
- */	width: 768px;
-    height:100% ! important;
-    min-height: 100% ! important;
+		height: auto;
+ 	max-width: 768px;
+    width:100% ! important;
     max-height: 1024px ! important;
 }
 
+
+.bg {
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+}
+
+#homediv {
+	background: transparent url('../imgs/bkgd_home.jpg') no-repeat;
+/* 	width: 768px;
+ */	height: 100%;
+ 	max-width: 768px;
+    width:100% ! important;
+    max-height: 1024px ! important;
+}
 #btn_build {
-	background-color: #694053;
 	width: 200px;
-	height: 50px;
+	height: 75px;
 	position: absolute;
 	top: 400px;
 }
 
+	
 #btn_vault {
-	background-color: #583242;
 	width: 200px;
-	height: 50px;
+	height: 75px;
 	position: absolute;
 	top: 500px;
 }
 
 #btn_packs {
-	background-color: #306393;
 	width: 200px;
-	height: 50px;
+	height: 75px;
 	position: absolute;
 	top: 600px;
 }
 
+.packcost {
+	float: right;
+	margin: 0 0 10px 10px;
+	}
+	
+div.inline { float:left; }
+	
+	
 #vault {
 	
 }
@@ -355,15 +273,21 @@ height: 100% !important;
 	height: 300px;
 }
 
+#vault .vaultcanvas-hidden {
+	visibility:hidden;
+	}
+	
+#vault .ui-grid-b canvas {
+    width  : 100%;
+    height : auto;
+}
 .nav-glyphish-example .ui-btn .ui-btn-inner {
-	padding-top: 80px !important;
+	 padding-top: 80px !important; 
 }
 
 .nav-glyphish-example .ui-btn .ui-icon {
-	width: 150px !important;
-	height: 80px !important;
+	width: 100%;
 	left: 0%;
-	margin-left: 1px !important;
 	box-shadow: none !important;
 	-moz-box-shadow: none !important;
 	-webkit-box-shadow: none !important;
@@ -371,36 +295,49 @@ height: 100% !important;
 	border-radius: 0 !important;
 }
 
+.ui-custom-image {
+	}
+	
 #headbtn .ui-icon {
 	background: transparent url('../imgs/nav_icons.png')  no-repeat;
 	background-position: 0 0;
-	width: 150px;
-	height: 80px;
+	/*width: 150px;
+	height: 80px;*/
+	width: 100%;
+	height: 100%;
 }
 
 #bodybtn .ui-icon {
 	background: transparent url('../imgs/nav_icons.png') no-repeat;
 	background-position: -150px 0;
-	width: 150px;
-	height: 80px;
+	/*width: 150px;
+	height: 80px;*/
+	width: 100%;
+	height: 100%;
 }
 #legbtn .ui-icon {
 	background: transparent url('../imgs/nav_icons.png') no-repeat;
 	background-position: -300px 0;
-	width: 150px;
-	height: 80px;
+	/*width: 150px;
+	height: 80px;*/
+	width: 100%;
+	height: 100%;
 }
 #xtrabtn .ui-icon {
 	background: transparent url('../imgs/nav_icons.png') no-repeat;
 	background-position: -450px 0;
-	width: 150px;
-	height: 80px;
+	/*width: 150px;
+	height: 80px;*/
+	width: 100%;
+	height: 100%;
 }
 
 #bkgdbtn .ui-icon {
 	background: transparent url('../imgs/nav_icons.png')  no-repeat;
 	background-position: -600px 0;
-	width: 150px;
-	height: 80px;
+	/*width: 150px;
+	height: 80px;*/
+	width: 100%;
+	height: 100%;
 }
 

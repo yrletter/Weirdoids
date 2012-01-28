@@ -22,7 +22,7 @@ if(!$link) {
 	$istatus["errormsg"] = "Failed to connect to server: ".mysql_errno($link). " ".mysql_error($link);
 	echo json_encode($istatus);
 	die();
-	}
+}
 
 //Select database
 $db = mysql_select_db(DB_DATABASE);
@@ -31,7 +31,7 @@ if(!$db) {
 	$istatus["errormsg"] = "Unable to select database: ".mysql_errno($link). " ".mysql_error($link);
 	echo json_encode($istatus);
 	die();
-	}
+}
 
 //Function to sanitize values received from the form. Prevents SQL injection
 function clean($str) {
@@ -81,7 +81,7 @@ if($result) {
 		session_regenerate_id();
 		$member = mysql_fetch_assoc($result);
 		$_SESSION['SESS_USER_ID'] = $member['user_id'];
-		$_SESSION['SESS_NAME'] = $member['name'];
+		$_SESSION['SESS_NAME'] = $member['yakname'];
 		$_SESSION['SESS_EMAIL'] = $member['email'];
 		$_SESSION['SESS_IS_PARENT'] = $member['is_parent'];
 		$_SESSION['SESS_AVATAR'] = $member['avatar'];
@@ -94,6 +94,10 @@ if($result) {
 		session_write_close();
 		$istatus["errorcode"] = 0;
 		$istatus["errormsg"] = "Found user";
+		$istatus["userid"] = $member['user_id'];
+		$istatus["yakname"] = $member['yakname'];
+		$istatus["email"] = $member['email'];
+
 		echo json_encode($istatus);
 		exit();
 		//return_to("myaccount");
