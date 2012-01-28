@@ -1,0 +1,86 @@
+packlist sql
+
+SELECT title, f.name AS familyname, f.description AS familydesc, f.listorder AS familylistorder, ct.name AS cyclename, button_img, button_order, height, width, top, leftx AS 'left', zindex
+FROM book b, packfamily f, cycle_types ct
+WHERE b.bookid = f.bookid
+AND f.packfamilyid = ct.packfamilyid
+AND title = 'weirdoids';
+
+packs
+
+select * from pack p, cycle c, cycle_image ci, cycle_types ct
+where p.packfamilyid = 1
+and c.packid = p.packid
+and ci.cycleid = ci.cycleid
+and c.cycletypeid = ct.cycletypeid;
+
+all family and packs
+
+select  f.name AS familyname, f.description AS familydesc, f.listorder AS familylistorder, 
+from book b, packfamily f, pack p
+WHERE b.bookid = f.bookidpack
+where p.packfamilyid = 1
+and c.packid = p.packid
+and ci.cycleid = ci.cycleid
+and c.cycletypeid = ct.cycletypeid;
+
+cycles
+select c.name as divname, ci.src as background,
+ci.top, ci.leftx as 'left',
+ci.height, ci.width,
+ci.zindex
+ from  cycle c, cycle_image ci, cycle_types ct
+where ci.cycleid = ci.cycleid
+and c.cycletypeid = ct.cycletypeid
+and c.packid = 1
+order by c.cycleid, ;
+
+select c.name as divname, ci.src as background,
+ct.top, ct.leftx as 'left',
+ct.height, ct.width,
+ct.zindex, ci.src as image
+ from  cycle c, cycle_image ci, cycle_types ct
+where c.cycleid = ci.cycleid
+and c.cycletypeid = ct.cycletypeid
+and ct.cycletypeid = c.cycletypeid
+and c.packid = 1
+and ct.packfamilyid = 1
+order by c.cycleid ;
+
+
+insert into pack_files (book,packfamily,pack)
+values ('weirdoids', 'original', 'pack1_original', 'C://cygwin/home/BillLaptop/git/Weirdoids/yakbooks/weirdoids/imgs/pack1_original_manifest.txt')
+
+
+
+DELIMITER $$  
+CREATE TRIGGER after_child_insert   
+AFTER INSERT ON users
+FOR EACH ROW BEGIN
+if 
+INSERT INTO employees_audit  
+SET action = 'update',
+employeeNumber = OLD.employeeNumber,
+lastname = OLD.lastname, 
+changedon = NOW(); END$$  
+DELIMITER ; 
+
+-- parent-children data
+
+SELECT p.user_id, p.email, p.fname, p.lname,
+p.address1, p.city, p.state,p.country,p.postal,
+p.verify_method, p.cc_type,p.cc_number,
+p.cc_expiration_date, p.cc_cvv,
+c.fname as child_fname,
+c.lname as child_lname,
+c.user_id as child_user_id,
+c.yakname,
+c.yaklogin
+ FROM `users` p, users c
+where p.is_parent = 1
+and c.parent_user_id = p.user_id
+order by p.user_id, c.user_id
+
+
+// insert into product component
+INSERT INTO `yakbooks`.`product_component` (`product_component_id`, `model`, `sku`, `upc`, `image`, `publisher_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `minimum`, `sort_order`, `status`, `date_added`, `date_modified`, `viewed`) VALUES (NULL, NULL, NULL, NULL, NULL, '1', '1', '0.0000', '0', '10', '2012-01-02', '1', '0', '0', '2012-01-02 00:00:00', '0000-00-00 00:00:00', '0');

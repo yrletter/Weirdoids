@@ -1,0 +1,191 @@
+{
+    "bands": {
+        "bands": [
+            {
+                "divname": "heads",
+                "left": "170",
+                "height": "450",
+                "width": "450",
+                "top": "10",
+                "zindex": "8",
+                "fullsize": 0,
+                "images": [
+                    {
+                        "id": "13",
+                        "src": "imgs/p1_head_1.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "14",
+                        "src": "imgs/p1_head_2.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "15",
+                        "src": "imgs/p1_head_3.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "16",
+                        "src": "imgs/p1_head_4.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "17",
+                        "src": "imgs/p1_head_5.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "18",
+                        "src": "imgs/p1_head_6.png",
+                        "dataurl": " "
+                    }
+                ]
+            },
+            {
+                "divname": "bodies",
+                "left": "170",
+                "height": "550",
+                "width": "700",
+                "top": "240",
+                "zindex": "8",
+                "fullsize": 0,
+                "images": [
+                    {
+                        "id": "1",
+                        "src": "imgs/p1_body_1.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "2",
+                        "src": "imgs/p1_body_2.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "3",
+                        "src": "imgs/p1_body_3.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "4",
+                        "src": "imgs/p1_body_4.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "5",
+                        "src": "imgs/p1_body_5.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "6",
+                        "src": "imgs/p1_body_6.png",
+                        "dataurl": " "
+                    }
+                ]
+            },
+            {
+                "divname": "legs",
+                "left": "170",
+                "height": "500",
+                "width": "700",
+                "top": "510",
+                "zindex": "8",
+                "fullsize": 0,
+                "images": [
+                    {
+                        "id": "19",
+                        "src": "imgs/p1_legs_1.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "20",
+                        "src": "imgs/p1_legs_2.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "21",
+                        "src": "imgs/p1_legs_3.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "22",
+                        "src": "imgs/p1_legs_4.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "23",
+                        "src": "imgs/p1_legs_5.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "24",
+                        "src": "imgs/p1_legs_6.png",
+                        "dataurl": " "
+                    }
+                ]
+            },
+            {
+                "divname": "xtras",
+                "left": "170",
+                "height": "300",
+                "width": "500",
+                "top": "10",
+                "zindex": "10",
+                "fullsize": 0,
+                "images": [
+                    {
+                        "id": "7",
+                        "src": "imgs/p1_extra_1.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "8",
+                        "src": "imgs/p1_extra_2.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "9",
+                        "src": "imgs/p1_extra_3.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "10",
+                        "src": "imgs/p1_extra_4.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "11",
+                        "src": "imgs/p1_extra_5.png",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "12",
+                        "src": "imgs/p1_extra_6.png",
+                        "dataurl": " "
+                    }
+                ]
+            },
+            {
+                "divname": "bkgds",
+                "left": "0",
+                "height": "1024",
+                "width": "768",
+                "top": "0",
+                "zindex": "7",
+                "fullsize": 1,
+                "images": [
+                    {
+                        "id": "25",
+                        "src": "imgs/p1_bkgd_1.jpg",
+                        "dataurl": " "
+                    },
+                    {
+                        "id": "26",
+                        "src": "imgs/p1_bkgd_2.jpg",
+                        "dataurl": " "
+                    }
+                ]
+            }
+        ]
+    }
+}

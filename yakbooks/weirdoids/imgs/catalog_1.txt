@@ -1,0 +1,62 @@
+{
+    "catalog": {
+        "families": [
+            {
+                "familyid": 1,
+                "familyname": "pack1",
+                "familydesc": "Original Weirdoids",
+                "familylistorder": 0,
+                "items": [
+                    {
+                        "id": 1,
+                        "item_type": "pack",
+                        "pack_id": 1,
+                        "heading1": "Original Weirdoids",
+                        "heading2": "Free Starter Set",
+                        "cost_str": "Free!",
+                        "cost": "0.00",
+                        "listorder": 0,
+                        "special_img": "",
+                        "thumbnail": "imgs/pack1_thumbnail.png",
+                        "preview_small": "imgs/pack1_thumbnail.png",
+                        "preview_large": "imgs/pack1_thumbnail.png",
+                        "preview_text": "this is the preview_text_description"
+                    },
+                    {
+                        "id": 2,
+                        "item_type": "pack",
+                        "pack_id": 1,
+                        "heading1": "MonsterMash",
+                        "heading2": "Createyourownghoulishmonster!",
+                        "cost_str": "99cents",
+                        "cost": "0.99",
+                        "listorder": 1,
+                        "special_img": "",
+                        "thumbnail": "imgs/pack2_thumbnail.png",
+                        "preview_small": "imgs/pack2_thumbnail.png",
+                        "preview_large": "imgs/pack2_thumbnail.png",
+                        "preview_text": "this is the preview_text_description"
+                    },
+                    {
+                        "id": "3",
+                        "item_type": "set",
+                        "pack_ids": [
+                            1,
+                            2
+                        ],
+                        "heading1": "Special Pack Offer",
+                        "heading2": "Get packs 1 and 2 for special price!",
+                        "cost_str": "$9.99",
+                        "cost": "9.99",
+                        "listorder": 2,
+                        "special_img": "imgs/pack2_thumbnail.png",
+                        "thumbnail": "imgs/pack2_thumbnail.png",
+                        "preview_small": "imgs/pack2_thumbnail.png",
+                        "preview_large": "imgs/pack2_thumbnail.png",
+                        "preview_text": "this is the preview_text_description"
+                    }
+                ]
+            }
+        ]
+    }
+}

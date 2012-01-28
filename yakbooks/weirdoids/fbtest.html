@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Description" content="" />
+
+<meta name="viewport"
+	content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon" href="imgs/apple-touch-icon.png" />
+
+
+<title>Weirdoids Proto1</title>
+
+
+
+<link rel="icon" type="image/png" href="images/favicon.png" />
+
+
+<link rel="stylesheet" href="css/jquery.mobile-1.0.min.css" />
+<script src="script/jquery-1.6.4.min.js"></script>
+<script src="script/jquery.mobile-1.0.js"></script>
+
+<script src="script/jquery-ui-1.8.16.custom.min.js"
+	type="text/javascript"></script>
+
+
+<script src="script/my_facebook.js" type="text/javascript"></script>
+
+
+
+
+
+</head>
+
+<body>
+	<div id="fb-root"></div>
+
+	<div id="home" data-role="page">
+		<h3>New JavaScript SDK and OAuth 2.0 based FBConnect Tutorial |
+			Thinkdiff.net</h3>
+		<button id="fb-auth">Login</button>
+		<div id="loader" style="display: none">
+			<img src="ajax-loader.gif" alt="loading" />
+		</div>
+		<br />
+		<div id="user-info"></div>
+		<br />
+		<div id="debug"></div>
+
+		<div id="other" style="display: none">
+			<a href="#" onclick="showStream(); return false;">Publish Wall
+				Post</a> | <a href="#" onclick="share(); return false;">Share With
+				Your Friends</a> | <a href="#"
+				onclick="graphStreamPublish(); return false;">Publish Stream
+				Using Graph API</a> | <a href="#" onclick="fqlQuery(); return false;">FQL
+				Query Example</a> <br />
+			<textarea id="status" cols="50" rows="5">Write your status here and click 'Status Set Using Legacy Api Call'</textarea>
+			<br /> <a href="#" onclick="setStatus(); return false;">Status
+				Set Using Legacy Api Call</a>
+		</div>
+	</div>
+
+	<div id="loginaccount" data-role="page" data-rel="dialog">
+
+		<!-- start header -->
+		<div data-role="header">
+			<h1>Log In to Yak</h1>
+			<a href="#" data-rel="back" data-icon="back" class="ui-btn-right">Back</a>
+		</div>
+		<!-- end header -->
+
+		<div id="content" data-role="content" class="content">
+
+
+			<div>
+				<form id="loginform" action="">
+					<fieldset>
+
+						<div data-role="fieldcontain">
+							<label for="username">Username</label> <input type="text"
+								name="login" id="username" value="ddd" /> <label class="error"
+								for="username" id="username_error">This field is
+								required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="password">Password</label> <input type="password"
+								name="password" id="password" value="ddd" /><label
+								class="error" for="password" id="password_error">This
+								field is required.</label>
+						</div>
+
+						<div>
+							<a href="#" data-role="button" id="btn_login" data-inline="true">Log
+								In</a>
+						</div>
+						<a href="#" id="btn_forgot_pwd" data-inline="true">Forgot Your
+							Password?</a>
+
+
+					</fieldset>
+				</form>
+			</div>
+			<hr />
+			<div>
+				Don't have a login? <a href="#signuppg">Sign Up</a>
+			</div>
+		</div>
+		<!-- /login -->
+</body>
+</html>

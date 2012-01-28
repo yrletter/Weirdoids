@@ -11,8 +11,14 @@ jQuery.loadPack = function(newPack) {
 
 	if (newPack.id == lastLoadedPack.id) {
 		console.log("Old pack already loaded");
+		$.mobile.changePage("#build", {
+			transition : "flip"
+		});
 		return;
 	}
+
+	$.mobile.showPageLoadingMsg();
+
 	currentPack = newPack;
 	lastLoadedPack = newPack;
 
@@ -21,32 +27,103 @@ jQuery.loadPack = function(newPack) {
 	// see if in localstorage
 	$pack_key = "pack1_" + currentPack.id;
 
+	var cycleid = currentPack.id;
 
-	if (localStorage.getItem($pack_key) === null) {
-		// did not found key
-		var image_manifest_url = currentPack.manifest; // "imgs/pack2_classic_manifest.txt";
-		image_manifest_url = "server/readcycles.php";// + '&cycleid=' +
+	// if (localStorage.getItem($pack_key) === null) {
+	// did not found key
+	var image_manifest_url = currentPack.manifest; // "imgs/pack2_classic_manifest.txt";
+	image_manifest_url = "server/readcycles.php"; // + '&cycleid=' +
+
+	if ($online) {
 		// currentPack.id;
+		console.log("getting pack " + image_manifest_url);
 
-		// get the json file
-		$.getJSON(image_manifest_url, function(json) {
-			$.processPackJson(json);
-			}).	error(function() {
-				alert("error getting pack json");
-			});
-	} else
-	{ 
-		console.log("found pack json in localstorage " + $pack_key);
-			$.processPackJson(JSON.parse(localStorage.getItem($pack_key)));
-		}
+		var request = $.ajax({
+			cache : false,
+			data : ({
+				cycleid : currentPack.id,
+				packfamilyid : currentPack.familyid
+			}),
+			success : function(json) {
+				// do something now that the data is loaded
+				$.mobile.hidePageLoadingMsg();
+				if (json.errorcode == 0) {
+					console.log("logged in!");
+					$.processPackJson(json.bands);
+				} else {
+					serverAlert("Read pack failure", json);
+					console.log("Read pack failure");
+					console.log(json.errormsg);
+				}
+			},
+			url : image_manifest_url
+		});
+
+		request.fail(function(jqXHR, textStatus, excObject) {
+			$.mobile.hidePageLoadingMsg();
+			alert("get pack Request failed: " + textStatus);
+		});
+
+	} else {
+		$.mobile.hidePageLoadingMsg();
+		alert("Not online and no pack info available for " + image_manifest_url
+				+ " key " + $pack_key);
+	}
+};
+
+function process_band(i, band) {
+	console.log("next band " + band.divname);
+	// append to div bands
+	var divid = 'wrapper_cycle_' + band.divname;
+	var cycleid = 'cycle_' + band.divname;
+	$("#bands")
+			.append(
+					'<div id="'
+							+ cycleid
+							+ '" style="position:absolute; top:0px; left:0px; height: 100%; width: 100%; z-index: '
+							+ band.zindex + '">');
+
+	$.each(band.images, function(i, sprite) {
+		// console.log("next image " +
+
+		$('#' + cycleid).append(
+				'<div  class="scalable_div" style=" margin-top: ' + band.top
+						+ 'px; margin-left: ' + band.left + 'px; height: '
+						+ band.height + 'px; width: ' + band.width
+						+ 'px; position:absolute;">' + '<image id="'
+						+ sprite.id
+						+ '" style="width: 100%; height: 100%; " src="'
+						+ sprite.src // dataurl
+						+ '"></image></div></li>');
+		$('#' + cycleid + ' div').attr('bandtop', band.top);
+		$('#' + cycleid + ' div').attr('bandleft', band.left);
+		$('#' + cycleid + ' div').attr('bandheight', band.height);
+		$('#' + cycleid + ' div').attr('bandwidth', band.width);
+	});
+
+	$('#' + cycleid).append('</div>');
+
+	$('#' + cycleid).addCycle(band.divname);
+	$('#' + cycleid).data('currSlide', 0);
+	$('#' + cycleid).data('band', band);
+	$('#' + cycleid).cycle({
+		speed : 500,
+		fx : 'scrollHorz',
+		timeout : 0,
+		after : onAfter,
+		slideResize : 0
+	});
+	if ($active_cycle == '')
+		$active_cycle = $('#' + cycleid);
+
 };
 
 jQuery.processPackJson = function(json) {
 
-	console.log("processPackJson " + json);
-	
+	console.log("processPackJson ");
+
 	if (localStorage.getItem($pack_key) === null) {
-	localStorage.setItem($pack_key,JSON.stringify(json));
+		localStorage.setItem($pack_key, JSON.stringify(json));
 	}
 
 	// we'll store the search term here
@@ -56,72 +133,17 @@ jQuery.processPackJson = function(json) {
 		$('link[title="packstyles"]').remove();
 	}
 
-//	$('head').append(
-//			'<link title="packstyles" href="' + currentPack.packstyles
-//					+ '" rel="stylesheet" type="text/css" />');
+	// $('head').append(
+	// '<link title="packstyles" href="' + currentPack.packstyles
+	// + '" rel="stylesheet" type="text/css" />');
 
 	$('#bands').empty();
 	$active_cycle = '';
 
-	$.each(json.bands,function(i, band) {
-		console.log("next band " + band.divname);
-		// append to div bands
-		var divid = 'wrapper_cycle_' + band.divname;
-		var cycleid = 'cycle_' + band.divname;
-		$("#bands").append(
-						'<div id="'
-								+ cycleid
-								+ '" style="position:absolute; top:0px; left:0px; height: 100%; width: 100%; z-index: '
-								+ band.zindex + '">');
+	$.each(json.bands, process_band);
 
-		$.each(band.images,function(i, sprite) {
-							// console.log("next image " +
-
-				$('#' + cycleid)
-						.append(
-								'<div  class="scalable_div" style=" margin-top: '
-										+ band.top
-										+ 'px; margin-left: '
-										+ band.left
-										+ 'px; height: '
-										+ band.height
-										+ 'px; width: '
-										+ band.width
-										+ 'px; position:absolute;">'
-										+ '<image id="'
-										+ sprite.id
-										+ '" style="width: 100%; height: 100%; " src="'
-										+ sprite.dataurl
-										+ '"></image></div></li>');
-				$('#' + cycleid + ' div').attr(
-						'bandtop', band.top);
-				$('#' + cycleid + ' div').attr(
-						'bandleft', band.left);
-				$('#' + cycleid + ' div').attr(
-						'bandheight', band.height);
-				$('#' + cycleid + ' div').attr(
-						'bandwidth', band.width);
-			});
-		
-			$('#' + cycleid).append('</div>');
-
-			$('#' + cycleid).addCycle(band.divname);
-			$('#' + cycleid).data('currSlide', 0);
-			$('#' + cycleid).data('band', band);
-			$('#' + cycleid).cycle({
-				speed : 500,
-				fx : 'scrollHorz',
-				timeout : 0,
-				after : onAfter,
-				slideResize : 0
-			});
-			if ($active_cycle == '')
-				$active_cycle = $('#' + cycleid);
-
-		});
-
-	console.log("clicking headbtn");
-	$('#headbtn').trigger('click');
+	// console.log("clicking headbtn");
+	// $('#headbtn').trigger('click');
 
 	if (navigator.userAgent.match(/Android/i)
 			|| navigator.userAgent.match(/webOS/i)
@@ -146,22 +168,26 @@ jQuery.processPackJson = function(json) {
 		});
 
 	}
-	
+
 	$('#build').trigger('create');
 
 	console.log("loadpack mid");
 
-	$('.heads, .bodies, .legs, .xtras , #btn_next_head, #btn_prev_head').waitForImages(
-			function() {
-				console.log('Before show, all images loaded.');
-				
-			},
-			function(loaded, count, success) {
+	$(
+			'.scalable_div, .heads, .bodies, .legs, .xtras , #btn_next_head, #btn_prev_head')
+			.waitForImages(
+					function() {
+						console.log('Before show, all images loaded.');
 
-				console.log(loaded + ' of ' + count + ' images has '
-						+ (success ? 'failed to load' : 'loaded') + '.');
+					},
+					function(loaded, count, success) {
 
-			});
+						console.log($(this).attr("id") + " " + loaded + ' of '
+								+ count + ' images has '
+								+ (!success ? 'failed to load' : 'loaded')
+								+ '.');
+
+					});
 
 	$('#banks-nav-bar').waitForImages(
 			function() {
@@ -170,23 +196,24 @@ jQuery.processPackJson = function(json) {
 			},
 			function(loaded, count, success) {
 
-				console.log(loaded + ' of ' + count + ' images has '
-						+ (success ? 'failed to load' : 'loaded') + '.');
+				console.log($(this).attr("id") + " " + loaded + ' of ' + count
+						+ ' images has '
+						+ (!success ? 'failed to load' : 'loaded') + '.');
 
 			});
 
 };
 
-function readyToResize()
- {
-	
+function readyToResize() {
 
-	
 	$.resizeImages();
-	
-	$('#btn_done').unbind('click');
-	$('#btn_done').click(
+
+	$('#donebtn').unbind('click');
+	$('#donebtn').click(
 			function(e) {
+
+				// console.log("in packs vault");
+
 				console.log('#cycle_heads current slide = '
 						+ $('#cycle_heads').data('currSlide') + ' divname '
 						+ $('#cycle_heads').data('band').divname);
@@ -204,14 +231,14 @@ function readyToResize()
 				var classname;
 
 				switch (idx) {
-				case 2:
-					classname = "ui-block-c";
-					break;
-				case 1:
-					classname = "ui-block-b";
-					break;
-				default:
-					classname = "ui-block-a";
+					case 2 :
+						classname = "ui-block-c";
+						break;
+					case 1 :
+						classname = "ui-block-b";
+						break;
+					default :
+						classname = "ui-block-a";
 				}
 
 				$('#vaultGrid').append(
@@ -326,15 +353,55 @@ function readyToResize()
 				// weirdoid.xtra, scaleBy, lmargin);
 				$lastweirdoid = weirdoid;
 
+				$.mobile.changePage("#previewpage", {
+					transition : "fade"
+				});
+
 				e.preventDefault();
+				return true;
 			});
 	// $.mobile.changePage( "#build", { transition: "flip"}
 	// );
+	$.mobile.hidePageLoadingMsg();
+
+	$.mobile.changePage("#build", {
+		transition : "flip"
+	});
 
 };
 
+jQuery.resizeHome = function() {
+	console.log("resize home page " + $.mobile.activePage);
+	// background image auto adjusts, but we need to move images accordingly
+
+	var divheight = $('#home').outerHeight();
+	if (divheight == 0)
+		return;
+
+	var scaleFactor = Math.max(Math.abs(Math.min(divheight / 1024, 1)), 0.5);
+	console.log("scalefactor " + scaleFactor + '  divheight ' + divheight);
+
+	$('#btn_vault').css('top',
+			parseInt($('#btn_vault').attr('origtop')) * scaleFactor);
+	$('#btn_packs').css('top',
+			parseInt($('#btn_packs').attr('origtop')) * scaleFactor);
+	$('#btn_build').css('top',
+			parseInt($('#btn_build').attr('origtop')) * scaleFactor);
+};
+
+$(window).load(function() {
+	// 
+	$('#btn_vault').attr('origtop', $('#btn_vault').css('top'));
+	$('#btn_packs').attr('origtop', $('#btn_packs').css('top'));
+	$('#btn_build').attr('origtop', $('#btn_build').css('top'));
+	// $.resizeHome();
+});
+
 jQuery.resizeImages = function() {
 	var o = $(this[0]); // It's your element
+
+	// $.resizeHome();
+
 	console.log("resizeImages ");
 	var buildheight = $('#build').outerHeight();
 	var bandheight = $('#bands').outerHeight();
@@ -342,10 +409,10 @@ jQuery.resizeImages = function() {
 	console.log("banks-nav-bar height " + $('#banks-nav-bar').outerHeight());
 	var bankheight = $('#banks-nav-bar').outerHeight();
 	var hdrheight = $('#buildhdr').outerHeight();
-	
+
 	if (bankheight == 0 || bandheight == 0)
 		return;
-	
+
 	$('#band_wrapper').height(Math.min(1024, buildheight) - bankheight);// -
 	// $('#btn_done').height());
 
@@ -375,6 +442,10 @@ jQuery.resizeImages = function() {
 		$(this).width(w);
 		$(this).height(h);
 	});
+
+	$('#btn_build').css('top', $btn_build_top * hfactor);
+	$('#btn_packs').css('top', $btn_packs_top * hfactor);
+	$('#btn_vault').css('top', $btn_vault_top * hfactor);
 
 	// $("#bands").trigger('create');
 };
