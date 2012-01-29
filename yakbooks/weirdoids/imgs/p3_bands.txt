@@ -1,8 +1,8 @@
-{
+{"errorcode":0,"errormsg":"Found user", "bands" : {
     "bands": [
         {
             "divname": "heads",
-            "left": "170",
+            "left": "159",
             "height": "450",
             "width": "450",
             "top": "10",
@@ -43,11 +43,11 @@
         },
         {
             "divname": "bodies",
-            "left": "170",
+            "left": "34",
             "height": "550",
             "width": "700",
-            "top": "240",
-            "zindex": "8",
+            "top": "150",
+            "zindex": "7",
             "fullsize": 0,
             "images": [
                 {
@@ -84,11 +84,11 @@
         },
         {
             "divname": "legs",
-            "left": "170",
+            "left": "34",
             "height": "500",
             "width": "700",
             "top": "510",
-            "zindex": "8",
+            "zindex": "6",
             "fullsize": 0,
             "images": [
                 {
@@ -125,10 +125,10 @@
         },
         {
             "divname": "xtras",
-            "left": "170",
+            "left": "134",
             "height": "300",
             "width": "500",
-            "top": "10",
+            "top": "38",
             "zindex": "10",
             "fullsize": 0,
             "images": [
@@ -170,7 +170,7 @@
             "height": "1024",
             "width": "768",
             "top": "0",
-            "zindex": "7",
+            "zindex": "5",
             "fullsize": 1,
             "images": [
                 {
@@ -181,4 +181,5 @@
             ]
         }
     ]
+}
 }

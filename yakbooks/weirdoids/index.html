@@ -55,31 +55,43 @@
 	<div id="wrapper">
 
 		<div id="home" data-role="page">
-			<div id="homediv1"
-				style="max-height: 1024px; height: 100%; width: 100%; position: absolute; max-width: 768px;">
-				<img id="homebg" alt="alt" src="imgs/bkgd_home.jpg" class="bg">
-				<div id="btn_build">
-					<!--a href="#" id="bldbtn" data-role="button" ></a-->
-					<input id="bldbtn" type="image" src="imgs/btn_build.jpg"
-						alt="Build" />
-				</div>
-				<div id="btn_vault">
-					<input id="vaultbtn" type="image" src="imgs/btn_vault.jpg"
-						alt="Vault" />
-				</div>
+			<div id="homewrap">
+				<div id="homemain">
+					<img id="homebg" alt="alt" src="imgs/bkgd_home.jpg" class="bg">
+					<div id="btn_build">
+						<!--a href="#" id="bldbtn" data-role="button" ></a-->
+						<input id="bldbtn" type="image" src="imgs/btn_build.jpg"
+							alt="Build" />
+					</div>
+					<div id="btn_vault">
+						<input id="vaultbtn" type="image" src="imgs/btn_vault.jpg"
+							alt="Vault" />
+					</div>
 
-				<div id="btn_packs">
-					<input id="packsbtn" type="image" src="imgs/btn_packs.jpg"
-						alt="Packs" />
+					<div id="btn_packs">
+						<input id="packsbtn" type="image" src="imgs/btn_packs.jpg"
+							alt="Packs" />
+					</div>
+				</div>
+			</div>
+			<div id="homefooter">
+				<div id="homefooterbtns">
+					<a href="#" data-role="button" class="online-only"
+						id="home_login_btn" data-inline="true">Log In</a> <a href="#"
+						data-role="button" class="online-only" id="home_signup_btn"
+						data-inline="true">Sign Up</a>
 				</div>
 			</div>
 		</div>
 
 		<div id="build" data-role="page">
 
-
-
-			<div data-role="header" class="nav-glyphish-example" id="buildhdr">
+			<div data-role="header" id="buildhdr">
+				<a href="#home" data-icon="delete" class="ui-btn-left"
+					data-theme="a">Cancel</a>
+				<h1 id="build_header_text" class="headertext">BUILD</h1>
+				<a href="#packs" data-icon="gear" class="ui-btn-right"
+					data-theme="a">Change Packs</a>
 				<div id="banks-nav-bar" data-role="navbar"
 					class="nav-glyphish-example" data-grid="d">
 					<ul>
@@ -114,6 +126,10 @@
 			<div id="btn_done">
 				<input id="donebtn" type="image" src="imgs/btn_done.jpg" alt="Done" />
 			</div>
+			<div id="btn_random">
+				<input id="randombtn" type="image" src="imgs/btn_random.jpg"
+					alt="Done" />
+			</div>
 
 
 
@@ -121,37 +137,52 @@
 		</div>
 
 		<div id="packs" data-role="page" data-title="Select a Pack">
-			<h1>Select a Pack</h1>
+
+			<div data-role="header" id="packshdr">
+				<a href="#" data-rel="back" data-icon="delete" class="ui-btn-left"
+					data-theme="a">Cancel</a>
+				<h1 id="packs_header_text" class="headertext">Select a Pack</h1>
+			</div>
+			<!-- /header -->
 
 			<div id="preview">
 				<ul id="packlist" data-theme="e">
 
 				</ul>
-				<p></p>
-				<a href="#home" data-role="button">Cancel</a>
-				<p></p>
-				<div id="buybtn">
-					<a href="#" data-reveal-id="myModal" data-role="button">Click
-						to Buy</a>
-				</div>
-
-			</div>
-
-			<div id="myModal" class="reveal-modal">
-				<h1>Purchase Pack</h1>
-
-
-
-				<p>
-				<p>
-				<p>
-
-					<a class="close-reveal-modal">&#215;</a>
 			</div>
 		</div>
 
-		<div id="vault" data-role="page">
+		<div id="buypreview" data-role="page">
 
+			<div data-role="header" id="packshdr">
+				<a href="#" data-rel="back" data-icon="back" class="ui-btn-left"
+					data-theme="a">Back</a>
+				<h1 id="buypreview_header_text" class="headertext">Buy a Pack</h1>
+			</div>
+			<!-- /header -->
+
+			<div data-role="content">
+
+
+				<div id="pack_preview_small"></div>
+				<h1 id="pack_heading1">Original Weirdoids</h1>
+				<h2 id="pack_heading2">Creatures from the castle!</h2>
+				<div id="pack_preview_text">Lora ipsum etc.</div>
+				<div id="pack_preview_buy_div">
+					<a href="#" id="btn_buyitem" data-role="button" data-icon="plus"
+						class="ui-btn-left" data-theme="d">$1.99</a>
+				</div>
+				<div id="pack_preview_large">
+					<div></div>
+					<!-- /content -->
+
+				</div>
+			</div>
+			<!-- /content -->
+
+		</div>
+
+		<div id="vault" data-role="page">
 
 			<div data-role="header" data-position="inline">
 				<a href="#home">Done</a>
@@ -168,7 +199,6 @@
 
 			</div>
 			<!-- /content -->
-
 
 		</div>
 
@@ -209,9 +239,9 @@
 						<a href="#" data-role="button" class="logged-in-only savebtns"
 							id="saveInVaultBtn" data-inline="true">Save</a> <a
 							href="#loginaccount" data-role="button" class="online-only"
-							id="goto_loginaccount" data-inline="true">Log In</a> <a
-							href="#" data-role="button" class="online-only"
-							id="btn_share_on_fb" data-inline="true">Share on Facebook</a>
+							id="goto_loginaccount" data-inline="true">Log In</a> <a href="#"
+							data-role="button" class="online-only" id="btn_share_on_fb"
+							data-inline="true">Share on Facebook</a>
 					</div>
 					<div id="imgs" style="max-height: 0px; height: 0px; width: 0px;"></div>
 				</form>
@@ -224,8 +254,9 @@
 
 			<!-- start header -->
 			<div data-role="header">
+				<a href="#" data-rel="back" data-icon="delete" class="ui-btn-left">Back</a>
 				<h1>Log In to Yak</h1>
-				<a href="#" data-rel="back" data-icon="back" class="ui-btn-right">Back</a>
+				<a href="#" data-icon="star" class="ui-btn-right">Sign Up</a>
 			</div>
 			<!-- end header -->
 
@@ -250,26 +281,86 @@
 									field is required.</label>
 							</div>
 
-							<div>
-								<a href="#" data-role="button" id="btn_login" data-inline="true">Log
-									In</a>
-							</div>
-							<a href="#" id="btn_forgot_pwd" data-inline="true">Forgot
-								Your Password?</a> <a href="#fblogin" data-role="button"
-								id="btn_login_with_fb" data-inline="true">Log in with
-								Facebook</a>
-
 						</fieldset>
 					</form>
-				</div>
-				<hr />
-				<div>
-					Don't have a login? <a href="#signuppg">Sign Up</a>
+					<div>
+						<div id="login_btn_div">
+
+							<a href="#" data-role="button" id="btn_login" data-inline="true">Log
+								In</a>
+						</div>
+						<h2 class="center-wrapper">OR</h2>
+						<div id="login_with_fb_btn_div">
+							<a href="#fblogin" data-role="button" id="btn_login_with_fb"
+								data-inline="true">Log in with Facebook</a>
+						</div>
+					</div>
+					<a href="#" id="btn_forgot_pwd" data-inline="true">Forgot Your
+						Password?</a>
 				</div>
 			</div>
 			<!-- /content -->
 		</div>
 		<!-- /login -->
+
+		<div id="signup_pg" data-role="page" data-rel="dialog">
+
+			<!-- start header -->
+			<div data-role="header">
+				<a href="#" data-rel="back" data-icon="delete" class="ui-btn-left">Back</a>
+				<h1>Sign Up to Yak</h1>
+				<a href="#" id="signup_pg_login_btn" data-icon="star" class="ui-btn-right">Log In</a>
+			</div>
+			<!-- end header -->
+
+			<div id="content" data-role="content" class="content">
+
+
+				<div>
+					<form id="loginform" action="">
+						<fieldset>
+
+							<div data-role="fieldcontain">
+								<label for="username">Username</label> <input type="text"
+									name="login" id="username" value="ddd" /> <label class="error"
+									for="username" id="username_error">This field is
+									required.</label>
+							</div>
+
+							<div data-role="fieldcontain">
+								<label for="email">Email</label> <input type="email"
+									name="email" id="email" value="ddd" /><label class="error"
+									for="email" id="email_error">This field is required.</label>
+							</div>
+
+							<div data-role="fieldcontain">
+								<label for="password">Password</label> <input type="password"
+									name="password" id="password" value="ddd" /><label
+									class="error" for="password" id="password_error">This
+									field is required.</label>
+							</div>
+
+							<div data-role="fieldcontain">
+								<label for="cpassword">Re-Type Password</label> <input
+									type="password" name="cpassword" id="cpassword" value="ddd" /><label
+									class="error" for="password" id="password_error">This
+									field is required.</label>
+							</div>
+
+							<div id="signup_btn_div">>
+								<a href="#" data-role="button" id="btn_signup"
+									data-inline="true">Sign Up</a>
+							</div>
+
+						</fieldset>
+					</form>
+				</div>
+				<hr />
+
+			</div>
+			<!-- /content -->
+		</div>
+		<!-- /signup -->
 
 		<div id="fblogin" data-role="page">
 
@@ -306,6 +397,8 @@
 			<!-- end content -->
 		</div>
 		<!-- end fblogin -->
+
+
 		<div id="share_on_fb" data-role="page">
 
 			<!-- start header -->
@@ -343,6 +436,5 @@
 	</div>
 
 	<!-- wrapper -->
-
 </body>
 </html>

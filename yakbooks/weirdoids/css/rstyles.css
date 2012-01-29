@@ -1,6 +1,5 @@
 body {
 	background-color: #18457c;
-	color: #333;
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: normal;
 	font-size: 14px;
@@ -9,30 +8,160 @@ body {
 	padding: 0;
 	max-height: 1024px;
 	width: 100%;
-	height: auto%;
+	height: 100%;
 }
-.floatrightonly
-{
-float: right;
-margin: 0 0 0 100px;
+
+.floatrightonly {
+	float: right;
+	margin: 0 0 0 100px;
 }
+
 .ui-mobile-viewport {
-    max-height: 1024px !important;
-    max-width: 768px;
-    
+	max-height: 1024px !important;
+	max-width: 768px;
 }
-.ui-mobile,
-.ui-mobile body {
-height: auto;
-width: 100%;
-	
+
+.ui-mobile,.ui-mobile body {
+	height: auto;
+	width: 100%;
+	max-height: 1024px !important;
 }
+
 #wrapper {
 	width: 100%;
 	height: 100%;
 	min-height: 700px;
 	overflow: hidden;
 	position: absolute;
+}
+
+#homewrap {
+	min-height: 100%;
+	max-height: 1024px;
+	overflow: hidden;
+}
+
+.username {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+	color: #ffffff;
+	text-align: center;
+}
+
+.headertext {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+	color: #ffffff;
+	text-align: center;
+}
+
+#homemain {
+	overflow: hidden;
+	padding-bottom: 100px;
+} /* must be same height as the footer */
+#homefooter {
+	position: relative;
+	margin-top: -100px; /* negative value of footer height */
+	height: 100px;
+	clear: both;
+}
+
+#homefooterbtns {
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#login_btn_div {
+	width : 120px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#signup_btn_div {
+	width : 120px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#login_with_fb_btn_div {
+	width : 220px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#homefooterbtns {
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#packlist {
+	padding-top: 20px;
+}
+
+#buypreview {
+	background-color: #000000;
+	color: #999999;
+}
+
+#pack_preview_small {
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#pack_heading1 {
+	font-weight: bold;
+	font-size: 28px;
+	color: #999999;
+	text-align: center;
+	margin-top: 20px;
+	clear: both;
+}
+
+#pack_heading2 {
+	font-weight: bold;
+	font-size: 20px;
+	color: #999999;
+	text-align: center;
+	margin-top: 20px;
+	clear: both;
+}
+
+#pack_preview_text {
+	font-weight: bold;
+	font-size: 28px;
+	color: #999999;
+	text-align: center;
+	margin-top: 20px;
+	clear: both;
+}
+
+#pack_preview_cost {
+	font-weight: bold;
+	font-size: 28px;
+	color: #999999;
+	text-align: center;
+	margin-top: 20px;
+	clear: both;
+}
+
+#pack_preview_buy_div {
+	width: 150px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	clear: both;
+}
+
+#pack_preview_large {
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	clear: both;
 }
 
 #btn_prev_head {
@@ -53,9 +182,8 @@ width: 100%;
 
 .browser-nav-btn {
 	
-	}
-	
-	
+}
+
 #btn_next_head {
 	background: transparent url('../imgs/btn_next_head.png') no-repeat;
 	position: absolute;
@@ -106,9 +234,9 @@ width: 100%;
 
 #bands {
 	z-index: 50;
-width: 100%;
-position: relative;
-height:100%;
+	width: 100%;
+	position: relative;
+	height: 100%;
 }
 
 #band_wrapper {
@@ -117,12 +245,20 @@ height:100%;
 	position: relative;
 }
 
-
 #btn_done {
 	position: absolute;
 	right: 0;
 	z-index: 2000;
 	top: 450px;
+	width: 200px;
+	height: 75px;
+}
+
+#btn_random {
+	position: absolute;
+	right: 0;
+	z-index: 2000;
+	top: 550px;
 	width: 200px;
 	height: 75px;
 }
@@ -134,7 +270,6 @@ height:100%;
 	z-index: 100;
 	top: 850px;
 }
-
 
 #wrapper_nav ul {
 	margin: 0;
@@ -194,33 +329,34 @@ height:100%;
 
 #build {
 	height: 100%;
-   width: 100%;
-    	}
-	
-#home {
-		height: auto;
- 	max-width: 768px;
-    width:100% ! important;
-    max-height: 1024px ! important;
+	width: 100%;
 }
 
+#home {
+	height: auto;
+	max-width: 768px;
+	width: 100% ! important;
+	max-height: 1024px ! important;
+}
 
 .bg {
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 0;
+	left: 0;
+	position: auto;
+	top: 0;
+	width: 100%;
+	z-index: 0;
 }
 
 #homediv {
 	background: transparent url('../imgs/bkgd_home.jpg') no-repeat;
-/* 	width: 768px;
- */	height: 100%;
- 	max-width: 768px;
-    width:100% ! important;
-    max-height: 1024px ! important;
+	/* 	width: 768px;
+ */
+	height: 100%;
+	max-width: 768px;
+	width: 100% ! important;
+	max-height: 1024px ! important;
 }
+
 #btn_build {
 	width: 200px;
 	height: 75px;
@@ -228,12 +364,16 @@ height:100%;
 	top: 400px;
 }
 
-	
 #btn_vault {
 	width: 200px;
 	height: 75px;
 	position: absolute;
 	top: 500px;
+}
+
+#item_desc_div {
+	width: 65%;
+	padding-left: 20px;
 }
 
 #btn_packs {
@@ -246,11 +386,51 @@ height:100%;
 .packcost {
 	float: right;
 	margin: 0 0 10px 10px;
-	}
-	
-div.inline { float:left; }
-	
-	
+}
+
+#cost_str_div {
+	float: right;
+	width: 20%;
+}
+.center-wrapper{
+text-align: center;
+}
+.center-wrapper * {
+margin: 0 auto;
+}
+.center-button {
+	margin: 0 auto;
+}
+
+.catalog-item {
+	height: 80px;
+	width: 60%;
+	float: left;
+}
+
+.catalog-list-item {
+	min-height: 75px;
+}
+
+#use_pack_div {
+	width: 50%;
+}
+
+.preview-thumbnail {
+	min-width: 80px;
+	padding-right: 20px;
+}
+
+div.inline {
+	float: left;
+	margin: 0 0 10px 10px;
+}
+
+.inline {
+	float: left;
+	margin: 0 0 10px 10px;
+}
+
 #vault {
 	
 }
@@ -274,15 +454,16 @@ div.inline { float:left; }
 }
 
 #vault .vaultcanvas-hidden {
-	visibility:hidden;
-	}
-	
-#vault .ui-grid-b canvas {
-    width  : 100%;
-    height : auto;
+	visibility: hidden;
 }
+
+#vault .ui-grid-b canvas {
+	width: 100%;
+	height: auto;
+}
+
 .nav-glyphish-example .ui-btn .ui-btn-inner {
-	 padding-top: 80px !important; 
+	padding-top: 80px !important;
 }
 
 .nav-glyphish-example .ui-btn .ui-icon {
@@ -296,10 +477,11 @@ div.inline { float:left; }
 }
 
 .ui-custom-image {
-	}
 	
+}
+
 #headbtn .ui-icon {
-	background: transparent url('../imgs/nav_icons.png')  no-repeat;
+	background: transparent url('../imgs/nav_icons.png') no-repeat;
 	background-position: 0 0;
 	/*width: 150px;
 	height: 80px;*/
@@ -315,6 +497,7 @@ div.inline { float:left; }
 	width: 100%;
 	height: 100%;
 }
+
 #legbtn .ui-icon {
 	background: transparent url('../imgs/nav_icons.png') no-repeat;
 	background-position: -300px 0;
@@ -323,6 +506,7 @@ div.inline { float:left; }
 	width: 100%;
 	height: 100%;
 }
+
 #xtrabtn .ui-icon {
 	background: transparent url('../imgs/nav_icons.png') no-repeat;
 	background-position: -450px 0;
@@ -333,11 +517,10 @@ div.inline { float:left; }
 }
 
 #bkgdbtn .ui-icon {
-	background: transparent url('../imgs/nav_icons.png')  no-repeat;
+	background: transparent url('../imgs/nav_icons.png') no-repeat;
 	background-position: -600px 0;
 	/*width: 150px;
 	height: 80px;*/
 	width: 100%;
 	height: 100%;
 }
-

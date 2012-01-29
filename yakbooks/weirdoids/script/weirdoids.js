@@ -133,74 +133,32 @@ $(document)
 						console.log("btn_login_with_fb clicked");
 						return true;
 					});
+					
+					$('#home_login_btn').click(function(e) {
+						console.log("home login button clicked");
+						$.mobile.changePage("#loginaccount", {
+							transition : "fade"
+						});
 
-					$('#previewpage')
-							.live(
-									'pagebeforeshow',
-									function(event) {
-										//
-										// draw the current
-										//
-										console.log("drawing preview canvas");
+						//displayUserName("Bob Wiley");
+						return false;
+					});
+					
 
-										var myselect = $('#select-choice-firstname');
-										myselect[0].selectedIndex = 0;
-										myselect.selectmenu("refresh");
-										myselect = $('#select-choice-lastname');
-										myselect[0].selectedIndex = 0;
-										myselect.selectmenu("refresh");
+					$('#home_signup_btn').click(function(e) {
+						console.log("home signup button clicked");
+						$.mobile.changePage("#signup_pg", {
+							transition : "fade"
+						});
 
-										if (typeof $lastweirdoid == 'undefined'
-												|| $lastweirdoid == null) {
-											console
-													.log(" $lastweirdoid undefined");
-											return;
-										}
-										$('#preview-canvas').hide();
+						//displayUserName("Bob Wiley");
+						return false;
+					});
 
-										var drawingCanvas = document
-												.getElementById("preview-canvas");
+					$('#previewpage').live('pagebeforeshow', function(event) {
+						drawPreview(event);
 
-										var ctx = drawingCanvas
-												.getContext('2d');
-										ctx.clearRect(0, 0,
-												drawingCanvas.width,
-												drawingCanvas.height);
-
-										var drawingCanvasBkgd = document
-												.getElementById("preview-canvas-background");
-
-										var ctx = drawingCanvasBkgd
-												.getContext('2d');
-										ctx.clearRect(0, 0,
-												drawingCanvasBkgd.width,
-												drawingCanvasBkgd.height);
-
-										var scaleBy = Math
-												.max(
-														1024 / drawingCanvasBkgd.height,
-														4.5);
-										var lmargin = 170;
-
-										drawInCanvas(drawingCanvasBkgd,
-												$lastweirdoid.bkgd, scaleBy, 0);
-
-										drawInCanvas(drawingCanvas,
-												$lastweirdoid.head, scaleBy,
-												lmargin);
-										drawInCanvas(drawingCanvas,
-												$lastweirdoid.body, scaleBy,
-												lmargin);
-										drawInCanvas(drawingCanvas,
-												$lastweirdoid.leg, scaleBy,
-												lmargin);
-										drawInCanvas(drawingCanvas,
-												$lastweirdoid.xtra, scaleBy,
-												lmargin);
-
-										$('#preview-canvas').show();
-
-									});
+					});
 
 					$('#clearcachebtn').click(function(e) {
 						console.log("clearing cache");
@@ -351,113 +309,10 @@ $(document)
 					// $weirdoids =
 					// JSON.parse(localStorage.getItem('myWeirdoids')); //
 
-					$('#vault')
-							.live(
-									'pagebeforeshow',
-									function(event) {
-										// draw all the saved weirdoids
-										$('#vaultGrid').empty();
-										$vaultCnt = 0;
-										$drawingqueue = [];
-										var reversedWeirdoids = new Array();
-										if ($weirdoids == null) {
-											console
-													.log("$weirdoids is null, can't draw");
-										} else
-											reversedWeirdoids = $weirdoids
-													.slice();
-										jQuery
-												.each(
-														reversedWeirdoids
-																.reverse(),
-														function() {
-															var savedWeirdoid = this;
-
-															// canvas is a
-															// reference to a
-															// <canvas> element
-
-															// add a new grid
-															// element in vault
-															// and add canvas
-															console
-																	.log("added from weirdoid array");
-
-															var canvasName = "nmodalCanvas"
-																	+ $vaultCnt;
-															var idx = $vaultCnt % 3;
-
-															$vaultCnt += 1;
-
-															var classname;
-
-															switch (idx) {
-																case 2 :
-																	classname = "ui-block-c";
-																	break;
-																case 1 :
-																	classname = "ui-block-b";
-																	break;
-																default :
-																	classname = "ui-block-a";
-															}
-															var fullname = "";
-															if (savedWeirdoid
-																	.hasOwnProperty("fname")) {
-																if (savedWeirdoid.fname.length > 0)
-																	fullname = savedWeirdoid.fname
-																			+ " ";
-															}
-															if (savedWeirdoid
-																	.hasOwnProperty("lname")) {
-																if (savedWeirdoid.lname.length > 0)
-																	fullname += savedWeirdoid.lname;
-															}
-															$('#vaultGrid')
-																	.append(
-																			'<div class="'
-																					+ classname
-																					+ '"><div class="ui-bar vaultcanvas-hidden" data-theme="b">'
-																					+ '<canvas id="'
-																					+ canvasName
-																					+ '" height=300"></canvas>'
-																					+ fullname
-																					+ '</div></div>');
-
-															var drawingCanvas = document
-																	.getElementById(canvasName);
-
-															var scaleBy = 3.5;
-															var lmargin = 170;
-
-															queueDraw(
-																	drawingCanvas,
-																	savedWeirdoid.bkgd,
-																	scaleBy, 0);
-															queueDraw(
-																	drawingCanvas,
-																	savedWeirdoid.head,
-																	scaleBy,
-																	lmargin);
-															queueDraw(
-																	drawingCanvas,
-																	savedWeirdoid.body,
-																	scaleBy,
-																	lmargin);
-															queueDraw(
-																	drawingCanvas,
-																	savedWeirdoid.leg,
-																	scaleBy,
-																	lmargin);
-															queueDraw(
-																	drawingCanvas,
-																	savedWeirdoid.xtra,
-																	scaleBy,
-																	lmargin);
-
-														});
-										drawFromQueue();
-									});
+					$('#vault').live('pagebeforeshow', function(event) {
+						// draw all the saved weirdoids
+						drawVault(event);
+					});
 
 					$('.savebtns').each(function(index) {
 
@@ -470,6 +325,11 @@ $(document)
 						});
 					});
 				});
+
+function displayUserName (uname) {
+	$('#homefooterbtns').empty().append('<p class="username">' + uname + '</p>');
+	
+}
 
 function shareClickHandler(isFromPreview, $tmpWeirdoid) {
 
@@ -506,6 +366,132 @@ function shareClickHandler(isFromPreview, $tmpWeirdoid) {
 	}
 }
 
+function drawPreview(event) {
+	//
+	// draw the current
+	//
+	console.log("drawing preview canvas");
+
+	var myselect = $('#select-choice-firstname');
+	myselect[0].selectedIndex = 0;
+	myselect.selectmenu("refresh");
+	myselect = $('#select-choice-lastname');
+	myselect[0].selectedIndex = 0;
+	myselect.selectmenu("refresh");
+
+	if (typeof $lastweirdoid == 'undefined' || $lastweirdoid == null) {
+		console.log(" $lastweirdoid undefined");
+		return;
+	}
+	$('#preview-canvas').hide();
+
+	var drawingCanvas = document.getElementById("preview-canvas");
+
+	var ctx = drawingCanvas.getContext('2d');
+	ctx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+
+	var drawingCanvasBkgd = document
+			.getElementById("preview-canvas-background");
+
+	var ctx = drawingCanvasBkgd.getContext('2d');
+	ctx.clearRect(0, 0, drawingCanvasBkgd.width, drawingCanvasBkgd.height);
+
+	var scaleBy = Math.max(1024 / drawingCanvasBkgd.height, 4.5);
+	var lmargin = 170;
+
+	drawInCanvas(drawingCanvasBkgd, $lastweirdoid.bkgd, scaleBy, 0);
+
+	drawInCanvas(drawingCanvas, $lastweirdoid.head, scaleBy,
+			$lastweirdoid.head.sprite.x);
+	drawInCanvas(drawingCanvas, $lastweirdoid.body, scaleBy,
+			$lastweirdoid.body.sprite.x);
+	drawInCanvas(drawingCanvas, $lastweirdoid.leg, scaleBy,
+			$lastweirdoid.leg.sprite.x);
+	drawInCanvas(drawingCanvas, $lastweirdoid.xtra, scaleBy,
+			$lastweirdoid.xtra.sprite.x);
+
+	$('#preview-canvas').show();
+
+}
+
+function drawVault(event) {
+	$('#vaultGrid').empty();
+	$vaultCnt = 0;
+	$drawingqueue = [];
+	var reversedWeirdoids = new Array();
+	if ($weirdoids == null) {
+		console.log("$weirdoids is null, can't draw");
+	} else
+		reversedWeirdoids = $weirdoids.slice();
+	jQuery
+			.each(
+					reversedWeirdoids.reverse(),
+					function() {
+						var savedWeirdoid = this;
+
+						// canvas is a
+						// reference to a
+						// <canvas> element
+
+						// add a new grid
+						// element in vault
+						// and add canvas
+						console.log("added from weirdoid array");
+
+						var canvasName = "nmodalCanvas" + $vaultCnt;
+						var idx = $vaultCnt % 3;
+
+						$vaultCnt += 1;
+
+						var classname;
+
+						switch (idx) {
+							case 2 :
+								classname = "ui-block-c";
+								break;
+							case 1 :
+								classname = "ui-block-b";
+								break;
+							default :
+								classname = "ui-block-a";
+						}
+						var fullname = "";
+						if (savedWeirdoid.hasOwnProperty("fname")) {
+							if (savedWeirdoid.fname.length > 0)
+								fullname = savedWeirdoid.fname + " ";
+						}
+						if (savedWeirdoid.hasOwnProperty("lname")) {
+							if (savedWeirdoid.lname.length > 0)
+								fullname += savedWeirdoid.lname;
+						}
+						$('#vaultGrid')
+								.append(
+										'<div class="'
+												+ classname
+												+ '"><div class="ui-bar vaultcanvas-hidden" data-theme="b">'
+												+ '<canvas id="' + canvasName
+												+ '" height=300"></canvas>'
+												+ fullname + '</div></div>');
+
+						var drawingCanvas = document.getElementById(canvasName);
+
+						var scaleBy = 3.5;
+						// var lmargin = 170;
+
+						queueDraw(drawingCanvas, savedWeirdoid.bkgd, scaleBy, 0);
+						queueDraw(drawingCanvas, savedWeirdoid.head, scaleBy,
+								savedWeirdoid.head.sprite.x);
+						queueDraw(drawingCanvas, savedWeirdoid.body, scaleBy,
+								savedWeirdoid.body.sprite.x);
+						queueDraw(drawingCanvas, savedWeirdoid.leg, scaleBy,
+								savedWeirdoid.leg.sprite.x);
+						queueDraw(drawingCanvas, savedWeirdoid.xtra, scaleBy,
+								savedWeirdoid.xtra.sprite.x);
+
+					});
+	drawFromQueue();
+};
+
 function readyToCreateImage() {
 	// create image on server (if it doesn't already exist), retrieve image url
 	console.log("Creating image for previously saved weirdoid "
@@ -533,7 +519,8 @@ function readyToCreateImage() {
 			success : function(json) {
 				// process the result
 				if (json.errorcode == 0) {
-					console.log("created image on server: " + json.serverUrl + " msg: " + json.errormsg);
+					console.log("created image on server: " + json.serverUrl
+							+ " msg: " + json.errormsg);
 					alert("Created image on server " + json.serverUrl);
 					$toSaveWeirdoid.serverUrl = json.serverUrl;
 					// call callback function;
@@ -833,7 +820,7 @@ $(document).ready(
 			if ($online) {
 
 				getProductList();
-				
+
 			} else {
 				alert("Not online and no packlist info available for "
 						+ packlist_url + " key " + $packlist_key);
@@ -915,6 +902,65 @@ $(document).ready(
 				});
 				event.preventDefault();
 				return true;
+			});
+
+			$('#randombtn').click(function(event) {
+
+				console.log("click randombtn");
+
+				// for each cycle, find count of images, go to random
+				// one
+				if ($('#cycle_legs').data('band') != undefined) {
+					var band = $('#cycle_legs').data('band');
+					var maxval = band.images.length;
+
+					if (maxval > 0) {
+
+						var numRand = Math.floor(Math.random() * maxval);
+						$('#cycle_legs').cycle(numRand);
+					}
+				}
+				if ($('#cycle_heads').data('band') != undefined) {
+					var band = $('#cycle_heads').data('band');
+					var maxval = band.images.length;
+
+					if (maxval > 0) {
+
+						var numRand = Math.floor(Math.random() * maxval);
+						$('#cycle_heads').cycle(numRand);
+					}
+				}
+				if ($('#cycle_bodies').data('band') != undefined) {
+					var band = $('#cycle_bodies').data('band');
+					var maxval = band.images.length;
+
+					if (maxval > 0) {
+
+						var numRand = Math.floor(Math.random() * maxval);
+						$('#cycle_bodies').cycle(numRand);
+					}
+				}
+				if ($('#cycle_xtras').data('band') != undefined) {
+					var band = $('#cycle_xtras').data('band');
+					var maxval = band.images.length;
+
+					if (maxval > 0) {
+
+						var numRand = Math.floor(Math.random() * maxval);
+						$('#cycle_xtras').cycle(numRand);
+					}
+				}
+				if ($('#cycle_bkgds').data('band') != undefined) {
+					var band = $('#cycle_bkgds').data('band');
+					var maxval = band.images.length;
+
+					if (maxval > 0) {
+
+						var numRand = Math.floor(Math.random() * maxval);
+						$('#cycle_bkgds').cycle(numRand);
+					}
+				}
+				return false;
 			});
 
 			// get orig location of home buttons
@@ -999,7 +1045,6 @@ $(document).ready(
 				$.resizeImages();
 			});
 		});
-
 
 jQuery.saveCreation = function() {
 	var o = $(this[0]); // It's your element

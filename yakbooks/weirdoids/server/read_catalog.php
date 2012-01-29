@@ -22,10 +22,14 @@ try {
 	if ($catalog == FALSE)
 		throw new Exception("Could not read catalog");
 
-	$istatus["errorcode"] = 0;
-	$istatus["errormsg"] = "Catalog found.";
-	$istatus["catalog"]	= $catalog;
-	echo json_encode($istatus);
+	$parsedText = str_replace(chr(10), "", $catalog);
+	$parsedText = str_replace('\"', '"', $parsedText);
+	$parsedText = str_replace(chr(9), "", $parsedText);
+		//$bands = str_replace(chr(13), "", $parsedText);
+		$catalog = preg_replace('/\s\s+/', ' ', $parsedText);
+	//echo $bands;
+	
+	echo $catalog;	
 	exit();
 }
 catch (Exception $e)
