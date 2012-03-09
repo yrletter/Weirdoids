@@ -1,4 +1,6 @@
 var $pack_key = null;
+var $loadedpacks = null;
+var $items = [];
 
 jQuery.loadPack = function(newPack) {
 	var o = $(this[0]); // It's your element
@@ -8,6 +10,19 @@ jQuery.loadPack = function(newPack) {
 	}
 	console.log("newPack " + newPack.id + " currentPack " + currentPack.id
 			+ ' lastLoadedPack ' + lastLoadedPack.id);
+
+	// 
+	if ($loadedpacks == null)
+		$loadedpacks = [];
+
+	// see if newPack in loadedpacks
+	if ($.inArray(newPack.id, $loadedpacks) > -1) {
+		console.log("Pack previously loaded");
+		$.mobile.changePage("#build", {
+			transition : "flip"
+		});
+		return;
+	}
 
 	if (newPack.id == lastLoadedPack.id) {
 		console.log("Old pack already loaded");
@@ -32,7 +47,8 @@ jQuery.loadPack = function(newPack) {
 	// if (localStorage.getItem($pack_key) === null) {
 	// did not found key
 	var image_manifest_url = currentPack.manifest; // "imgs/pack2_classic_manifest.txt";
-	image_manifest_url = "server/readcycles.php"; // + '&cycleid=' +
+
+	image_manifest_url = "server/read_p1.php"; // + '&cycleid=' +
 
 	if ($online) {
 		// currentPack.id;
@@ -42,13 +58,15 @@ jQuery.loadPack = function(newPack) {
 			cache : false,
 			data : ({
 				cycleid : currentPack.id,
-				packfamilyid : currentPack.familyid
+				packfamilyid : currentPack.familyid,
+				packfile : currentPack.packfile
 			}),
 			success : function(json) {
 				// do something now that the data is loaded
 				$.mobile.hidePageLoadingMsg();
 				if (json.errorcode == 0) {
-					console.log("logged in!");
+					console.log("Read the pack file!");
+					$loadedpacks.push(currentPack.id);
 					$.processPackJson(json.bands);
 				} else {
 					serverAlert("Read pack failure", json);
@@ -56,7 +74,12 @@ jQuery.loadPack = function(newPack) {
 					console.log(json.errormsg);
 				}
 			},
-			url : image_manifest_url
+			url : image_manifest_url,
+			complete : function(xhr, data) {
+				if (xhr.status != 0 && xhr.status != 200)
+					alert('Error calling server to read pack. Status='
+							+ xhr.status + " " + xhr.statusText);
+			}
 		});
 
 		request.fail(function(jqXHR, textStatus, excObject) {
@@ -71,17 +94,244 @@ jQuery.loadPack = function(newPack) {
 	}
 };
 
+//function processPacklist(json) {
+//
+//	$packs = [];
+//
+//	if (localStorage.getItem($packlist_key) === null) {
+//		localStorage.setItem($packlist_key, JSON.stringify(json));
+//	}
+//
+//	$.each(json.families, function(i, family) {
+//		console.log("processpacklist: family " + family.familyid + " "
+//				+ family.familyname);
+//
+//		$("#packlist").append(
+//				'<li data-role="list-divider" role="heading">'
+//						+ family.familyname + '</li>');
+//		$.each(family.packs, function(i, pack) {
+//			console.log("next pack " + pack.id);
+//			$pack["familyid"] = family.familyid;
+//			$packs[pack.id] = pack;
+//
+//			$("#packlist").append(
+//					'<li passed-parameter="' + pack.id + '" id="packlist_"'
+//							+ pack.id + '"><a href="#"> <img src="'
+//							+ pack.thumbnail + '" />'
+//							+ '<div class="inline"><h3>' + pack.heading1
+//							+ '</h3><p>' + pack.heading2
+//							+ '</p></div><div class="packcost">'
+//							+ pack.cost_str + '</div> </a></li>');
+//		});
+//		// $("#packlist").listview("refresh");
+//
+//		$("#bldbtn,#packsbtn").button('enable').css('opacity', '1');
+//	});
+//
+//	/*
+//	 * 
+//	 */
+//	$('#packlist').delegate('li', 'click', function(e) {
+//		passedParameter = $(this).get(0).getAttribute('passed-parameter');
+//		console.log('clicked list ' + passedParameter);
+//		console.log(packs[passedParameter]);
+//		currentPack = packs[passedParameter];
+//
+//		e.preventDefault();
+//
+//		if (packIsInstalled(currentPack)) {
+//			// all loading done in build screen click handler
+//			$('#bldbtn').trigger('click');
+//		} else {
+//			// begin purchase process
+//			console.log("begin purchase flow");
+//			beginPackPurchase(currentPack);
+//		}
+//	});
+//
+//};
+
+function checkInstalledProducts() {
+	console.log("checkInstalledProducts");
+
+
+	// iterate through all listitems
+	$('#packlist a').each( function() {
+		// list item
+		packid =   $(this).attr('passed-parameter');
+		curpack = $items[packid];
+		if (curpack == null) {
+			alert("Pack referenced in packlist missing in $items: " + packid);
+		} else {
+			// look for pack id in user prodkeys
+			if (userHasPurchased(packid)) {
+				$(this).html('Installed');
+			} else {
+				$(this).html(curpack.cost_str);
+			}
+		}
+	});
+
+}
+function processProductList(json) {
+	$items = [];
+
+	if (localStorage.getItem($packlist_key) === null) {
+		localStorage.setItem($packlist_key, JSON.stringify(json));
+	}
+
+	$
+			.each(
+					json.families,
+					function(i, family) {
+						console.log("processProductList: family "
+								+ family.familyid + " " + family.familyname);
+
+						$("#packlist").append(
+								'<li data-role="list-divider" role="heading">'
+										+ family.familyname + '</li>');
+						$
+								.each(
+										family.items,
+										function(i, item) {
+											console.log("next item " + item.id);
+											$items["familyid"] = family.familyid;
+											$items[item.id] = item;
+
+											$("#packlist")
+													.append(
+															'<li class="catalog-list-item" passed-parameter="'
+																	+ item.id
+																	+ '"><div class="catalog-item"><img class="inline preview-thumbnail" src="'
+																	+ item.thumbnail
+																	+ '" />'
+																	+ '<h3>'
+																	+ item.item_type
+																	+ ' - '
+																	+ item.heading1
+																	+ '</h3>'
+																	+ item.heading2
+																	+ '</div>'
+																	+ '<div id="cost_str_div">'
+																	+ '<a href="#" id="btn_get_pack" data-role="button" passed-parameter="'
+																	+ item.id
+																	+ '">'
+																	+ item.cost_str
+																	+ '</a></div>'
+																	+ '</li>');
+										});
+						// $("#packlist").listview("refresh");
+
+						$("#bldbtn,#packsbtn").button('enable').css('opacity',
+								'1');
+					});
+
+	/*
+	 * $('#packs').live('pagebeforeshow', function(event) {
+	 * 
+	 * $('#packlist').listview('refresh'); });
+	 */// $("#packlist").listview('refresh');
+	$.each($('#packlist a'), function() {
+		$(this).click(
+				function(e) {
+					passedParameter = $(this).get(0).getAttribute(
+							'passed-parameter');
+					console.log('clicked list ' + passedParameter);
+					console.log($items[passedParameter]);
+					currentPack = $items[passedParameter];
+
+					if (userHasPurchased(currentPack)|| currentPack.cost == 0) {
+						// all loading done in build screen click handler
+						$('#bldbtn').trigger('click');
+					} else {
+						// begin purchase process
+						console.log("begin purchase flow");
+						
+						
+						if (!$is_logged_in || $userid == null) {
+							// we need user to select among possible user keys if more than 1
+							alert("You must log in before you can buy new Packs!");
+							$srcPage = "#packs";
+							$afterLoginPage = "#packs";
+							$.mobile.changePage("#loginaccount", {
+								transition : "fade"
+							});
+
+							return false;
+						}
+						
+						beginPackPurchase(currentPack, $userid);
+					}
+					return false;
+//					if (currentPack.cost == undefined) {
+//						alert("No cost found for currentPack");
+//					} else if (currentPack.cost > 0) {
+//						console.log("Current pack not installed and costs "
+//								+ currentPack.cost);
+//						$.mobile.changePage("#buypreview", {
+//							transition : "flip"
+//						});
+//						return false;
+//					} else {
+//						e.preventDefault();
+//						$('#bldbtn').trigger('click');
+//
+//					}
+				});
+	});
+
+};
+
+function getProductList() {
+	// var packlist_url = "server/readpacks2.php"; // "imgs/packlist.txt";
+	var packlist_url = "server/read_catalog.php"; // "imgs/packlist.txt";
+	// currentPack.id;
+
+	// get the json file
+	console.log("getting catalog " + packlist_url);
+	var request = $.ajax({
+		cache : false,
+		success : function(json) {
+			// do something now that the data is loaded
+			if (json.errorcode == 0) {
+				console.log("Read catalog!");
+				processProductList(json.catalog);
+			} else {
+				serverAlert("Read catalog failure", json);
+				console.log("Read catalog failure");
+				console.log(json.errormsg);
+			}
+		},
+		url : packlist_url,
+		complete : function(xhr, data) {
+			if (xhr.status != 0 && xhr.status != 200)
+				alert('Error calling server to get catalog. Status='
+						+ xhr.status + " " + xhr.statusText);
+		}
+	});
+
+	request.fail(function(jqXHR, textStatus, errorThrown) {
+		alert("get catalog Request failed: " + textStatus + " " + errorThrown);
+		console.log("incoming Text " + jqXHR.responseText);
+	});
+
+}
+
 function process_band(i, band) {
 	console.log("next band " + band.divname);
 	// append to div bands
 	var divid = 'wrapper_cycle_' + band.divname;
 	var cycleid = 'cycle_' + band.divname;
-	$("#bands")
-			.append(
-					'<div id="'
-							+ cycleid
-							+ '" style="position:absolute; top:0px; left:0px; height: 100%; width: 100%; z-index: '
-							+ band.zindex + '">');
+
+	if ($("#" + divid + "#" + cycleid).length > 0)
+		console.log("cycle already exists");
+	else {
+		console.log("no pre-existing cycle");
+
+		$("#bands").append('<div class="cyclediv" id="' + cycleid + '">');
+		$('#' + cycleid).css("z-index", band.zindex);
+
+	}
 
 	$.each(band.images, function(i, sprite) {
 		// console.log("next image " +
@@ -91,9 +341,7 @@ function process_band(i, band) {
 						+ 'px; margin-left: ' + band.left + 'px; height: '
 						+ band.height + 'px; width: ' + band.width
 						+ 'px; position:absolute;">' + '<image id="'
-						+ sprite.id
-						+ '" style="width: 100%; height: 100%; " src="'
-						+ sprite.src // dataurl
+						+ sprite.id + '" class="cycleimg" src="' + sprite.src // dataurl
 						+ '"></image></div></li>');
 		$('#' + cycleid + ' div').attr('bandtop', band.top);
 		$('#' + cycleid + ' div').attr('bandleft', band.left);
@@ -105,7 +353,16 @@ function process_band(i, band) {
 
 	$('#' + cycleid).addCycle(band.divname);
 	$('#' + cycleid).data('currSlide', 0);
-	$('#' + cycleid).data('band', band);
+
+	// if cycle previously had images saved, then just append new ones, else
+	if ($('#' + cycleid).data('band') == undefined) {
+		$('#' + cycleid).data('band', band);
+	} else {
+		$oldband = $('#' + cycleid).data('band');
+		$.merge($oldband.images, band.images);
+		$('#' + cycleid).data('band', $oldband);
+	}
+
 	$('#' + cycleid).cycle({
 		speed : 500,
 		fx : 'scrollHorz',
@@ -137,10 +394,12 @@ jQuery.processPackJson = function(json) {
 	// '<link title="packstyles" href="' + currentPack.packstyles
 	// + '" rel="stylesheet" type="text/css" />');
 
-	$('#bands').empty();
+	// $('#bands').empty();
 	$active_cycle = '';
 
-	$.each(json.bands, process_band);
+	$.each(json.bands, function(i, band) {
+		process_band(i, band);
+	});
 
 	// console.log("clicking headbtn");
 	// $('#headbtn').trigger('click');
@@ -173,35 +432,29 @@ jQuery.processPackJson = function(json) {
 
 	console.log("loadpack mid");
 
-	$(
-			'.scalable_div, .heads, .bodies, .legs, .xtras , #btn_next_head, #btn_prev_head')
-			.waitForImages(
-					function() {
-						console.log('Before show, all images loaded.');
+	var containers = $('.scalable_div');
 
-					},
-					function(loaded, count, success) {
+	// $(containers).waitForImages(
+	myWaitForImages(function() {
+		console.log('Before show, all images loaded.');
+		readyToResize();
+	}, function(loaded, count, success) {
 
-						console.log($(this).attr("id") + " " + loaded + ' of '
-								+ count + ' images has '
-								+ (!success ? 'failed to load' : 'loaded')
-								+ '.');
+		console.log("Loaded " + loaded + ' of ' + count + ' images has '
+				+ (!success ? 'failed to load' : 'loaded') + '.');
 
-					});
+	});
 
-	$('#banks-nav-bar').waitForImages(
-			function() {
-				console.log('Before readyToResize, all images loaded.');
-				readyToResize();
-			},
-			function(loaded, count, success) {
-
-				console.log($(this).attr("id") + " " + loaded + ' of ' + count
-						+ ' images has '
-						+ (!success ? 'failed to load' : 'loaded') + '.');
-
-			});
-
+	/*
+	 * $('#banks-nav-bar').waitForImages( function() { console.log('Before
+	 * readyToResize, all images loaded.'); readyToResize(); }, function(loaded,
+	 * count, success) {
+	 * 
+	 * console.log($(this).attr("id") + " " + loaded + ' of ' + count + ' images
+	 * has ' + (!success ? 'failed to load' : 'loaded') + '.');
+	 * 
+	 * });
+	 */
 };
 
 function readyToResize() {
@@ -291,18 +544,6 @@ function readyToResize() {
 
 				myhead.sprite = sprite;
 				weirdoid.head = myhead;
-				// drawInCanvas(drawingCanvas,
-				// weirdoid.head, scaleBy, lmargin);
-
-				// topoffset =
-				// $('#cycle_heads').data('band').top;
-				// context.drawImage(image,
-				// sprite.x, sprite.y, sprite.width,
-				// sprite.height, lmargin / scaleBy,
-				// topoffset
-				// / scaleBy, sprite.width /
-				// scaleBy,
-				// sprite.height / scaleBy);
 
 				var context = drawingCanvas.getContext('2d');
 				var image = new Image();
@@ -449,3 +690,39 @@ jQuery.resizeImages = function() {
 
 	// $("#bands").trigger('create');
 };
+
+function myWaitForImages(finishedCallback, eachCallback) {
+	var eventNamespace = 'myWaitForImages';
+	var allImgs = $('.scalable_div').find('img');
+	var allImgsLength = allImgs.length, allImgsLoaded = 0;
+
+	// If no images found, don't bother.
+	if (allImgsLength == 0) {
+		finishedCallback();
+	};
+
+	$.each(allImgs, function(i, img) {
+
+		var image = new Image;
+
+		// Handle the image loading and error with the same callback.
+		$(image).bind(
+				'load.' + eventNamespace + ' error.' + eventNamespace,
+				function(event) {
+					allImgsLoaded++;
+
+					// If an error occurred with loading the image, set the
+					// third argument accordingly.
+					eachCallback.call(img.element, allImgsLoaded,
+							allImgsLength, event.type == 'load');
+
+					if (allImgsLoaded == allImgsLength) {
+						finishedCallback();
+						return false;
+					};
+
+				});
+
+		image.src = img.src;
+	});
+}

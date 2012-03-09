@@ -102,6 +102,7 @@ if($result) {
  $path = $_SERVER['DOCUMENT_ROOT'];
 
 $serverUrl = "http://yrcreative.com/clients/yakbooks/weirdoids/user_images/".$user_weirdoid_id.".jpg";
+//$serverUrl = "http://yak.com/yakbooks/weirdoids/user_images/".$user_weirdoid_id.".jpg";
 
 //$serverUrl = "http://yrcreative.com/clients/yakbooks/weirdoids/user_images/".$user_weirdoid_id.".jpg";
 $imgname = "../user_images/".$user_weirdoid_id.".jpg";
@@ -173,13 +174,13 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 
 try {
-	$out = imagecreatetruecolor($bkgd_width, $bkgd_width);
+	$out = imagecreatetruecolor($bkgd_width, $bkgd_height);
 
 	imagecopyresampled($out, $jpeg, 0, 0, 0, 0, $bkgd_width, $bkgd_height, $bkgd_width, $bkgd_height);
-	imagecopyresampled($out, $head_png, 170,60, 0, 0, $head_width, $head_height, $head_width, $head_height);
-	imagecopyresampled($out, $body_png, 170,290, 0, 0, $body_width, $body_height, $body_width, $body_height);
-	imagecopyresampled($out, $leg_png, 170,560, 0, 0, $leg_width, $leg_height, $leg_width, $leg_height);
-	imagecopyresampled($out, $xtra_png, 170,60, 0, 0, $xtra_width, $xtra_height, $xtra_width, $xtra_height);
+	imagecopyresampled($out, $head_png, 159,00, 0, 0, $head_width, $head_height, $head_width, $head_height);
+	imagecopyresampled($out, $body_png, 34,150, 0, 0, $body_width, $body_height, $body_width, $body_height);
+	imagecopyresampled($out, $leg_png, 34,510, 0, 0, $leg_width, $leg_height, $leg_width, $leg_height);
+	imagecopyresampled($out, $xtra_png, 134,20, 0, 0, $xtra_width, $xtra_height, $xtra_width, $xtra_height);
 	imagejpeg($out, $imgname,100);
 //header('Content-Type: image/jpg');
 

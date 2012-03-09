@@ -1,0 +1,152 @@
+{"errorcode":0,"errormsg":"Found user", "bands" : {
+    "bands": [
+        {
+            "divname": "heads",
+            "left": "159",
+            "height": "450",
+            "width": "450",
+            "top": "10",
+            "zindex": "8",
+            "fullsize": 0,
+            "images": [
+                {
+                    "id": "13",
+                    "src": "imgs/p6_head_1.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "14",
+                    "src": "imgs/p6_head_2.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "15",
+                    "src": "imgs/p6_head_3.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "16",
+                    "src": "imgs/p6_head_4.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "17",
+                    "src": "imgs/p6_head_5.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "18",
+                    "src": "imgs/p6_head_6.png",
+                    "dataurl": " "
+                }
+            ]
+        },
+        {
+            "divname": "bodies",
+            "left": "34",
+            "height": "550",
+            "width": "700",
+            "top": "150",
+            "zindex": "7",
+            "fullsize": 0,
+            "images": [
+                {
+                    "id": "1",
+                    "src": "imgs/p6_body_1.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "2",
+                    "src": "imgs/p6_body_2.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "3",
+                    "src": "imgs/p6_body_3.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "4",
+                    "src": "imgs/p6_body_4.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "5",
+                    "src": "imgs/p6_body_5.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "6",
+                    "src": "imgs/p6_body_6.png",
+                    "dataurl": " "
+                }
+            ]
+        },
+        {
+            "divname": "legs",
+            "left": "34",
+            "height": "500",
+            "width": "700",
+            "top": "510",
+            "zindex": "6",
+            "fullsize": 0,
+            "images": [
+                {
+                    "id": "19",
+                    "src": "imgs/p6_legs_1.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "20",
+                    "src": "imgs/p6_legs_2.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "21",
+                    "src": "imgs/p6_legs_3.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "22",
+                    "src": "imgs/p6_legs_4.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "23",
+                    "src": "imgs/p6_legs_5.png",
+                    "dataurl": " "
+                },
+                {
+                    "id": "24",
+                    "src": "imgs/p6_legs_6.png",
+                    "dataurl": " "
+                }
+            ]
+        },
+        {
+            "divname": "xtras",
+            "left": "134",
+            "height": "300",
+            "width": "500",
+            "top": "38",
+            "zindex": "10",
+            "fullsize": 0,
+            "images": [
+
+            ]
+        },
+        {
+            "divname": "bkgds",
+            "left": "0",
+            "height": "1024",
+            "width": "768",
+            "top": "0",
+            "zindex": "5",
+            "fullsize": 1,
+            "images": [
+                
+            ]
+        }
+    ]
+}
+}

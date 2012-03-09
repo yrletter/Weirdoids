@@ -2,47 +2,24 @@
 //Start session
 session_start();
 
+header('Content-Type: application/json');
+
 //Include database connection details
-require_once('config.php');
+require_once('../../yak/controllers/db_functions.php');
 require_once('weirdoid.php');
 require_once('weirdoid_sprite.php');
 
 //Array to store validation errors
 $errmsg_arr = array();
+$istatus = array();
 
 //Validation error flag
 $errflag = false;
 
-$istatus = array();
-
-header('Content-Type: application/json');
-
-//Connect to mysql server
-$link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
-if(!$link) {
-	$istatus["errorcode"] = 1;
-	$istatus["errormsg"] = "Failed to connect to server: ".mysql_errno($link). " ".mysql_error($link);
-	echo json_encode($istatus);
-	die();
-}
-
-//Select database
-$db = mysql_select_db(DB_DATABASE);
-if(!$db) {
-	$istatus["errorcode"] = 1;
-	$istatus["errormsg"] = "Unable to select database: ".mysql_errno($link). " ".mysql_error($link);
-	echo json_encode($istatus);
-	die();
-}
-
-//Function to sanitize values received from the form. Prevents SQL injection
-function clean($str) {
-	$str = @trim($str);
-	if(get_magic_quotes_gpc()) {
-		$str = stripslashes($str);
-	}
-	return mysql_real_escape_string($str);
-}
+//Connect to mysql server, sets $link and $db, dies on error
+// uses $errflag, $istatus, $errmsg_arr
+$link = connectToDB();
+$db = selectDB();
 
 //Sanitize the POST values
 $json = clean($_POST['data']);
@@ -103,8 +80,8 @@ $head->cyclename = "head";
 
 $head->topoffset = clean($obj->head->topoffset);
 $head->src = clean($obj->head->sprite->src);
-$head->xloc = clean($obj->head->sprite->x);
-$head->yloc = clean($obj->head->sprite->y);
+$head->xloc = clean($obj->head->sprite->xloc);
+$head->yloc = clean($obj->head->sprite->yloc);
 $head->width = clean($obj->head->sprite->width);
 $head->height = clean($obj->head->sprite->height);
 
@@ -112,8 +89,8 @@ $body = new WeirdoidSprite();
 $body->cyclename = "body";
 $body->topoffset = clean($obj->body->topoffset);
 $body->src = clean($obj->body->sprite->src);
-$body->xloc = clean($obj->body->sprite->x);
-$body->yloc = clean($obj->body->sprite->y);
+$body->xloc = clean($obj->body->sprite->xloc);
+$body->yloc = clean($obj->body->sprite->yloc);
 $body->width = clean($obj->body->sprite->width);
 $body->height = clean($obj->body->sprite->height);
 
@@ -121,8 +98,8 @@ $leg = new WeirdoidSprite();
 $leg->cyclename = "leg";
 $leg->topoffset = clean($obj->leg->topoffset);
 $leg->src = clean($obj->leg->sprite->src);
-$leg->xloc = clean($obj->leg->sprite->x);
-$leg->yloc = clean($obj->leg->sprite->y);
+$leg->xloc = clean($obj->leg->sprite->xloc);
+$leg->yloc = clean($obj->leg->sprite->yloc);
 $leg->width = clean($obj->leg->sprite->width);
 $leg->height = clean($obj->leg->sprite->height);
 
@@ -130,8 +107,8 @@ $xtra = new WeirdoidSprite();
 $xtra->cyclename = "xtra";
 $xtra->topoffset = clean($obj->xtra->topoffset);
 $xtra->src = clean($obj->xtra->sprite->src);
-$xtra->xloc = clean($obj->xtra->sprite->x);
-$xtra->yloc = clean($obj->xtra->sprite->y);
+$xtra->xloc = clean($obj->xtra->sprite->xloc);
+$xtra->yloc = clean($obj->xtra->sprite->yloc);
 $xtra->width = clean($obj->xtra->sprite->width);
 $xtra->height = clean($obj->xtra->sprite->height);
 
@@ -139,8 +116,8 @@ $bkgd = new WeirdoidSprite();
 $bkgd->cyclename = "bkgd";
 $bkgd->topoffset = clean($obj->bkgd->topoffset);
 $bkgd->src = clean($obj->bkgd->sprite->src);
-$bkgd->xloc = clean($obj->bkgd->sprite->x);
-$bkgd->yloc = clean($obj->bkgd->sprite->y);
+$bkgd->xloc = clean($obj->bkgd->sprite->xloc);
+$bkgd->yloc = clean($obj->bkgd->sprite->yloc);
 $bkgd->width = clean($obj->bkgd->sprite->width);
 $bkgd->height = clean($obj->bkgd->sprite->height);
 
@@ -167,7 +144,7 @@ try {
 			//Login failed
 			//header("location: login-failed.php");
 			$istatus["errorcode"] = 1;
-			$istatus["errormsg"] = "Error: Reading packlist failed ".mysql_errno($link). " ".mysql_error($link);
+			$istatus["errormsg"] = "Error: Insert user_weirdoid failed ".mysql_errno($link). " ".mysql_error($link);
 			echo json_encode($istatus);
 			throw new Exception($istatus["errormsg"]);
 		} else {
@@ -205,7 +182,7 @@ try {
 				//Login failed
 				//header("location: login-failed.php");
 				$istatus["errorcode"] = 1;
-				$istatus["errormsg"] = "Error: Reading packlist failed ".mysql_errno($link). " ".mysql_error($link);
+				$istatus["errormsg"] = "Error: insert weirdoid_sprite failed ".mysql_errno($link). " ".mysql_error($link);
 				echo json_encode($istatus);
 				throw new Exception($istatus["errormsg"]);
 				

@@ -80,6 +80,47 @@ function login(response, info) {
 	if (response.authResponse) {
 		var accessToken = response.authResponse.accessToken;
 
+/*		userInfo.innerHTML = '<img src="https://graph.facebook.com/' + info.id
+				+ '/picture">' + info.name + "<br /> Your Access Token: "
+				+ accessToken;
+		button.innerHTML = 'Logout';
+		showLoader(false);
+		document.getElementById('other').style.display = "block";
+*/
+		$is_on_facebook = true;
+		$is_logged_in = true;
+		$userid = info.id;
+		console.log("Logged into facebook");
+		
+
+		// log in to yak with fb credentials
+		// if no such account, create one
+		// 
+
+		// create data object
+		var fbdata = {
+			email : info.email,
+			id : info.id,
+			accessToken : accessToken
+		};
+		login_to_site(fbdata);
+
+/*		button.onclick = function() {
+			FB.logout(function(response) {
+
+			});
+			logout(response, true);
+		};
+*/
+		
+	}
+}
+
+/*
+function login(response, info) {
+	if (response.authResponse) {
+		var accessToken = response.authResponse.accessToken;
+
 		userInfo.innerHTML = '<img src="https://graph.facebook.com/' + info.id
 				+ '/picture">' + info.name + "<br /> Your Access Token: "
 				+ accessToken;
@@ -111,11 +152,14 @@ function login(response, info) {
 		};
 	}
 }
+*/
+
 
 function login_to_site(fbdata) {
 
-	$
-			.ajax({
+	console.log("After FB login, now logging into yak");
+	
+	$.ajax({
 				url : '../yak/controllers/login-fb.php',
 				type : 'post',
 				dataType : 'json',
@@ -145,6 +189,7 @@ function login_to_site(fbdata) {
 				}
 			});
 }
+
 function logout(response) {
 	userInfo.innerHTML = "";
 	document.getElementById('debug').innerHTML = "";

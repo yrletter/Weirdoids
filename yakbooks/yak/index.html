@@ -8,14 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="apple-touch-icon" href="imgs/apple-touch-icon.png" />
 
-<!--link rel="stylesheet" href="css/jquery.mobile-1.0.css" /-->
-
-
-<link rel="stylesheet" href="css/yaktheme.min.css" />
-
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
-
-
+<link rel="stylesheet" href="css/yaktheme.css" />
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile.structure-1.0.min.css" /> 
 <link rel="stylesheet" href="css/site.css" />
 
 
@@ -53,11 +47,10 @@
 				src="img/btn_games.png" alt="" /> </a>
 		</div>
 
+<!--
 		<div id="footer">
 			<ul>
-				<li><a href="#myaccount" class="loggedaccount"><img
-						src="img/app_weirdoids.png" /> </a>
-				</li>
+				
 				<li><a href="#signuppg"><img src="img/btn_signup_sm.png" />
 				</a>
 				</li>
@@ -66,21 +59,62 @@
 				</li>
 			</ul>
 		</div>
+		-->
 
 	</div>
+	
+	<div id="accountbar" data-role="header">
+	
+	<div id="accountpanel">
+	<a href="#myaccount" class="loggedaccount"><img src="img/app_weirdoids.png" /> </a>
+	<a href="#accountnotify"> <img src="img/icon_notifications.png" /></a>
+	<a href="#paymenthistory"> <img src="img/icon_purchased.png" /></a>
+	
+	<input type="search" name="search" id="searc-basic" value="" />
+	
+	<div class="right">
+		<a href="#signuppg">Sign Up</a>
+		<a href="#loginaccount">Log In</a>
+		<a href="#">Logout</a>
+	</div>
+	
+	</div>
+	
+	
+
+	</div>
+	
+	<!--
+	<div id="accountbarunlogged" data-role="header">
+		
+		<div id="accountpanel">
+	
+		<div class="right">
+			<a href="#">Signup</a>
+			<a href="#">Log In</a>
+		</div>
+		
+		</div>
+		
+		
+	
+		</div>
+	-->
+	
+	
 
 	<div id="new" data-role="page">
 
 		<div id="content" data-role="content">
 
 			<div>
-				<div id="cyclebook">
+				<div id="cyclebook" >
 				</div>
 			</div>
 			<!--
 			  <div class="nav"><a id="prev2" href="#">Prev</a> <a id="next2" href="#">Next</a></div>
 			-->
-			<div id="sectionbar" class="new">
+			<div id="sectionbar" class="orange">
 				<img src="img/icon_star.png" />
 				<h1>New Releases</h1>
 			</div>
@@ -97,63 +131,7 @@
 
 	</div>
 
-	<div id="loginpg" data-role="page">
-
-		<div id="content" data-role="content">
-
-
-			<div id="sectionbar" class="new">
-				<img src="img/icon_star.png" />
-				<h1>Choose Your Account</h1>
-			</div>
-
-			<div class="content">
-
-				<ul class="login">
-					<li><a href="#loginaccount"><img
-							src="img/app_weirdoids.png" />yrletter</a>
-					</li>
-					<li><a href="#loginaccount"><img
-							src="img/app_sophisticrits.png" />jlbrowni</a>
-					</li>
-					<li><a href="#loginaccount"><img
-							src="img/app_sagetrail.png" />newcombannie</a>
-					</li>
-					<li><a href="#loginaccount"><img
-							src="img/app_tophatapple.png" />bkeenan99</a>
-					</li>
-					<li><a href="#loginaccount"><img
-							src="img/app_weirdoids.png" />yrletter</a>
-					</li>
-					<li><a href="#loginaccount"><img
-							src="img/app_sophisticrits.png" />jlbrowni</a>
-					</li>
-					<li><a href="#loginaccount"><img
-							src="img/app_sagetrail.png" />newcombannie</a>
-					</li>
-					<li><a href="#loginaccount"><img
-							src="img/app_weirdoids.png" />bkeenan99</a>
-					</li>
-					<li><a href="#loginaccount"><img
-							src="img/app_weirdoids.png" />yrletter</a>
-					</li>
-					<li><a href="#loginaccount"><img
-							src="img/app_sophisticrits.png" />jlbrowni</a>
-					</li>
-					<li><a href="#loginaccount"><img
-							src="img/app_sagetrail.png" />newcombannie</a>
-					</li>
-					<li><a href="#loginaccount"><img
-							src="img/app_weirdoids.png" />bkeenan99</a>
-					</li>
-				</ul>
-			</div>
-
-
-		</div>
-		<!-- /content -->
-
-	</div>
+	
 	<div id="loginaccount" data-role="page">
 
 		<div id="content" data-role="content">
@@ -185,11 +163,11 @@
 									class="error" for="password" id="password_error">This
 									field is required.</label>
 							</div>
+							
+							<a href="#">Forgot Your Password?</a>
+							
 							<div>
-								<div id="btn_login">
-									<a href="#" data-transition="fade"><img
-										src="img/btn_login.png" alt="" /> </a>
-								</div>
+								<a href="index.html" data-role="button" data-inline="true">Log In</a>
 
 
 
@@ -230,6 +208,9 @@
 					<li><a href="#signupkidpg"><img
 							src="img/app_weirdoids.png" />Kid</a>
 					</li>
+					<li><a href="#signupteenpg"><img
+							src="img/app_sophisticrits.png" />Tween/Teen</a>
+					</li>
 					<li><a href="#signupgrownuppg"><img
 							src="img/app_sophisticrits.png" />Grown Up</a>
 					</li>
@@ -254,7 +235,7 @@
 
 			<div class="content">
 
-				<h1>Hello!</h1>
+				I think we should use Yak Screen Name here instead of first name
 
 				<form id="signup_kid_form" action="">
 					<fieldset>
@@ -276,10 +257,10 @@
 					
 						<label class="error" for="avatarlist" id="avatar_error">You must select an avatar.</label>
 					
-						<div id="btn_signup_kid">
-							<a href="#" data-transition="fade"><img
-								src="img/btn_signup.png" alt="" /> </a>
-						</div>
+					
+						
+						<a id="btn_signup_kid" href="#" data-role="button" data-inline="true" data-transition="fade">Sign Up</a>
+						
 
 					</fieldset>
 				</form>
@@ -307,10 +288,10 @@
 
 			<div class="content">
 
-				<h1>Hello!</h1>
-
 				<form id="signup_kid_form2" action="">
 					<fieldset>
+
+						We already got their first name from the previous screen. Should we switch this and use screen name on first screen instead?
 
 						<div data-role="fieldcontain">
 							<label for="child_yakname">First Name</label> <input type="text"
@@ -320,7 +301,7 @@
 						</div>
 
 						<div data-role="fieldcontain">
-							<label for="child_yaklogin">Yak Login</label> <input type="text"
+							<label for="child_yaklogin">Yak Screen Name</label> <input type="text"
 								name="child_yaklogin" id="child_yaklogin" value="yaklogin@yak.com" /> <label
 								class="error" for="child_yaklogin" id="child_yaklogin_error">This
 								field is required.</label>
@@ -433,7 +414,55 @@
 
 	</div>
 
-
+	<div id="signupteenpg" data-role="page">
+	
+			<div id="content" data-role="content">
+	
+	
+	
+				<div id="sectionbar" class="new">
+					<h1>Sign Up</h1>
+				</div>
+	
+	
+				<div class="content">
+	
+					
+	
+					<form id="signup_kid_form" action="">
+						<fieldset>
+							<div data-role="fieldcontain">
+								<label for="screen_name">Pick a Screen Name</label> <input
+									type="text" name="name" id="screen_name" value="" /> <label
+									class="error" for="screen_name" id="screen_name_error">This
+									field is required.</label>
+							</div>
+	
+	
+	
+	
+							<div>
+								Choose an Avatar
+								<ul class="avatars" id="avatarlist">
+								</ul>
+							</div>
+						
+							<label class="error" for="avatarlist" id="avatar_error">You must select an avatar.</label>
+						
+							<a id="btn_signup_kid" href="#" data-role="button" data-inline="true" data-transition="fade">Sign Up</a>
+	
+						</fieldset>
+					</form>
+	
+				</div>
+	
+	
+	
+	
+			</div>
+			<!-- /content -->
+	
+		</div>
 
 	<div id="signupgrownuppg" data-role="page">
 
@@ -448,10 +477,11 @@
 
 			<div class="content">
 
-				<h1>Hey there old timer!</h1>
+				
 
 				<form id="signup_adult_form" action="">
 					<fieldset>
+					
 						<div data-role="fieldcontain">
 							<label for="email">Email</label> <input type="text" name="email"
 								id="email" value="ddd@ddd.com" /> <label class="error"
@@ -465,13 +495,19 @@
 							<label class="error" for="adult_password"
 								id="adult_password_error">This field is required.</label>
 						</div>
+						
+						
 
 						<div data-role="fieldcontain">
-							<label for="adult_cpassword">Password</label> <input
+							<label for="adult_cpassword">Re-Enter Password</label> <input
 								type="password" name="cpassword" id="adult_cpassword" value="d" />
 							<label class="error" for="adult_cpassword"
 								id="adult_cpassword_error">This field is required.</label>
+								
 						</div>
+						
+						
+						
 						<div data-role="fieldcontain"
 							class="ui-field-contain ui-body ui-br">
 							<fieldset data-role="controlgroup"
@@ -494,10 +530,9 @@
 
 						<div class="error" id="agree_terms_error">This field is
 							required.</div>
-
-
+							
 						<div id="btn_signup_adult">
-							<a href="#" data-role="button" data-inline="true">Sign Up</a>
+							<a href="#" data-role="button" data-inline="true">Submit</a>
 						</div>
 					</fieldset>
 				</form>
@@ -519,13 +554,21 @@
 
 
 			<div id="sectionbar" class="new">
-				<h1>Sign Up</h1>
+				<h1>Any kids?</h1>
 			</div>
 
 
 			<div class="content">
 
-				<h1>Who is your child?</h1>
+				<h2>Do you have any kids you want to register now?</h2>
+				
+				<div data-role="fieldcontain">
+								<!-- <label for="slider2">Flip switch:</label> -->
+								<select name="slider2" id="slider2" data-role="slider">
+									<option value="off">No</option>
+									<option value="on">Yes</option>
+								</select>
+							</div>
 
 				<form id="signup_adult_form2" action="">
 					<fieldset>
@@ -553,6 +596,8 @@
 							<label class="error" for="child_yakname" id="child_yakname_error">This
 								field is required.</label>
 						</div>
+
+						I don't think we need this "login name" - it's the same as screen name.
 
 						<div data-role="fieldcontain">
 							<label for="child_yaklogin">Yak Login Name</label> <input
@@ -596,13 +641,14 @@
 									for="child_gender_girl_rb">Girl</label>
 							</fieldset>
 						</div>
+						
+						Do we need the avatar selector here? Or do kids do it themselves somehow?
 
 						<a href="#" data-role="button">Add Another Child</a>
 
-						<div id="btn_signup_adult2">
-							<a href="#" data-transition="fade"><img
-								src="img/btn_signup.png" alt="" /> </a>
-						</div>
+						<a id="btn_signup_adult2" href="#" data-role="button" data-inline="true" data-transition="fade">Next</a>
+
+						
 					</fieldset>
 				</form>
 
@@ -624,13 +670,13 @@
 
 
 			<div id="sectionbar" class="new">
-				<h1>Sign Up</h1>
+				<h1>Verify Your Information</h1>
 			</div>
 
 
 			<div class="content">
 
-				<h1>Verify</h1>
+				
 
 				<form id="signup_adult_form3" action="">
 					<fieldset>
@@ -684,7 +730,8 @@
 						</div>
 
 
-						<h1>Verify with your Credit Card</h1>
+						<h1>Credit Card</h1>
+						<h3>To verify your account, we will run a charge of $1 to your credit card that you will be able to use to purchase anything you wish on Yak.</h3>
 
 						<div data-role="fieldcontain">
 							<fieldset data-role="controlgroup" data-type="horizontal"
@@ -701,11 +748,36 @@
 							</fieldset>
 						</div>
 
-						<h1>Expiration Date</h1>
+						
 
+
+
+						<div data-role="fieldcontain">
+													<fieldset data-role="controlgroup">
+														<legend>Expiration:</legend>
+						
+														<label for="cc_exp_date_choice_month">Month</label>
+														<select name="cc_exp_date_choice_month" id="parent_cc_expiration_date_month" class="monthselect">
+														</select>
+														
+														<label for="cc_exp_date_choice_year">Year</label>
+														<select name="cc_exp_date_choice_year" id="parent_cc_expiration_date_year" class="ccyearselect">
+														</select>
+														
+														<label class="error" id="parent_cc_expiration_date_error">Invalid
+															expiration date.</label> <input type="hidden"
+															name="parent_cc_expiration_date" id="parent_cc_expiration_date"
+															value="">
+														
+													</fieldset>
+						
+												</div>
+
+
+<!--
 						<label for="cc_exp_date_choice_month" class="select">Month</label>
 						<select name="cc_exp_date_choice_month"
-							id="parent_cc_expiration_date_month" class="monthselect" >
+							id="parent_cc_expiration_date_month" class="monthselect"  >
 						</select> <label for="cc_exp_date_choice_year" class="select">Year</label>
 						<select name="cc_exp_date_choice_year"
 							id="parent_cc_expiration_date_year" class="ccyearselect">
@@ -713,6 +785,9 @@
 							expiration date.</label> <input type="hidden"
 							name="parent_cc_expiration_date" id="parent_cc_expiration_date"
 							value="">
+
+-->
+
 
 						<div data-role="fieldcontain">
 							<label for="parent_cc_cvv">CVV</label> <input type="text"
@@ -729,10 +804,11 @@
 						</div>
 
 
-						<div id="btn_signup_adult_verify">
-							<a href="#" data-transition="fade"><img
-								src="img/btn_signup.png" alt="" /> </a>
-						</div>
+					
+						
+						<a id="btn_signup_adult_verify" href="#" data-role="button" data-inline="true" data-transition="fade">Verify</a>
+						
+						
 					</fieldset>
 				</form>
 
@@ -746,24 +822,341 @@
 
 	</div>
 
-
 	<div id="signupgrownuppg4" data-role="page">
+	
+			<div id="content" data-role="content">
+	
+	
+	
+				<div id="sectionbar" class="new">
+					<h1>Sign Up</h1>
+				</div>
+	
+	
+				<div class="content">
+	
+					<h1>The credit card was billed $1, you can use it on Yak.</h1>
+	
+					<form id="signup_adult_form4" action="">
+						<fieldset>I think that's it</fieldset>
+					</form>
+	
+				</div>
+	
+	
+	
+	
+			</div>
+			<!-- /content -->
+	
+		</div>
+
+	
+	<div id="signupgrownupkids" data-role="page">
+	
+			<div id="content" data-role="content">
+	
+	
+	
+				<div id="sectionbar" class="new">
+					<h1>Any kids?</h1>
+				</div>
+	
+	
+				<div class="content">
+	
+					<h2>Do you have any kids you want to register now?</h2>
+					
+					<div data-role="fieldcontain">
+									<!-- <label for="slider2">Flip switch:</label> -->
+									<select name="slider2" id="slider2" data-role="slider">
+										<option value="off">No</option>
+										<option value="on">Yes</option>
+									</select>
+								</div>
+	
+					<form id="signup_adult_form2" action="">
+						<fieldset>
+	
+							<div data-role="fieldcontain">
+								<label for="child_fname">First Name</label> <input type="text"
+									name="child_fname" id="child_fname" value="ddd" /> <label
+									class="error" for="child_fname" id="child_fname_error">This
+									field is required.</label>
+							</div>
+	
+	
+	
+							<div data-role="fieldcontain">
+								<label for="child_lname">Last Name</label> <input type="text"
+									name="child_lname" id="child_lname" value="ddd" /> <label
+									class="error" for="child_lname" id="child_lname_error">This
+									field is required.</label>
+							</div>
+	
+	
+							<div data-role="fieldcontain">
+								<label for="child_yakname">Yak Screen Name</label> <input
+									type="text" name="child_yakname" id="child_yakname" value="ddd" />
+								<label class="error" for="child_yakname" id="child_yakname_error">This
+									field is required.</label>
+							</div>
+	
+							<div data-role="fieldcontain">
+								<fieldset data-role="controlgroup">
+									<legend>Date of Birth:</legend>
+	
+									<label for="select-choice-month2">Month</label> <select
+										name="select-choice-month" id="select-choice-month2" class="monthselect">
+									</select> <label for="select-choice-day2">Day</label> <select
+										name="select-choice-day" id="select-choice-day2" class="dayselect">
+									</select> <label for="select-choice-year2">Year</label> <select
+										name="select-choice-year" id="select-choice-year2" class="yearselect">
+									</select>
+								</fieldset>
+	
+							</div>
+	
+							<input type="hidden" name="child_bday_date" id="child_bday_date"
+								value="English">
+	
+							<div data-role="fieldcontain">
+								<label for="child_email">Child Email (optional)</label> <input
+									type="text" name="child_email" id="child_email" value="" /> <label
+									class="error" for="child_email" id="child_email_error">Invalid
+									email address.</label>
+							</div>
+	
+							<div data-role="fieldcontain">
+								<fieldset data-role="controlgroup" data-type="horizontal">
+									<legend>Gender</legend>
+									<input type="radio" name="child_gender" id="child_gender_boy_rb"
+										value="1" checked /> <label for="child_gender_boy_rb">Boy</label>
+									<input type="radio" name="child_gender"
+										id="child_gender_girl_rb" value="0" /> <label
+										for="child_gender_girl_rb">Girl</label>
+								</fieldset>
+							</div>
+							
+							Do we need the avatar selector here? Or do kids do it themselves somehow?
+	
+							<a href="#" data-role="button">Add Another Child</a>
+	
+							<a id="btn_signup_adult2" href="#" data-role="button" data-inline="true" data-transition="fade">Next</a>
+	
+							
+						</fieldset>
+					</form>
+	
+				</div>
+	
+	
+	
+	
+			</div>
+			<!-- /content -->
+	
+		</div>
+
+	<div id="signupgrownupinfo" data-role="page">
+
+		<div id="content" data-role="content">
+
+			<div id="sectionbar" class="new">
+				<h1>Your Information</h1>
+			</div>
+
+
+					
+
+					
+					
+					<form id="signup_adult_form3" action="">
+					
+					
+					<div data-role="fieldcontain">
+						<label for="username">Pick a Screen Name</label> <input type="text" name="username"
+							id="username" value="ddd" /> <label class="error"
+							for="username" id="username_error">This field is required.</label>
+					</div>
+					
+						Choose Avatar (selector here)
+					
+					<h2>Connect to Facebook?</h2>
+								
+					<a href="#" data-role="button" data-inline="true" data-transition="fade">Connect Facebook</a>
+					
+										<fieldset>
+					
+											<div data-role="fieldcontain">
+												<label for="parent_fname">First Name</label> <input type="text"
+													name="parent_fname" id="parent_fname" value="ddd" /> <label
+													class="error" for="parent_fname" id="parent_fname_error">This
+													field is required.</label>
+											</div>
+					
+											<div data-role="fieldcontain">
+												<label for="parent_lname">Last Name</label> <input type="text"
+													name="parent_lname" id="parent_lname" value="ddd" /> <label
+													class="error" for="parent_lname" id="parent_lname_error">This
+													field is required.</label>
+											</div>
+					
+											<div data-role="fieldcontain">
+												<label for="parent_phone">Phone Number</label> <input type="text"
+													name="parent_phone" id="parent_phone" value="ddd" /> <label
+													class="error" for="parent_phone" id="parent_phone_error">This
+													field is required.</label>
+											</div>
+					
+											<div data-role="fieldcontain">
+												<label for="parent_address1">Address</label> <input type="text"
+													name="parent_address1" id="parent_address1" value="ddd" /> <label
+													class="error" for="parent_address1" id="parent_address1_error">This
+													field is required.</label>
+											</div>
+					
+											<div data-role="fieldcontain">
+												<label for="parent_city">City</label> <input type="text"
+													name="parent_city" id="parent_city" value="ddd" /> <label
+													class="error" for="parent_city" id="parent_city_error">This
+													field is required.</label>
+											</div>
+					
+											<div data-role="fieldcontain">
+												<label for="parent_state" class="select">Your state:</label> <select
+													name="parent_state" id="parent_state" class="stateselect">
+												</select>
+											</div>
+					
+											<div data-role="fieldcontain">
+												<label for="parent_postal">Zip</label> <input type="text"
+													name="parent_postal" id="parent_postal" value="02154" /> <label
+													class="error" for="parent_postal" id="parent_postal_error">This
+													field is required.</label>
+											</div>
+											
+								
+											
+											<div data-role="fieldcontain">
+																		<fieldset data-role="controlgroup">
+																			<legend>Date of Birth:</legend>
+											
+																			<label for="select-choice-month2">Month</label> <select
+																				name="select-choice-month" id="select-choice-month2" class="monthselect">
+																			</select> <label for="select-choice-day2">Day</label> <select
+																				name="select-choice-day" id="select-choice-day2" class="dayselect">
+																			</select> <label for="select-choice-year2">Year</label> <select
+																				name="select-choice-year" id="select-choice-year2" class="yearselect">
+																			</select>
+																		</fieldset>
+											
+											</div>
+											
+											<div data-role="fieldcontain">
+												<fieldset data-role="controlgroup" data-type="horizontal">
+													<legend>Gender</legend>
+													<input type="radio" name="child_gender" id="child_gender_boy_rb"
+														value="1" checked /> <label for="child_gender_boy_rb">Male</label>
+													<input type="radio" name="child_gender"
+														id="child_gender_girl_rb" value="0" /> <label
+														for="child_gender_girl_rb">Female</label>
+												</fieldset>
+											</div>
+											
+											
+											
+											
+											</fieldset>
+					</form>
+					
+					<a href="#" data-role="button" data-inline="true" data-transition="fade">Next</a>
+
+
+
+</div>
+</div>
+
+
+<div id="signupgrownupverify" data-role="page">
 
 		<div id="content" data-role="content">
 
 
 
 			<div id="sectionbar" class="new">
-				<h1>Sign Up</h1>
+				<h1>Verify Your Information</h1>
 			</div>
 
 
 			<div class="content">
 
-				<h1>The credit card was billed $1, you can use it on Yak.</h1>
+				
 
-				<form id="signup_adult_form4" action="">
-					<fieldset>I think that's it</fieldset>
+				<form id="signup_adult_form3" action="">
+					<fieldset>
+
+
+						<h1>Credit Card</h1>
+						<h3>To verify your account, we will run a charge of $1 to your credit card that you will be able to use to purchase anything you wish on Yak.</h3>
+
+						<div data-role="fieldcontain">
+							<fieldset data-role="controlgroup" data-type="horizontal"
+								id="parent_cc_type">
+								<legend>Card Type</legend>
+								<input type="radio" name="parent_cc_type" id="visa" value="visa" />
+								<label for="visa">Visa</label> <input type="radio"
+									name="parent_cc_type" id="mastercard" value="mastercard" /> <label
+									for="mastercard">Mastercard</label> <input type="radio"
+									name="parent_cc_type" id="americanexpress"
+									value="americanexpress" /> <label for="americanexpress">American
+									Express</label>
+
+							</fieldset>
+						</div>
+
+						
+
+
+
+						<div data-role="fieldcontain">
+													<fieldset data-role="controlgroup">
+														<legend>Date of Birth:</legend>
+						
+														<label for="select-choice-month2">Month</label> <select
+															name="select-choice-month" id="select-choice-month2" class="monthselect">
+														</select> <label for="select-choice-day2">Day</label> <select
+															name="select-choice-day" id="select-choice-day2" class="dayselect">
+														</select> <label for="select-choice-year2">Year</label> <select
+															name="select-choice-year" id="select-choice-year2" class="yearselect">
+														</select>
+													</fieldset>
+						
+												</div>
+
+
+
+						<div data-role="fieldcontain">
+							<label for="parent_cc_cvv">CVV</label> <input type="text"
+								name="parent_cc_cvv" id="parent_cc_cvv" value="" /> <label
+								class="error" for="parent_cc_cvv" id="parent_cc_cvv_error">This
+								field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="parent_cc_number">Credit Card #</label> <input
+								type="text" name="parent_cc_number" id="parent_cc_number"
+								value="" /> <label class="error" for="parent_cc_number"
+								id="parent_cc_number_error">This field is required.</label>
+						</div>
+
+
+					
+						
+						<a id="btn_signup_adult_verify" href="#" data-role="button" data-inline="true" data-transition="fade">Verify</a>
+						
+						
+					</fieldset>
 				</form>
 
 			</div>
@@ -776,7 +1169,29 @@
 
 	</div>
 
+	
 
+	<div id="myaccountkid" data-role="page">
+	
+			<div id="content" data-role="content">
+	
+	
+	
+				<div id="sectionbar" class="new">
+					<h1>My Account</h1>
+				</div>
+	
+				<div class="content">
+	
+					<h1>This is my account page</h1>
+	
+					Account Page
+	
+				</div>
+			</div>
+			<!-- /content -->
+	
+		</div>
 
 	<div id="myaccount" data-role="page">
 
@@ -790,44 +1205,267 @@
 
 			<div class="content">
 
-				<h1>This is my account page</h1>
-
-				Account Page
-
+				<h1>Brian Keenan</h1>
+				<h2>Verified</h2>
+				
+				<ul>
+					<li>Email: email@email.com</li>
+					<li>Password: ******</li>
+					<li><a href="#">Reset Password</a></li>
+				</ul>
+				
+				<h2>Connected Accounts:</h2>
+				
+					<a href="#" data-role="button" data-inline="true">Connect Facebook</a>
+				
+				
+				<h2>Child/Children:</h2>
+				
+				
+				<div data-role="collapsible" data-content-theme="c">
+				   <h3>Kid Kidname</h3>
+				   	<ul>
+				   		<li>kiddy1</li>
+				   		<li>DOB: 3/3/2003</li>
+				   		<li>email: kid@kidname.com</li>
+				   		<li>Gender: Male</li>
+				   	</ul>
+				   <a href="#" data-role="button" data-inline="true">Edit</a>
+				    <a href="#" data-role="button" data-inline="true">Delete</a>
+				</div>
+				
+				
+				<div data-role="collapsible" data-content-theme="c">
+				   <h3>Kid2 Kidname</h3>
+				   <ul>
+					   	<li>kiddy2</li>
+					   	<li>DOB: 3/3/2003</li>
+					   	<li>email: kid2@kidname.com</li>
+					   	<li>Gender: Female</li>
+				   </ul>
+				   <a href="#" data-role="button" data-inline="true">Edit</a>
+				    <a href="#" data-role="button" data-inline="true">Delete</a>
+				</div>
+				
+				<a href="#" data-role="button" data-inline="true">Add a Child</a>
+				
+				<h2>Address</h2>
+					<ul>			
+						<li>6 Olympus Drive</li>
+						<li>Macedon, NY 14502</li>
+						<li><a href="#">Edit</a></li>
+					</ul>
+					
+				<h2>Date of Birth</h2>
+					<ul>
+						<li>3/2/1967</li>
+						<li><a href="#">Edit</a></li>
+					</ul>
+					
+				<h2>Gender</h2>
+					<ul>
+						<li>Male</li>
+					</ul>
+				
+				<h2>Avatar Here</h2>
+				
+				<h2>Credit Card Information</h2>
+					<ul>
+						<li>Visa</li>
+						<li>**** *** 1111</li>
+						<li>Exp: 04/2013</li>
+						<li><a href="#">Edit</a></li>
+					</ul>
+					
+				<a href="#" data-role="button" data-inline="true">Delete My Account</a>
+				
 
 			</div>
-
-
-
-
 		</div>
 		<!-- /content -->
 
 	</div>
+	
+	<div id="accountnotify" data-role="page">
+	
+			<div id="content" data-role="content">
+	
+	
+	
+				<div id="sectionbar" class="new">
+					<h1>Account Notifications</h1>
+				</div>
+	
+				<div class="content">
+	
+					
+					
+					<div>
+					
+					<div class="paymenticon">
+						<img src="img/app_weirdoids.png" />
+					</div>
+					
+					<div class="paymentinfo">
+					Kidnamey12 has requested to buy Weirdoids Pack 1.
+						
+					
+					Do you want to purchase this pack for $1.99?
+					
+					<a href="#">View Details</a>
+					
+						<div data-role="controlgroup" data-type="horizontal">
+						<a href="#" data-role="button">Yes</a>
+						<a href="#" data-role="button">No</a>
+						</div>
+					</div>
+					
+					</div>
+					
+					
+					<div>
+					
+					<div class="paymenticon">
+						<img src="img/app_weirdoids.png" />
+					</div>
+					
+					<div class="paymentinfo">
+					Kidnamey12 has requested to buy Weirdoids Pack 1.
+						
+					
+					Do you want to purchase this pack for $1.99?
+					
+					<a href="#">View Details</a>
+					
+						<div data-role="controlgroup" data-type="horizontal">
+						<a href="#" data-role="button">Yes</a>
+						<a href="#" data-role="button">No</a>
+						</div>
+					</div>
+					
+					</div>
+					
+						
+					
+					
+	
+				</div>
+			</div>
+			<!-- /content -->
+	
+		</div>
+	
+	<div id="paymenthistory" data-role="page"  >
+	
+			<div id="content" data-role="content" data-theme="a" >
+	
+	
+	
+				<div id="sectionbar" class="new">
+					<h1>Payment History</h1>
+				</div>
+	
+				<div class="content">
+					<ul data-role="listview" >
+								<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
+								<li><a href="#">
+										<img src="img/app_weirdoids.png" />
+										<h3>Weirdoids</h3>
+										<p><strong>Lorem ipsum dolar sit amet</strong></p>
+										<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+										<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+									
+								</a></li>
+								<li><a href="#">
+										<img src="img/app_weirdoids.png" />
+										<h3>Weirdoids</h3>
+										<p><strong>Lorem ipsum dolar sit amet</strong></p>
+										<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+										<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+									
+								</a></li>
+								<li data-role="list-divider">Thursday, October 7, 2010 <span class="ui-li-count">1</span></li>
+								<li><a href="#">
+										<img src="img/app_weirdoids.png" />
+										<h3>Weirdoids</h3>
+										<p><strong>Lorem ipsum dolar sit amet</strong></p>
+										<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+										<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+									
+								</a></li>
+								<li data-role="list-divider">Wednesday, October 6, 2010 <span class="ui-li-count">3</span></li>
+								<li><a href="#">
+										<img src="img/app_weirdoids.png" />
+										<h3>Weirdoids</h3>
+										<p><strong>Lorem ipsum dolar sit amet</strong></p>
+										<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+										<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+									
+								</a></li>
+								<li><a href="#">
+										<img src="img/app_weirdoids.png" />
+										<h3>Weirdoids</h3>
+										<p><strong>Lorem ipsum dolar sit amet</strong></p>
+										<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+										<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+									
+								</a></li>
+								<li><a href="#">
+										<img src="img/app_weirdoids.png" />
+										<h3>Weirdoids</h3>
+										<p><strong>Lorem ipsum dolar sit amet</strong></p>
+										<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+										<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+									
+								</a></li>
+									<li data-role="list-divider">Tuesday, October 5, 2010 <span class="ui-li-count">3</span></li>
+									<li><a href="#">
+											<img src="img/app_weirdoids.png" />
+											<h3>Weirdoids</h3>
+											<p><strong>Lorem ipsum dolar sit amet</strong></p>
+											<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+											<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+										
+									</a></li>
+									<li><a href="#">
+											<img src="img/app_weirdoids.png" />
+											<h3>Weirdoids</h3>
+											<p><strong>Lorem ipsum dolar sit amet</strong></p>
+											<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+											<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+										
+									</a></li>
+							</ul>
+							
+				</div>
+			</div>
+			<!-- /content -->
+	
+		</div>
 
 
 	<div id="books" data-role="page">
 
 		<div id="content" data-role="content">
 
-			<div id="sectionbar" class="books">
+			<div id="sectionbar" class="green">
 				<img src="img/icon_book.png" />
 				<h1>Books</h1>
 			</div>
 
-			<div id="sectionbar" class="norm">
+			
 
 				<h2>Featured Books</h2>
-			</div>
+			
 
 			<div class="content">
 				<ul class="featuredapps" id="featuredbookslist">
 				</ul>
 			</div>
 
-			<div id="sectionbar" class="norm">
+			
 				<h2>All Books</h2>
-			</div>
+			
 
 			<div class="content">
 
@@ -845,7 +1483,7 @@
 
 		<div id="content" data-role="content">
 
-			<div id="sectionbar" class="games">
+			<div id="sectionbar" class="blue">
 				<img src="img/icon_games.png" />
 				<h1>Games</h1>
 			</div>
@@ -874,17 +1512,17 @@
 
 	</div>
 
-	<div id="detail" data-role="page">
+	<div id="detail" data-role="page" >
 
 
 
-		<div id="content" data-role="content">
+		<div id="content" data-role="content" >
 
 			<div data-role="header">
 				<h1 id="detail_h1"></h1>
 				<a href="#new" data-rel="back">Back</a>
 			</div>
-			<!-- /header -->
+			
 
 			<div class="content">
 
@@ -903,17 +1541,33 @@
 
 				<div id="ss_ctr">
 					<div id="screenshots">
-
 					</div>
 				</div>
+				
+				
+				<h2>Packs</h2>
+							
+					
+					
+					<ul data-role="listview" data-theme="a">
+								<li><a href="#"><img src="img/app_weirdoids.png" alt="France" class="ui-li-icon">Original Weirdoids <span class="ui-li-count">$1.99</span></a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" alt="France" class="ui-li-icon">Classic Monsters <span class="ui-li-count">$1.99</span></a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" alt="France" class="ui-li-icon">Robots <span class="ui-li-count">$1.99</span></a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" alt="France" class="ui-li-icon">Sea Creatures <span class="ui-li-count">$1.99</span></a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" alt="France" class="ui-li-icon">Cute Overload <span class="ui-li-count">$1.99</span></a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" alt="France" class="ui-li-icon">Wrestlers <span class="ui-li-count">$1.99</span></a></li>
+							</ul>
+				
+
+				
 
 			</div>
 
 		</div>
-		<!-- /content -->
+		
 
 	</div>
-	<!-- /page -->
+	
 
 	<div data-role="page" id="error_dialog" data-rel="dialog"
 		data-theme="d" data-transition="pop">
