@@ -57,10 +57,10 @@ $(document)
 				function() {
 					console.log("in ready w");
 
-//					$('a').live('click', function(event) {
-//						event.preventDefault();
-//						window.location = $(this).attr("href");
-//					});
+					// $('a').live('click', function(event) {
+					// event.preventDefault();
+					// window.location = $(this).attr("href");
+					// });
 
 					// localStorage.clear();
 
@@ -109,7 +109,7 @@ $(document)
 
 						// To enable
 						$('.online-only').removeAttr('disabled');
-						
+
 						synchProdKeys();
 					});
 
@@ -121,10 +121,29 @@ $(document)
 					var packs = [];
 
 					if ($online) {
-						$.getJSON($fnames_url, function(json) {
-							console.log("getting fname json " + $fnames_url);
-							$.processNameJson(json, $fnames_url);
-						});
+						$.ajax({
+									url : $fnames_url,
+									type : 'get',
+									dataType : 'json',
+									success : function(json) {
+										// process the result
+										console.log("getting fname json "
+												+ $fnames_url);
+										$.processNameJson(json, $fnames_url);
+									},
+									failure : function(data) {
+										console.log("fname json failure");
+									},
+									complete : function(xhr, data) {
+										if (xhr.status != 0
+												&& xhr.status != 200)
+											alert('Error calling server to read json name. Status='
+													+ xhr.status
+													+ " "
+													+ xhr.statusText);
+									}
+
+								});
 					} else if (localStorage.getItem($fnames_url) === null) {
 						alert("Not online and no local version of JSON for "
 								+ $fnames_url);
@@ -281,7 +300,7 @@ $(document)
 						console.log("clearing cache");
 						localStorage.removeItem($current_user_key);
 						$weirdoids = new Array();
-						$('#vaultGrid').empty();
+						$('#vaultgrid').empty();
 
 						return true;
 					});
@@ -378,7 +397,6 @@ $(document)
 						}
 					}
 
-
 					// get product keys
 					synchProdKeys();
 
@@ -431,7 +449,7 @@ function afterFirstFBLogin(isloggedin, msg) {
 
 function afterYakLogin(isloggedin, msg) {
 	console.log("in afterYakLogin");
-	
+
 	afterLogin($userid);
 	$('.logged-in-only').attr('disabled', '');
 	var nuid = "Logged in with Facebook";
@@ -732,7 +750,7 @@ function shareClickHandler(isFromPreview, $tmpWeirdoid) {
 
 	$toSaveWeirdoid = $tmpWeirdoid;
 
-	if (typeof $toSaveWeirdoid == 'undefined' || $toSaveWeirdoid == null) {
+	if (typeof $toSaveWeirdoid == undefined || $toSaveWeirdoid == null) {
 		console.log("shareClickHandler $lastweirdoid undefined");
 		return;
 	}
@@ -753,7 +771,7 @@ function shareClickHandler(isFromPreview, $tmpWeirdoid) {
 	}
 
 	// was weirdoid previously saved on server?
-	if (typeof $toSaveWeirdoid.user_weirdoid_id == 'undefined'
+	if (typeof $toSaveWeirdoid.user_weirdoid_id == undefined
 			|| $toSaveWeirdoid.user_weirdoid_id == null) {
 		// first save the weirdoid
 		$saveSuccessFunction = readyToCreateImage;
@@ -772,20 +790,22 @@ function drawPreview(event, target) {
 	//
 	console.log("drawing preview canvas " + target);
 
-	if (typeof $lastweirdoid == 'undefined' || $lastweirdoid == null) {
+	if (typeof $lastweirdoid == undefined || $lastweirdoid == null) {
 		console.log(" $lastweirdoid undefined");
 		return;
 	}
 
 	canvasname = "preview-canvas";
 	bkgdname = "preview-canvas-background";
-
+	canvasdiv = "preview-canvas-div";
+	
 	var name = getWeirdoidName($lastweirdoid);
 
 	if (target == "previewshare") {
 
 		canvasname = "preview-share-canvas";
 		bkgdname = "preview-share-canvas-background";
+		canvasdiv = "preview-share-canvas-div";
 		$('#preview-share-weirdoid-name').html(name);
 
 	} else {
@@ -815,38 +835,68 @@ function drawPreview(event, target) {
 
 	$('#' + canvasname).hide();
 
-	var drawingCanvas = document.getElementById(canvasname);
+	if ($.browser.msie && parseInt($.browser.version, 10) < 9){ 
+ 
+		$('#' + canvasdiv).empty();
+		var el = document.createElement(canvasname);
+		el.setAttribute("width", 150); 
+		el.setAttribute("height", 300); 
+		el.setAttribute("class", "mapping"); 	
+		
+		$('#' + canvasdiv).append(el);
+		
+		G_vmlCanvasManager.initElement(el);
+		var ctx = el.getContext('2d');
+	} else {
+		var drawingCanvas = document.getElementById(canvasname);
+		var ctx = drawingCanvas.getContext('2d');
+	}
 
-	var ctx = drawingCanvas.getContext('2d');
-	ctx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+	// var drawingCanvasBkgd = document.getElementById(bkgdname);
+//	var back_height = 1024;
+//	var back_width = 768;
+	
+	if ($.browser.msie && parseInt($.browser.version, 10) < 9){ 
+		var back_height = 1024;
+		var back_width = 768;
 
-	var drawingCanvasBkgd = document.getElementById(bkgdname);
+//		var back_el = document.createElement(bkgdname);
+//		back_el.setAttribute("width", 150); 
+//		back_el.setAttribute("height", 300); 
+//		back_el.setAttribute("class", "mapping"); 	
+//		
+//		$('#' + canvasdiv).append(back_el);
+//		G_vmlCanvasManager.initElement(back_el);
+//		
+//		var back_ctx = back_el.getContext('2d');
+	} else {
+		var drawingCanvasBkgd = document.getElementById(bkgdname);
+//		var back_ctx = drawingCanvas.getContext('2d');
 
-	var ctx = drawingCanvasBkgd.getContext('2d');
-	ctx.clearRect(0, 0, drawingCanvasBkgd.width, drawingCanvasBkgd.height);
+		var back_height = drawingCanvasBkgd.height;
+		var back_width = drawingCanvasBkgd.width;
+	}
 
-	var scaleBy = Math.max(1024 / drawingCanvasBkgd.height, 4.5);
+	ctx.clearRect(0, 0, back_width, back_height);
+	//back_ctx.clearRect(0, 0, back_width, back_height);
+
+	var scaleBy = Math.max(1024 / back_height, 4.5);
 	var lmargin = 170;
 
+	queueDraw(ctx, $lastweirdoid.bkgd, scaleBy, 0);
 
-	queueDraw(drawingCanvasBkgd, $lastweirdoid.bkgd, scaleBy, 0);
-
-	queueDraw(drawingCanvas, $lastweirdoid.head, scaleBy,
-			$lastweirdoid.head.sprite.xloc);
-	queueDraw(drawingCanvas, $lastweirdoid.body, scaleBy,
-			$lastweirdoid.body.sprite.xloc);
-	queueDraw(drawingCanvas, $lastweirdoid.leg, scaleBy,
-			$lastweirdoid.leg.sprite.xloc);
-	queueDraw(drawingCanvas, $lastweirdoid.xtra, scaleBy,
-			$lastweirdoid.xtra.sprite.xloc);
+	queueDraw(ctx, $lastweirdoid.head, scaleBy, $lastweirdoid.head.sprite.xloc);
+	queueDraw(ctx, $lastweirdoid.body, scaleBy, $lastweirdoid.body.sprite.xloc);
+	queueDraw(ctx, $lastweirdoid.leg, scaleBy, $lastweirdoid.leg.sprite.xloc);
+	queueDraw(ctx, $lastweirdoid.xtra, scaleBy, $lastweirdoid.xtra.sprite.xloc);
 	drawFromQueue();
-	
+
 	$('#' + canvasname).show();
 
 }
 
 function drawVault(event) {
-	$('#vaultGrid').empty();
+	$('#vaultgrid').empty();
 	$vaultCnt = 0;
 	$drawingqueue = [];
 	var reversedWeirdoids = new Array();
@@ -896,17 +946,21 @@ function drawVault(event) {
 								fullname += savedWeirdoid.lname;
 						}
 
-						$('#vaultGrid')
+						var canvasdiv = canvasName + '_div';
+						
+						$('#vaultgrid')
 								.append(
 										'<div class="'
 												+ classname
-												+ '"><div class="ui-bar vaultcanvas-hidden" data-theme="b">'
+												+ '"><div id="' + canvasdiv + '" class="ui-bar vault-canvas-div vaultcanvas-hidden" data-theme="b">'
 												+ '<canvas id="'
 												+ canvasName
 												+ '" height=300" class="vaultcanvas"></canvas>'
-												+ fullname + '</div></div>');
+												+  '</div><div class="vault-name">' + fullname + '</div></div>');
 
-						var drawingCanvas = document.getElementById(canvasName);
+						// var drawingCanvas =
+						// document.getElementById(canvasName);
+
 						$('#' + canvasName).data('weirdoid', savedWeirdoid);
 						$('#' + canvasName).unbind('click').click(function(e) {
 							$lastweirdoid = $(this).data('weirdoid');
@@ -919,14 +973,33 @@ function drawVault(event) {
 						var scaleBy = 3.5;
 						// var lmargin = 170;
 
-						queueDraw(drawingCanvas, savedWeirdoid.bkgd, scaleBy, 0);
-						queueDraw(drawingCanvas, savedWeirdoid.head, scaleBy,
+						// pass context
+						if ($.browser.msie && parseInt($.browser.version, 10) < 9){ 
+							 
+							$('#' + canvasdiv).empty();
+							var el = document.createElement(canvasName);
+							el.setAttribute("width", 150); 
+							el.setAttribute("height", 300); 
+							el.setAttribute("class", "mapping"); 	
+							
+							$('#' + canvasdiv).append(el);
+							
+							G_vmlCanvasManager.initElement(el);
+							var context = el.getContext('2d');
+						} else {
+							var drawingCanvas = document
+									.getElementById(canvasName);
+							var context = drawingCanvas.getContext('2d');
+						}
+
+						queueDraw(context, savedWeirdoid.bkgd, scaleBy, 0);
+						queueDraw(context, savedWeirdoid.head, scaleBy,
 								savedWeirdoid.head.sprite.xloc);
-						queueDraw(drawingCanvas, savedWeirdoid.body, scaleBy,
+						queueDraw(context, savedWeirdoid.body, scaleBy,
 								savedWeirdoid.body.sprite.xloc);
-						queueDraw(drawingCanvas, savedWeirdoid.leg, scaleBy,
+						queueDraw(context, savedWeirdoid.leg, scaleBy,
 								savedWeirdoid.leg.sprite.xloc);
-						queueDraw(drawingCanvas, savedWeirdoid.xtra, scaleBy,
+						queueDraw(context, savedWeirdoid.xtra, scaleBy,
 								savedWeirdoid.xtra.sprite.xloc);
 
 					});
@@ -997,7 +1070,7 @@ function readyToCreateImage() {
 
 function imgCreatedOnServer() {
 
-	if (typeof $toSaveWeirdoid.serverUrl == 'undefined'
+	if (typeof $toSaveWeirdoid.serverUrl == undefined
 			|| $toSaveWeirdoid.serverUrl == null) {
 		alert("imgCreatedOnServerf: saveclick serverUrl undefined");
 		if ($srcPage != null)
@@ -1057,12 +1130,12 @@ function setWeirdoidNameFromSelect(weirdoid) {
 	fname = $('#select-choice-firstname option:selected').val();
 	lname = $('#select-choice-lastname option:selected').val();
 
-	if (weirdoid.fname == 'undefined' || weirdoid.fname.length == 0)
+	if (weirdoid.fname == undefined || weirdoid.fname.length == 0)
 		weirdoid.fname = (fname === null || fname == '') ? '' : fname;
 	else if (fname != null && fname.length > 0)
 		weirdoid.fname = fname;
 
-	if (weirdoid.lname == 'undefined' || weirdoid.lname.length == 0)
+	if (weirdoid.lname == undefined || weirdoid.lname.length == 0)
 		weirdoid.lname = (lname === null || lname == '') ? '' : lname;
 	else if (lname != null && lname.length > 0)
 		weirdoid.lname = lname;
@@ -1093,9 +1166,9 @@ function saveBeforeShare() {
 
 function getWeirdoidName(weirdoid) {
 	var name = '';
-	if (weirdoid.fname != 'undefined')
+	if (weirdoid.fname != undefined)
 		name = weirdoid.fname;
-	if (weirdoid.lname != 'undefined') {
+	if (weirdoid.lname != undefined) {
 		if (name.length > 0)
 			name += " ";
 		name += weirdoid.lname;
@@ -1108,7 +1181,7 @@ function storeLocalWeirdoid(tmpWeirdoid) {
 
 	$toSaveWeirdoid = tmpWeirdoid;
 
-	if (typeof $toSaveWeirdoid == 'undefined' || $toSaveWeirdoid == null) {
+	if (typeof $toSaveWeirdoid == undefined || $toSaveWeirdoid == null) {
 		console.log(" saveclick $toSaveWeirdoid undefined");
 		return;
 	}
@@ -1127,7 +1200,7 @@ function saveWeirdoid(tmpWeirdoid) {
 
 	$toSaveWeirdoid = tmpWeirdoid;
 
-	if (typeof $toSaveWeirdoid == 'undefined' || $toSaveWeirdoid == null) {
+	if (typeof $toSaveWeirdoid == undefined || $toSaveWeirdoid == null) {
 		console.log(" saveclick $toSaveWeirdoid undefined");
 		return;
 	}
@@ -1194,7 +1267,7 @@ function onSavedWeirdoidInDB(savedok, id) {
 
 function saveWeirdoidInDB(callback) {
 
-	if (typeof $toSaveWeirdoid == 'undefined' || $toSaveWeirdoid == null) {
+	if (typeof $toSaveWeirdoid == undefined || $toSaveWeirdoid == null) {
 		alert("saveWeirdoidInDB $toSaveWeirdoid undefined");
 		return;
 	}
@@ -1324,7 +1397,7 @@ function saveWeirdoidsLocal() {
 
 function saveWeirdoidLocal() {
 
-	if (typeof $toSaveWeirdoid == 'undefined' || $toSaveWeirdoid == null) {
+	if (typeof $toSaveWeirdoid == undefined || $toSaveWeirdoid == null) {
 		alert("saveWeirdoidLocal $toSaveWeirdoid undefined");
 		return false;
 	}
@@ -1361,259 +1434,309 @@ var currentPack = '';
 var lastLoadedPack = '';
 var $packlist_key = null;
 
-$(document).ready(
-		function() {
-			// 
+$(document)
+		.ready(
+				function() {
+					// 
 
-			$packlist_key = "packlist";
+					$packlist_key = "packlist";
 
-			// if (localStorage.getItem($packlist_key) === null) {
-			// did not found key
+					// if (localStorage.getItem($packlist_key) === null) {
+					// did not found key
 
-			$('#packs').live('pageinit', function() {
-				console.log("created packs");
-				$('#packlist').attr('data-role', 'listview');
-				$("#packlist").listview();
+					$('#packs').live('pageinit', function() {
+						console.log("created packs");
+						// $('#packlist').attr('data-role', 'listview');
+						// $("#packlist").listview();
+						//
+						// $("#packlist").listview('refresh');
 
-				$("#packlist").listview('refresh');
-
-			});
-
-			$('#packs').live('pagebeforeshow', function() {
-				console.log("correcting prices for installed packs");
-				checkInstalledProducts();
-			});
-
-
-			if ($online) {
-
-				getProductList();
-
-			} else {
-				alert("Not online and no packlist info available for "
-						+ packlist_url + " key " + $packlist_key);
-			}
-
-			// } else {
-			// console.log("found $packlist_key json in localstorage "
-			// + $packlist_key);
-			// processPacklist(JSON.parse(localStorage
-			// .getItem($packlist_key)));
-			// }
-
-			$('#loginaccount').live('pagebeforeshow', function(event) {
-				// hide errors
-				$('.error').hide();
-
-			});
-
-			$('#previewpage').live('pagebeforeshow', function(event) {
-				if ($online)
-					$('btn_login').show();
-				else
-					$('btn_login').hide();
-
-			});
-
-			$('#bldbtn').click(function(event) {
-
-				console.log("in bldbt click");
-				if (currentPack == '') {
-					$.mobile.changePage("#packs", {
-						transition : "fade"
-					});
-					event.preventDefault();
-					return true;
-				} else {
-					// Test plugin
-					$('#build').waitForImages(function() {
-						console.log('bldbtn: All images are loaded.');
-						setTimeout(function() {
-							// load the pack, when all are loaded, transition to
-							// build
-							console.log("before build show");
-							$.loadPack(currentPack);
-							// $.mobile.changePage("#build", {
-							// transition : "flip"
-							// });
-						}, 1000);
-					});
-				}
-
-				return true;
-			});
-
-			$('#packsbtn').click(function(event) {
-
-				console.log("in packs click");
-				$.mobile.changePage("#packs", {
-					transition : "fade"
-				});
-				event.preventDefault();
-				return true;
-			});
-
-			$('#vaultbtn').click(function(event) {
-
-				console.log("in packs vault");
-				$.mobile.changePage("#vault", {
-					transition : "fade"
-				});
-				event.preventDefault();
-				return true;
-			});
-
-			$('#donebtn').click(function(event) {
-
-				console.log("click donebtn");
-				$.mobile.changePage("#previewpage", {
-					transition : "fade"
-				});
-				event.preventDefault();
-				return true;
-			});
-
-			$('#randombtn').click(function(event) {
-
-				console.log("click randombtn");
-
-				// for each cycle, find count of images, go to random
-				// one
-				if ($('#cycle_legs').data('band') != undefined) {
-					var band = $('#cycle_legs').data('band');
-					var maxval = band.images.length;
-
-					if (maxval > 0) {
-
-						var numRand = Math.floor(Math.random() * maxval);
-						$('#cycle_legs').cycle(numRand);
-					}
-				}
-				if ($('#cycle_heads').data('band') != undefined) {
-					var band = $('#cycle_heads').data('band');
-					var maxval = band.images.length;
-
-					if (maxval > 0) {
-
-						var numRand = Math.floor(Math.random() * maxval);
-						$('#cycle_heads').cycle(numRand);
-					}
-				}
-				if ($('#cycle_bodies').data('band') != undefined) {
-					var band = $('#cycle_bodies').data('band');
-					var maxval = band.images.length;
-
-					if (maxval > 0) {
-
-						var numRand = Math.floor(Math.random() * maxval);
-						$('#cycle_bodies').cycle(numRand);
-					}
-				}
-				if ($('#cycle_xtras').data('band') != undefined) {
-					var band = $('#cycle_xtras').data('band');
-					var maxval = band.images.length;
-
-					if (maxval > 0) {
-
-						var numRand = Math.floor(Math.random() * maxval);
-						$('#cycle_xtras').cycle(numRand);
-					}
-				}
-				if ($('#cycle_bkgds').data('band') != undefined) {
-					var band = $('#cycle_bkgds').data('band');
-					var maxval = band.images.length;
-
-					if (maxval > 0) {
-
-						var numRand = Math.floor(Math.random() * maxval);
-						$('#cycle_bkgds').cycle(numRand);
-					}
-				}
-				return false;
-			});
-
-			// get orig location of home buttons
-			$btn_build_top = $('#btn_build').css('top');
-			$btn_vault_top = $('#btn_vault').css('top');
-			$btn_packs_top = $('#btn_packs').css('top');
-
-			$('#build').live('pagebeforeshow', function(event) {
-				$('#headbtn').trigger('click');
-			});
-
-			$('#headbtn').click(function(e) {
-
-				$active_cycle = $('#cycle_heads');
-
-				console.log("in head click");
-
-				e.preventDefault();
-				return true;
-			});
-
-			$('#legbtn').click(function(e) {
-
-				console.log("in legs click");
-				$active_cycle = $('#cycle_legs');
-
-				e.preventDefault();
-				return true;
-			});
-			$('#bodybtn').click(function(e) {
-
-				$active_cycle = $('#cycle_bodies');
-
-				e.preventDefault();
-				return true;
-			});
-			$('#xtrabtn').click(function(e) {
-
-				$active_cycle = $('#cycle_xtras');
-
-				e.preventDefault();
-				return true;
-			});
-
-			$('#bkgdbtn').click(function(e) {
-
-				$active_cycle = $('#cycle_bkgds');
-
-				e.preventDefault();
-				return true;
-			});
-
-			$('#bands').swipeleft(
-					function(e) {
-
-						if (typeof $active_cycle == 'undefined'
-								|| $active_cycle == '') {
-							console.log("swipeleft $active_cycle undefined");
-							return;
-						}
-						$active_cycle.cycle('next');
-						console.log("swipeleft");
-
-						e.preventDefault();
 					});
 
-			$('#bands').swiperight(
-					function(e) {
-						if (typeof $active_cycle == 'undefined'
-								|| $active_cycle == '') {
-							console.log("swiperight $active_cycle undefined");
-							return;
+					$('#packs').live('pagebeforeshow', function() {
+						console.log("correcting prices for installed packs");
+						checkInstalledProducts();
+					});
+
+					if ($online) {
+
+						getProductList();
+
+					} else {
+						alert("Not online and no packlist info available for "
+								+ packlist_url + " key " + $packlist_key);
+					}
+
+					// } else {
+					// console.log("found $packlist_key json in localstorage "
+					// + $packlist_key);
+					// processPacklist(JSON.parse(localStorage
+					// .getItem($packlist_key)));
+					// }
+
+					$('#loginaccount').live('pagebeforeshow', function(event) {
+						// hide errors
+						$('.error').hide();
+
+					});
+
+					$('#previewpage').live('pagebeforeshow', function(event) {
+						if ($online)
+							$('btn_login').show();
+						else
+							$('btn_login').hide();
+
+					});
+
+					$('#bldbtn').click(function(event) {
+
+						console.log("in bldbt click");
+						if (currentPack == '') {
+							$.mobile.changePage("#packs", {
+								transition : "fade"
+							});
+							event.preventDefault();
+							return true;
+						} else {
+							// Test plugin
+							$('#build').waitForImages(function() {
+								console.log('bldbtn: All images are loaded.');
+								setTimeout(function() {
+									// load the pack, when all are loaded,
+									// transition to
+									// build
+									console.log("before build show");
+									$.loadPack(currentPack);
+									// $.mobile.changePage("#build", {
+									// transition : "flip"
+									// });
+								}, 1000);
+							});
 						}
 
-						$active_cycle.cycle('prev');
-						console.log("swiperight");
-						e.preventDefault();
+						return true;
 					});
 
-			$(window).resize(function() {
-				console.log("in resize");
-				$.resizeImages();
-			});
-		});
+					$('#packsbtn').click(function(event) {
+
+						console.log("in packs click");
+						$.mobile.changePage("#packs", {
+							transition : "fade"
+						});
+						event.preventDefault();
+						return true;
+					});
+
+					$('#vaultbtn').click(function(event) {
+
+						console.log("in packs vault");
+						$.mobile.changePage("#vault", {
+							transition : "fade"
+						});
+						event.preventDefault();
+						return true;
+					});
+
+					$('#donebtn').click(function(event) {
+
+						console.log("click donebtn");
+						$.mobile.changePage("#previewpage", {
+							transition : "fade"
+						});
+						event.preventDefault();
+						return true;
+					});
+
+					$('#randombtn')
+							.click(
+									function(event) {
+
+										console.log("click randombtn");
+
+										// for each cycle, find count of images,
+										// go to random
+										// one
+										if ($('#cycle_legs').data('band') != undefined) {
+											var band = $('#cycle_legs').data(
+													'band');
+											var maxval = band.images.length;
+
+											if (maxval > 0) {
+
+												var numRand = Math.floor(Math
+														.random()
+														* maxval);
+												$('#cycle_legs').cycle(numRand);
+											}
+										}
+										if ($('#cycle_heads').data('band') != undefined) {
+											var band = $('#cycle_heads').data(
+													'band');
+											var maxval = band.images.length;
+
+											if (maxval > 0) {
+
+												var numRand = Math.floor(Math
+														.random()
+														* maxval);
+												$('#cycle_heads')
+														.cycle(numRand);
+											}
+										}
+										if ($('#cycle_bodies').data('band') != undefined) {
+											var band = $('#cycle_bodies').data(
+													'band');
+											var maxval = band.images.length;
+
+											if (maxval > 0) {
+
+												var numRand = Math.floor(Math
+														.random()
+														* maxval);
+												$('#cycle_bodies').cycle(
+														numRand);
+											}
+										}
+										if ($('#cycle_xtras').data('band') != undefined) {
+											var band = $('#cycle_xtras').data(
+													'band');
+											var maxval = band.images.length;
+
+											if (maxval > 0) {
+
+												var numRand = Math.floor(Math
+														.random()
+														* maxval);
+												$('#cycle_xtras')
+														.cycle(numRand);
+											}
+										}
+										if ($('#cycle_bkgds').data('band') != undefined) {
+											var band = $('#cycle_bkgds').data(
+													'band');
+											var maxval = band.images.length;
+
+											if (maxval > 0) {
+
+												var numRand = Math.floor(Math
+														.random()
+														* maxval);
+												$('#cycle_bkgds')
+														.cycle(numRand);
+											}
+										}
+										return false;
+									});
+
+					// get orig location of home buttons
+					$btn_build_top = $('#btn_build').css('top');
+					$btn_vault_top = $('#btn_vault').css('top');
+					$btn_packs_top = $('#btn_packs').css('top');
+
+					$('#build')
+							.live(
+									'pagebeforeshow',
+									function(event) {
+										$('#headbtn').trigger('click');
+
+										// set all the images
+										if ($.browser.msie) {
+
+											$('.cycleimg')
+													.each(
+															function() {
+																// list item
+																var src = $(
+																		this)
+																		.attr(
+																				'src');
+																$(this)
+																		.css(
+																				'filter',
+																				'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="'
+																						+ src
+																						+ '", sizingMethod="scale";');
+															});
+										}
+									});
+
+					$('#headbtn').click(function(e) {
+
+						$active_cycle = $('#cycle_heads');
+
+						console.log("in head click");
+
+						e.preventDefault();
+						return true;
+					});
+
+					$('#legbtn').click(function(e) {
+
+						console.log("in legs click");
+						$active_cycle = $('#cycle_legs');
+
+						e.preventDefault();
+						return true;
+					});
+					$('#bodybtn').click(function(e) {
+
+						$active_cycle = $('#cycle_bodies');
+
+						e.preventDefault();
+						return true;
+					});
+					$('#xtrabtn').click(function(e) {
+
+						$active_cycle = $('#cycle_xtras');
+
+						e.preventDefault();
+						return true;
+					});
+
+					$('#bkgdbtn').click(function(e) {
+
+						$active_cycle = $('#cycle_bkgds');
+
+						e.preventDefault();
+						return true;
+					});
+
+					$('#bands')
+							.swipeleft(
+									function(e) {
+
+										if (typeof $active_cycle == undefined
+												|| $active_cycle == '') {
+											console
+													.log("swipeleft $active_cycle undefined");
+											return;
+										}
+										$active_cycle.cycle('next');
+										console.log("swipeleft");
+
+										e.preventDefault();
+									});
+
+					$('#bands')
+							.swiperight(
+									function(e) {
+										if (typeof $active_cycle == undefined
+												|| $active_cycle == '') {
+											console
+													.log("swiperight $active_cycle undefined");
+											return;
+										}
+
+										$active_cycle.cycle('prev');
+										console.log("swiperight");
+										e.preventDefault();
+									});
+
+					$(window).resize(function() {
+						console.log("in resize");
+						$.resizeImages();
+					});
+				});
 
 jQuery.saveCreation = function() {
 	var o = $(this[0]); // It's your element
@@ -1622,9 +1745,9 @@ jQuery.saveCreation = function() {
 
 $drawingqueue = [];
 
-function queueDraw(drawingCanvas, weirdoid, scaleBy, lmargin) {
+function queueDraw(context, weirdoid, scaleBy, lmargin) {
 	var drawing = [];
-	drawing.drawingCanvas = drawingCanvas;
+	drawing.context = context;
 	drawing.weirdoid = weirdoid;
 	drawing.scaleBy = scaleBy;
 	drawing.lmargin = lmargin;
@@ -1634,21 +1757,25 @@ function queueDraw(drawingCanvas, weirdoid, scaleBy, lmargin) {
 function drawFromQueue() {
 	if ($drawingqueue.length > 0) {
 		drawing = $drawingqueue.shift();
-		drawInCanvas(drawing.drawingCanvas, drawing.weirdoid, drawing.scaleBy,
+		drawInCanvas(drawing.context, drawing.weirdoid, drawing.scaleBy,
 				drawing.lmargin);
 	} else
 		$('#vault .vaultcanvas-hidden').removeClass('vaultcanvas-hidden');
 }
 
-function drawInCanvas(drawingCanvas, weirdoid, scaleBy, lmargin) {
-	var context = drawingCanvas.getContext('2d');
+function drawInCanvas(context, weirdoid, scaleBy, lmargin) {
+
 	var img = new Image();
 
 	img.sprite = weirdoid.sprite;
+	img.scaleBy = scaleBy;
+	img.lmargin = lmargin;
+	img.context = context;
 
 	img.onload = function() {
 		var ximg = this;
 		var sprite = ximg.sprite;
+		var context = img.context;
 		// console.log("drawinCanvas " + this.id + " " + sprite.xloc + " ");
 
 		// if (img.sprite.dataurl != null) {
@@ -1660,10 +1787,12 @@ function drawInCanvas(drawingCanvas, weirdoid, scaleBy, lmargin) {
 		// / scaleBy + ' ' + weirdoid.topoffset / scaleBy + ' '
 		// + sprite.width / scaleBy + ' ' + sprite.height / scaleBy);
 
-		if (lmargin == undefined || lmargin == null) {
-			lmargin = 0;
+		if (img.lmargin == undefined || img.lmargin == null) {
+			img.lmargin = 0;
 			console.log("lmargin not set");
 		}
+
+		var scaleBy = img.scaleBy;
 
 		var nu_x = Math.round(lmargin / scaleBy);
 		var nu_y = Math.round(weirdoid.topoffset / scaleBy);
@@ -1671,9 +1800,11 @@ function drawInCanvas(drawingCanvas, weirdoid, scaleBy, lmargin) {
 		var nu_h = Math.round(sprite.height / scaleBy);
 		if (ximg == null)
 			alert("null img in drawInCanvas");
-		if (nu_w == undefined || nu_h == undefined || nu_w <= 0 || nu_h <= 0 )
-			alert("Bad image values: offset=" + weirdoid.topoffset + " scaleBy=" + scaleBy + " width=" + sprite.width + " height=" + sprite.height)
-			
+		if (nu_w == undefined || nu_h == undefined || nu_w <= 0 || nu_h <= 0)
+			alert("Bad image values: offset=" + weirdoid.topoffset
+					+ " scaleBy=" + scaleBy + " width=" + sprite.width
+					+ " height=" + sprite.height)
+
 		context.drawImage(ximg, 0, 0, sprite.width, sprite.height, nu_x, nu_y,
 				nu_w, nu_h);
 		drawFromQueue();
@@ -1682,19 +1813,6 @@ function drawInCanvas(drawingCanvas, weirdoid, scaleBy, lmargin) {
 
 	img.src = img.sprite.src;// weirdoid.src;
 
-	// if (img.sprite.dataurl != null) {
-	// var sprite = img.sprite;
-	// console.log("drawinCanvas " + img.src + " h " + sprite.height + " w " +
-	// sprite.width + " scaleby " + scaleBy + ' lmargin ' + lmargin);
-	// console.log( sprite.width + ' ' + sprite.height+ ' ' + lmargin/ scaleBy+
-	// ' ' + weirdoid.topoffset / scaleBy+ ' ' +
-	// sprite.width / scaleBy+ ' ' + sprite.height / scaleBy);
-	//		
-	// img.src = img.sprite.dataurl;// weirdoid.src;
-	// context.drawImage(img, 0, 0, sprite.width, sprite.height, lmargin
-	// / scaleBy, weirdoid.topoffset / scaleBy,
-	// sprite.width / scaleBy, sprite.height / scaleBy);
-	// }
 
 };
 
@@ -1703,11 +1821,11 @@ function onAfter(curr, next, opts) {
 
 	var cycle = opts.$cont;
 
-	// if (typeof $active_cycle == 'undefined' || $active_cycle == '') {
+	// if (typeof $active_cycle == undefined || $active_cycle == '') {
 	// console.log("$active_cycle undefined");
 	// return;
 	// }
-	if (typeof cycle == 'undefined' || cycle == '') {
+	if (typeof cycle == undefined || cycle == '') {
 		console.log("onAfter: cycle undefined");
 		return;
 	}

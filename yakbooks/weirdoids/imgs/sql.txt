@@ -141,3 +141,13 @@ create table order_item
 PRIMARY KEY (order_item_id)
 )
 	
+-- get weiroid pack catalog items
+
+SELECT pf.product_family_id,family_name, pc.description,p.listorder, product_component_id,  item_type,  pack_id, 
+heading1, heading2, cost_str,cost,listorder,special_img, thumbnail,preview_small,preview_large, preview_text,packfile
+ FROM product_family pf,product_component pc, pack p
+where pf.product_family_id = pc.product_family_id
+and pf.family_name = 'Weirdoids'
+and item_type = 'pack'
+and p.pack_id = item_id
+order by p.listorder

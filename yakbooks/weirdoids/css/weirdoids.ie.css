@@ -1,0 +1,31 @@
+@CHARSET "ISO-8859-1";
+
+.packgrid a {
+	display: block;
+	height: 220px;
+	width: 220px;
+	position: absolute;
+}
+
+.packgrid a img{
+	height: 100%;
+}
+
+.cycleimg {
+	
+}
+
+.scalable_div {
+	background-color: transparent;
+}
+
+#vault .ui-grid-b canvas {
+	width: auto;
+	height: 300px;
+}
+
+.vault-canvas-div {
+	height: 300px;
+	width: 230px;
+	margin: 0px auto;
+}

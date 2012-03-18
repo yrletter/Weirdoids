@@ -2,6 +2,9 @@ var $pack_key = null;
 var $loadedpacks = null;
 var $items = [];
 
+var blank = new Image();
+blank.src = 'imgs/blank.gif';
+
 jQuery.loadPack = function(newPack) {
 	var o = $(this[0]); // It's your element
 
@@ -94,71 +97,13 @@ jQuery.loadPack = function(newPack) {
 	}
 };
 
-//function processPacklist(json) {
-//
-//	$packs = [];
-//
-//	if (localStorage.getItem($packlist_key) === null) {
-//		localStorage.setItem($packlist_key, JSON.stringify(json));
-//	}
-//
-//	$.each(json.families, function(i, family) {
-//		console.log("processpacklist: family " + family.familyid + " "
-//				+ family.familyname);
-//
-//		$("#packlist").append(
-//				'<li data-role="list-divider" role="heading">'
-//						+ family.familyname + '</li>');
-//		$.each(family.packs, function(i, pack) {
-//			console.log("next pack " + pack.id);
-//			$pack["familyid"] = family.familyid;
-//			$packs[pack.id] = pack;
-//
-//			$("#packlist").append(
-//					'<li passed-parameter="' + pack.id + '" id="packlist_"'
-//							+ pack.id + '"><a href="#"> <img src="'
-//							+ pack.thumbnail + '" />'
-//							+ '<div class="inline"><h3>' + pack.heading1
-//							+ '</h3><p>' + pack.heading2
-//							+ '</p></div><div class="packcost">'
-//							+ pack.cost_str + '</div> </a></li>');
-//		});
-//		// $("#packlist").listview("refresh");
-//
-//		$("#bldbtn,#packsbtn").button('enable').css('opacity', '1');
-//	});
-//
-//	/*
-//	 * 
-//	 */
-//	$('#packlist').delegate('li', 'click', function(e) {
-//		passedParameter = $(this).get(0).getAttribute('passed-parameter');
-//		console.log('clicked list ' + passedParameter);
-//		console.log(packs[passedParameter]);
-//		currentPack = packs[passedParameter];
-//
-//		e.preventDefault();
-//
-//		if (packIsInstalled(currentPack)) {
-//			// all loading done in build screen click handler
-//			$('#bldbtn').trigger('click');
-//		} else {
-//			// begin purchase process
-//			console.log("begin purchase flow");
-//			beginPackPurchase(currentPack);
-//		}
-//	});
-//
-//};
-
 function checkInstalledProducts() {
 	console.log("checkInstalledProducts");
 
-
 	// iterate through all listitems
-	$('#packlist a').each( function() {
+	$('.packprice').each(function() {
 		// list item
-		packid =   $(this).attr('passed-parameter');
+		packid = $(this).attr('passed-parameter');
 		curpack = $items[packid];
 		if (curpack == null) {
 			alert("Pack referenced in packlist missing in $items: " + packid);
@@ -187,9 +132,9 @@ function processProductList(json) {
 						console.log("processProductList: family "
 								+ family.familyid + " " + family.familyname);
 
-						$("#packlist").append(
-								'<li data-role="list-divider" role="heading">'
-										+ family.familyname + '</li>');
+						// $("#packlist").append(
+						// '<li data-role="list-divider" role="heading">'
+						// + family.familyname + '</li>');
 						$
 								.each(
 										family.items,
@@ -197,28 +142,59 @@ function processProductList(json) {
 											console.log("next item " + item.id);
 											$items["familyid"] = family.familyid;
 											$items[item.id] = item;
+											// <li>
+											// <div
+											// class="packprice">$1.99</div>
+											// <div class="packdesc">Free
+											// Original Starter Set</div> <a
+											// href="#"><img
+											// src="imgs/icon_pack1.png" />
+											// </a></li>
+											//										
+											var nuli = '<li class="packprice-li" passed-parameter="'
+													+ item.id
+													+ '"><div class="packprice" passed-parameter="'
+													+ item.id
+													+ '">xxx</div><div class="packdesc">'
+													+ item.heading1
+													+ '</div><a href="#" id="btn_get_pack"  data-role="button" passed-parameter="'
+													+ item.id
+													+ '"><img src="'
+													+ item.thumbnail
+													+ '"></a></li>';
+											// console.log("nuli:" + nuli);
 
-											$("#packlist")
-													.append(
-															'<li class="catalog-list-item" passed-parameter="'
-																	+ item.id
-																	+ '"><div class="catalog-item"><img class="inline preview-thumbnail" src="'
-																	+ item.thumbnail
-																	+ '" />'
-																	+ '<h3>'
-																	+ item.item_type
-																	+ ' - '
-																	+ item.heading1
-																	+ '</h3>'
-																	+ item.heading2
-																	+ '</div>'
-																	+ '<div id="cost_str_div">'
-																	+ '<a href="#" id="btn_get_pack" data-role="button" passed-parameter="'
-																	+ item.id
-																	+ '">'
-																	+ item.cost_str
-																	+ '</a></div>'
-																	+ '</li>');
+											$("#packlist").append(nuli);
+											// console.log("packlist count: " +
+											// $("#packlist").length + " " +
+											// $("#packlist").children().length);
+											// $("#packlist")
+											// .append(
+											// '<li class="catalog-list-item"
+											// passed-parameter="'
+											// + item.id
+											// + '"><div
+											// class="catalog-item"><img
+											// class="inline preview-thumbnail"
+											// src="'
+											// + item.thumbnail
+											// + '" />'
+											// + '<h3>'
+											// + item.item_type
+											// + ' - '
+											// + item.heading1
+											// + '</h3>'
+											// + item.heading2
+											// + '</div>'
+											// + '<div id="cost_str_div">'
+											// + '<a href="#" id="btn_get_pack"
+											// data-role="button"
+											// passed-parameter="'
+											// + item.id
+											// + '">'
+											// + item.cost_str
+											// + '</a></div>'
+											// + '</li>');
 										});
 						// $("#packlist").listview("refresh");
 
@@ -232,52 +208,50 @@ function processProductList(json) {
 	 * $('#packlist').listview('refresh'); });
 	 */// $("#packlist").listview('refresh');
 	$.each($('#packlist a'), function() {
-		$(this).click(
-				function(e) {
-					passedParameter = $(this).get(0).getAttribute(
-							'passed-parameter');
-					console.log('clicked list ' + passedParameter);
-					console.log($items[passedParameter]);
-					currentPack = $items[passedParameter];
+		$(this).click(function(e) {
+			passedParameter = $(this).get(0).getAttribute('passed-parameter');
+			console.log('clicked list ' + passedParameter);
+			console.log($items[passedParameter]);
+			currentPack = $items[passedParameter];
 
-					if (userHasPurchased(currentPack)|| currentPack.cost == 0) {
-						// all loading done in build screen click handler
-						$('#bldbtn').trigger('click');
-					} else {
-						// begin purchase process
-						console.log("begin purchase flow");
-						
-						
-						if (!$is_logged_in || $userid == null) {
-							// we need user to select among possible user keys if more than 1
-							alert("You must log in before you can buy new Packs!");
-							$srcPage = "#packs";
-							$afterLoginPage = "#packs";
-							$.mobile.changePage("#loginaccount", {
-								transition : "fade"
-							});
+			if (userHasPurchased(currentPack.id) || currentPack.cost == 0) {
+				// all loading done in build screen click handler
+				$('#bldbtn').trigger('click');
+			} else {
+				// begin purchase process
+				console.log("begin purchase flow");
 
-							return false;
-						}
-						
-						beginPackPurchase(currentPack, $userid);
-					}
+				if (!$is_logged_in || $userid == null) {
+					// we need user to select among possible user keys if more
+					// than 1
+					alert("You must log in before you can buy new Packs!");
+					$srcPage = "#packs";
+					$afterLoginPage = "#packs";
+					$.mobile.changePage("#loginaccount", {
+						transition : "fade"
+					});
+
 					return false;
-//					if (currentPack.cost == undefined) {
-//						alert("No cost found for currentPack");
-//					} else if (currentPack.cost > 0) {
-//						console.log("Current pack not installed and costs "
-//								+ currentPack.cost);
-//						$.mobile.changePage("#buypreview", {
-//							transition : "flip"
-//						});
-//						return false;
-//					} else {
-//						e.preventDefault();
-//						$('#bldbtn').trigger('click');
-//
-//					}
-				});
+				}
+
+				beginPackPurchase(currentPack, $userid);
+			}
+			return false;
+			// if (currentPack.cost == undefined) {
+			// alert("No cost found for currentPack");
+			// } else if (currentPack.cost > 0) {
+			// console.log("Current pack not installed and costs "
+			// + currentPack.cost);
+			// $.mobile.changePage("#buypreview", {
+			// transition : "flip"
+			// });
+			// return false;
+			// } else {
+			// e.preventDefault();
+			// $('#bldbtn').trigger('click');
+			//
+			// }
+		});
 	});
 
 };
@@ -333,25 +307,56 @@ function process_band(i, band) {
 
 	}
 
-	$.each(band.images, function(i, sprite) {
-		// console.log("next image " +
+	$
+			.each(
+					band.images,
+					function(i, sprite) {
+						// console.log("next image " +
 
-		$('#' + cycleid).append(
-				'<div  class="scalable_div" style=" margin-top: ' + band.top
-						+ 'px; margin-left: ' + band.left + 'px; height: '
-						+ band.height + 'px; width: ' + band.width
-						+ 'px; position:absolute;">' + '<image id="'
-						+ sprite.id + '" class="cycleimg" src="' + sprite.src // dataurl
-						+ '"></image></div></li>');
-		$('#' + cycleid + ' div').attr('bandtop', band.top);
-		$('#' + cycleid + ' div').attr('bandleft', band.left);
-		$('#' + cycleid + ' div').attr('bandheight', band.height);
-		$('#' + cycleid + ' div').attr('bandwidth', band.width);
-	});
+						var src = sprite.src;
+						if ($.browser.msie) {
+
+						}
+
+						$('#' + cycleid)
+								.append(
+										'<div  class="scalable_div" style=" margin-top: '
+												+ band.top
+												+ 'px; margin-left: '
+												+ band.left
+												+ 'px; height: '
+												+ band.height
+												+ 'px; width: '
+												+ band.width
+												+ 'px; position:absolute;background-color:transparent;">'
+												+ '<image id="' + sprite.id
+												+ '" class="cycleimg" src="'
+												+ sprite.src // dataurl
+												+ '"></image></div>');
+						$('#' + cycleid + ' div').attr('bandtop', band.top);
+						$('#' + cycleid + ' div').attr('bandleft', band.left);
+						$('#' + cycleid + ' div').attr('bandheight',
+								band.height);
+						$('#' + cycleid + ' div').attr('bandwidth', band.width);
+
+						if ($.browser.msie) {
+
+							$('#' + sprite.id).each(function() {
+								if (!this.complete) {
+									this.onload = function() {
+										// fixPng(this);
+									};
+								} else {
+									// fixPng(this);
+								}
+							});
+
+						}
+					});
 
 	$('#' + cycleid).append('</div>');
 
-	$('#' + cycleid).addCycle(band.divname);
+	// $('#' + cycleid).addCycle(band.divname);
 	$('#' + cycleid).data('currSlide', 0);
 
 	// if cycle previously had images saved, then just append new ones, else
@@ -367,6 +372,8 @@ function process_band(i, band) {
 		speed : 500,
 		fx : 'scrollHorz',
 		timeout : 0,
+		cleartype : false,
+		cleartypeNoBg : true,
 		after : onAfter,
 		slideResize : 0
 	});
@@ -385,7 +392,7 @@ jQuery.processPackJson = function(json) {
 
 	// we'll store the search term here
 
-	if ($('link[title="packstyles"]').exists()) {
+	if ($('link[title="packstyles"]').length > 0) {
 		$('link[title="packstyles"]').attr('disabled', 'disabled');
 		$('link[title="packstyles"]').remove();
 	}
@@ -494,13 +501,20 @@ function readyToResize() {
 						classname = "ui-block-a";
 				}
 
-				$('#vaultGrid').append(
+				$('#vaultgrid').append(
 						'<div class="' + classname
 								+ '"><div class="ui-bar" data-theme="b">'
 								+ '<canvas id="' + canvasName
 								+ '" height="300"></canvas></div></div>');
 
-				var drawingCanvas = document.getElementById(canvasName);
+//				if ($.browser.msie) {
+//					var el = document.createElement(canvasName);
+//					G_vmlCanvasManager.initElement(el);
+//					var context = el.getContext('2d');
+//				} else {
+//					var drawingCanvas = document.getElementById(canvasName);
+//					var context = drawingCanvas.getContext('2d');
+//				}
 
 				var scaleBy = 3.5;
 				var lmargin = 170;
@@ -545,7 +559,6 @@ function readyToResize() {
 				myhead.sprite = sprite;
 				weirdoid.head = myhead;
 
-				var context = drawingCanvas.getContext('2d');
 				var image = new Image();
 
 				imgidx = $('#cycle_bodies').data('currSlide');
@@ -725,4 +738,27 @@ function myWaitForImages(finishedCallback, eachCallback) {
 
 		image.src = img.src;
 	});
+}
+
+function fixPng(png) {
+	// get src
+
+	var src = png.src;
+	if (!src.match(/png$/))
+		return;
+
+	// set width and height
+	if (!png.style.width) {
+		png.style.width = $(png).width();
+	}
+	if (!png.style.height) {
+		png.style.height = $(png).height();
+	}
+	// replace by blank image
+	png.onload = function() {
+	};
+	png.src = blank.src;
+	// set filter (display original image)
+	png.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"
+			+ src + "',sizingMethod='scale')";
 }

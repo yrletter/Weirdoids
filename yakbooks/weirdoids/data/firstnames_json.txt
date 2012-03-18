@@ -704,7 +704,7 @@
 "Sal",
 "Salem",
 "Sally",
-"Salomé",
+"Salome",
 "Sand",
 "Sandy",
 "Santa's",

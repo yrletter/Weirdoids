@@ -6,8 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="Description" content="" />
 
-<meta name="viewport"
-	content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="apple-touch-icon" href="imgs/apple-touch-icon.png" />
@@ -21,34 +20,33 @@
 
 <link rel="stylesheet" href="css/jquery.mobile-1.0.min.css" />
 <link href="css/reveal.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css"
-	href="css/jquery.mobile.simpledialog.min.css" />
+<link rel="stylesheet" type="text/css" 	href="css/jquery.mobile.simpledialog.min.css" />
 
-<link href="css/rstyles.css" rel="stylesheet" type="text/css" />
-
+<link href="css/weirdoids.css" rel="stylesheet" type="text/css" />
+<!--[if lt IE 9]>
+<link href="css/weirdoids.ie.css" rel="stylesheet" type="text/css" />
+<![endif]-->
 <script src="script/libs/jquery-1.6.4.min.js"></script>
 <script src="script/libs/jquery.mobile-1.0.js"></script>
 
-<script src="script/libs/jquery-ui-1.8.16.custom.min.js"
-	type="text/javascript"></script>
+<script src="script/libs/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
 <script src="script/libs/jquery.cycle.all.js" type="text/javascript"></script>
 <script src="script/libs/jquery.reveal.js" type="text/javascript"></script>
 <script src="script/libs/jquery.waitforimages.js" type="text/javascript"></script>
-<script src="script/libs/jquery.cookies.2.2.0.min.js"
-	type="text/javascript"></script>
-<script src="script/libs/jquery.mobile.simpledialog.min.js"
-	type="text/javascript"></script>
+<script src="script/libs/jquery.cookies.2.2.0.min.js" type="text/javascript"></script>
+<script src="script/libs/jquery.mobile.simpledialog.min.js" type="text/javascript"></script>
 <script src="script/libs/json2.js" type="text/javascript"></script>
+<!--[if IE]><script type="text/javascript" src="script/excanvas.js"></script><![endif]-->
 
-
-<script src="script/site.js" type="text/javascript"></script>
 <script src="script/loadPack2.js" type="text/javascript"></script>
 <script src="script/user_data_mgmt.js" type="text/javascript"></script>
 <script src="script/prodmgmt.js" type="text/javascript"></script>
 <script src="script/weirdoids.js" type="text/javascript"></script>
 <script src="script/weirdoids_facebook.js" type="text/javascript"></script>
 
-
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 
 
 </head>
@@ -58,65 +56,96 @@
 	<div id="wrapper">
 
 		<div id="home" data-role="page">
-			<div id="homewrap">
-				<div id="homemain">
-					<img id="homebg" alt="alt" src="imgs/bkgd_home.jpg" class="bg">
-					<div id="btn_build">
-						<!--a href="#" id="bldbtn" data-role="button" ></a-->
-						<input id="bldbtn" type="image" src="imgs/btn_build.jpg"
-							alt="Build" />
-					</div>
-					<div id="btn_vault">
-						<input id="vaultbtn" type="image" src="imgs/btn_vault.jpg"
-							alt="Vault" />
-					</div>
 
-					<div id="btn_packs">
-						<input id="packsbtn" type="image" src="imgs/btn_packs.jpg"
-							alt="Packs" />
+			<div id="homemain">
+				<img id="homebg" alt="alt" src="imgs/bkgd_home.jpg" class="bg">
+				<div id="btn_build">
+					<!--a href="#" id="bldbtn" data-role="button" ></a-->
+					<input id="bldbtn" type="image" src="imgs/btn_build.jpg"
+						alt="Build" />
+				</div>
+				<div id="btn_vault">
+					<input id="vaultbtn" type="image" src="imgs/btn_vault.jpg"
+						alt="Vault" />
+				</div>
+
+				<div id="btn_packs">
+					<input id="packsbtn" type="image" src="imgs/btn_packs.jpg"
+						alt="Packs" />
+				</div>
+				<div id="homefooter">
+					<div id="homefooterbtns">
+						<a href="#" data-role="button" class="online-only"
+							id="home_login_btn" data-inline="true">Log In</a> <a href="#"
+							data-role="button" class="online-only" id="home_signup_btn"
+							data-inline="true">Sign Up</a>
 					</div>
 				</div>
 			</div>
-			<div id="homefooter">
-				<div id="homefooterbtns">
-					<a href="#" data-role="button" class="online-only"
-						id="home_login_btn" data-inline="true">Log In</a> <a href="#"
-						data-role="button" class="online-only" id="home_signup_btn"
-						data-inline="true">Sign Up</a>
-				</div>
-			</div>
+
 		</div>
 
 		<div id="build" data-role="page">
 
 			<div data-role="header" id="buildhdr">
-				<a href="#home" data-icon="delete" class="ui-btn-left"
-					data-theme="a">Cancel</a>
-				<h1 id="build_header_text" class="headertext">BUILD</h1>
-				<a href="#packs" data-icon="gear" class="ui-btn-right"
-					data-theme="a">Change Packs</a>
+
 				<div id="banks-nav-bar" data-role="navbar"
 					class="nav-glyphish-example" data-grid="d">
 					<ul>
 						<li><a href="#" id="headbtn" data-iconpos="notext"
-							data-icon="custom"></a></li>
+							data-icon="custom"></a>
+						</li>
 						<li><a href="#" id="bodybtn" data-iconpos="notext"
-							data-icon="custom"></a></li>
+							data-icon="custom"></a>
+						</li>
 						<li><a href="#" id="legbtn" data-iconpos="notext"
-							data-icon="custom"></a></li>
+							data-icon="custom"></a>
+						</li>
 						<li><a href="#" id="xtrabtn" data-iconpos="notext"
-							data-icon="custom"></a></li>
+							data-icon="custom"></a>
+						</li>
 						<li><a href="#" id="bkgdbtn" data-iconpos="notext"
-							data-icon="custom"></a></li>
+							data-icon="custom"></a>
+						</li>
 					</ul>
 				</div>
 			</div>
 
 
 
+			<div id="buildbar">
 
-			<div id="band_wrapper"
-				style="height: 100%; width: 100%; postion: absolute;">
+				<div id="btn_cancel">
+					<input id="cancelbtn" type="image" src="imgs/btn_cancel.png"
+						alt="Cancel" />
+				</div>
+
+				<div id="changepacks">
+					<ul>
+						<li><a href="#"><img src="imgs/icon_pack1.png" />
+						</a>
+						</li>
+						<li><a href="#"><img src="imgs/icon_pack2.png" />
+						</a>
+						</li>
+						<li><a href="#"><img src="imgs/icon_pack3.png" />
+						</a>
+						</li>
+					</ul>
+				</div>
+
+				<div id="btn_random">
+					<input id="randombtn" type="image" src="imgs/btn_random.png"
+						alt="Done" />
+				</div>
+
+				<div id="btn_done">
+					<input id="donebtn" type="image" src="imgs/btn_done.png" alt="Done" />
+				</div>
+
+			</div>
+
+			<div id="band_wrapper">
 				<div id="btn_prev_head" class="browser-nav-btn">
 					<a href="#" id="prev_heads"></a>
 				</div>
@@ -126,15 +155,6 @@
 
 				<div id="bands"></div>
 			</div>
-			<div id="btn_done">
-				<input id="donebtn" type="image" src="imgs/btn_done.jpg" alt="Done" />
-			</div>
-			<div id="btn_random">
-				<input id="randombtn" type="image" src="imgs/btn_random.jpg"
-					alt="Done" />
-			</div>
-
-
 
 
 		</div>
@@ -146,13 +166,19 @@
 					data-theme="a">Cancel</a>
 				<h1 id="packs_header_text" class="headertext">Select a Pack</h1>
 			</div>
-			<!-- /header -->
 
-			<div id="preview">
-				<ul id="packlist" data-theme="e">
 
-				</ul>
+			<div class="content packgrid">
+
+				<div>
+					<img src="imgs/hdr_packs.jpg" />
+				</div>
+
+				<ul id="packlist"></ul>
+
 			</div>
+
+
 		</div>
 
 		<div id="buypreview" data-role="page">
@@ -187,8 +213,7 @@
 			<div data-role="header" data-position="inline">
 				<a href="#home">Home</a>
 				<h1>VAULT</h1>
-				<div data-type="horizontal"
-					style="top: 5px; position: absolute; float: right; z-index: 10; display: inline;"
+				<div id="vault_btn_bar" data-type="horizontal"
 					align="right" class="ui-btn-right">
 					<a href="#" data-icon="delete" data-role="button"
 						id="clearcachebtn">Clear Cache</a> <a href="#build"
@@ -197,10 +222,13 @@
 			</div>
 			<!-- /header -->
 
-			<div data-role="content">
+			<div id="vaultcontent" data-role="content" class="content" >
 
+				<div>
+					<img src="imgs/hdr_vault.jpg" />
+				</div>
 
-				<div class="ui-grid-b" id="vaultGrid" data-scroll="true"></div>
+				<div class="ui-grid-b" id="vaultgrid" data-scroll="true"></div>
 				<!-- /grid-a -->
 
 			</div>
@@ -216,7 +244,7 @@
 			</div>
 			<!-- /header -->
 
-			<div data-role="content">
+			<div data-role="content" class="content">
 				<div id="preview-canvas-div">
 					<canvas id="preview-canvas"
 						style="position: absolute; left: 0; top: 0; z-index: 1; height: 300px;"></canvas>
@@ -266,8 +294,8 @@
 			</div>
 			<!-- /header -->
 
-			<div data-role="content">
-				<div id="preview-canvas-div">
+			<div data-role="content" class="content">
+				<div id="preview-share-canvas-div">
 					<canvas id="preview-share-canvas"
 						style="position: absolute; left: 0; top: 0; z-index: 1; height: 300px;"></canvas>
 					<canvas id="preview-share-canvas-background"
@@ -616,30 +644,29 @@
 						<h1>Buy using Google Checkout!</h1>
 						<form
 							action="https://sandbox.google.com/checkout/api/checkout/v2/checkoutForm/Merchant/770630670709102"
-							id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm" 
+							id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm"
 							target="_top">
 							<input name="item_name_1" type="hidden" value="Weirdoid Pack" />
 							<input name="item_description_1" type="hidden"
 								value="Monster Mash pack" /> <input name="item_quantity_1"
 								type="hidden" value="1" /> <input name="item_price_1"
 								type="hidden" value="1.99" /> <input name="item_currency_1"
-								type="hidden" value="USD" /> 
-								<input type="hidden"
+								type="hidden" value="USD" /> <input type="hidden"
 								name="shopping-cart.items.item-1.merchant-item-id"
 								value="1234abcd" /><input type="hidden"
-								name="shopping-cart.merchant-private-data"
-								value="1234abcd" />
-							
-								 <input
+								name="shopping-cart.merchant-private-data" value="1234abcd" />
+
+							<input
 								name="shopping-cart.items.item-1.digital-content.description"
 								type="hidden" value="these are instructions" /> <input
 								name="shopping-cart.items.item-1.digital-content.key"
 								type="hidden"
 								value="WGF0jlsYj9iFyCQ5TZHrmVBxecTMlRKLQjQa5T5W54w=" /> <input
 								name="shopping-cart.items.item-1.digital-content.key.is-encrypted"
-								type="hidden" value="true" /><input type="hidden" name="checkout-flow-support.merchant-checkout-flow-support.continue-shopping-url" value="http://yrcreative.com/clients/yakbooks/weirdoids/index.html" />
-								 <input
-								name="shopping-cart.items.item-1.digital-content.url"
+								type="hidden" value="true" /><input type="hidden"
+								name="checkout-flow-support.merchant-checkout-flow-support.continue-shopping-url"
+								value="http://yrcreative.com/clients/yakbooks/weirdoids/index.html" />
+							<input name="shopping-cart.items.item-1.digital-content.url"
 								type="hidden" value="http://weirdoids.com/fileaccessurl" /> <input
 								name="_charset_" type="hidden" value="utf-8" /> <input alt=""
 								src="https://sandbox.google.com/checkout/buttons/buy.gif?merchant_id=770630670709102&amp;w=117&amp;h=48&amp;style=trans&amp;variant=text&amp;loc=en_US"
