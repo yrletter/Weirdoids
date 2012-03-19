@@ -4,8 +4,10 @@ body {
 	font-weight: normal;
 	font-size: 14px;
 	color: #071e3a;
-	margin: 0;
+	margin: 0 auto;
 	padding: 0;
+	max-width: 768px;
+	max-height: 1024px;
 }
 
 .ui-body-c,.ui-dialog.ui-overlay-c {
@@ -23,6 +25,12 @@ body {
 	padding: 0;
 }
 
+.ui-page .ui-header, .ui-page .ui-footer {
+    margin: 0 auto;
+    max-width: 768px;
+    position: relative;
+}
+
 .floatrightonly {
 	float: right;
 	margin: 0 0 0 100px;
@@ -30,10 +38,9 @@ body {
 
 #wrapper {
 	margin: 0 auto;
-}
-
-#homewrap {
-	
+	max-height: 1024px;
+	height: 100%;
+	overflow: hidden;
 }
 
 .packgrid ul {
@@ -44,11 +51,12 @@ body {
 .packgrid li {
 	list-style: none;
 	display: inline-block;
-	width: 240px;
-	height: 240px;
-	margin-right: 20px;
-	margin-top: 15px;
-	margin-left: 5px;
+	width: 33%;
+	height: auto;
+	margin-right: 0;
+	margin-top: 5px;
+	margin-left: 0;
+	margin-bottom: 20px;
 	background-color: #000;
 	border-radius: 10px 10px 10px 10px;
 }
@@ -116,10 +124,10 @@ body {
 #buildbar {
 	background-color: #666666;
 	height: 90px;
-	margin-top: 840px;
-	padding: 10px;
-	position: absolute;
-	width: 748px;
+	bottom: 0;
+	padding-top: 10px;
+	position: relative;
+	width: 100%;
 	z-index: 200;
 }
 
@@ -138,23 +146,6 @@ body {
 	font-weight: bold;
 	font-size: 20px;
 	color: #ffffff;
-	text-align: center;
-}
-
-#homemain { //
-	padding-bottom: 100px;
-	width: 768px;
-	margin: 0 auto;
-} /* must be same height as the footer */
-#homefooter {
-	position: relative;
-	top: -100px; /* negative value of footer height */
-	height: 100px;
-	clear: both; //
-	background-color: #ccc;
-}
-
-#homefooterbtns {
 	text-align: center;
 }
 
@@ -181,11 +172,6 @@ body {
 	width: 200px;
 }
 
-#homefooterbtns {
-	width: 350px;
-	margin-left: auto;
-	margin-right: auto;
-}
 
 .preview-weirdoid-name {
 	width: 100%;
@@ -363,13 +349,23 @@ body {
 
 #bands {
 	z-index: 50;
-	position: absolute;
+	position: relative;
 }
 
 #band_wrapper {
 	
 	margin: 0 auto;
 	width: 768px;
+	position: relative;
+	//overflow: hidden;
+}
+
+#buildhdr {
+	//width: 100%;
+}
+
+#banks-nav-bar .ui-navbar ul, #buildhdr .ui-navbar-expanded ul {
+	//width: 100%;
 }
 
 #changepacks {
@@ -489,18 +485,19 @@ body {
 #build {
 	margin: 0 auto;
 	position: relative;
-	width: 768px;
+	width: 100%;
 	overflow: hidden;
+	height: 100%;
 }
 
-#home {
+#packs {
+	margin: 0 auto;
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	height: 100%;
+	}
 	
-}
-
-.bg {
-	
-}
-
 #homediv {
 	background: transparent url('../imgs/bkgd_home.jpg') no-repeat;
 	/* 	width: 768px;
@@ -511,18 +508,60 @@ body {
 	max-height: 1024px ! important;
 }
 
-#btn_build {
-	width: 200px;
-	height: 75px;
+#home_btns {
 	position: absolute;
 	top: 400px;
+	margin-left: 10px;
+	overflow: hidden;
+	}
+
+#btn_build {
+	width: 200px;
+	height: auto;
+	margin: 0 0 20px;
+	clear: both;
+	position: relative;
 }
 
 #btn_vault {
 	width: 200px;
-	height: 75px;
-	position: absolute;
-	top: 500px;
+	height: auto;
+	margin: 0 0 20px;
+	clear: both;
+	position: relative;
+}
+
+#btn_packs {
+	width: 200px;
+	height: auto;
+	margin: 0 0;
+	clear: both;
+	position: relative;
+}
+
+#homemain { //
+	padding-bottom: 100px;
+	width: 768px;
+	margin: 0 auto;
+} /* must be same height as the footer */
+
+#homefooter {
+	position: relative;
+	top: -100px; /* negative value of footer height */
+	height: 100px;
+	clear: both; //
+	background-color: #ccc;
+}
+
+#homefooterbtns {
+	text-align: center;
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#home_login_btn {
+	margin-right: 20px;
 }
 
 #item_desc_div {
@@ -530,12 +569,6 @@ body {
 	padding-left: 20px;
 }
 
-#btn_packs {
-	width: 200px;
-	height: 75px;
-	position: absolute;
-	top: 600px;
-}
 
 .packcost {
 	float: right;
@@ -729,7 +762,8 @@ div.inline {
 
 .cycleimg {
 	background: transparent;
-	
+	margin: auto;
+	display: block;
 
 	zoom: 1; //
 	width: 100%; //

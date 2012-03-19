@@ -294,70 +294,69 @@ function getProductList() {
 function process_band(i, band) {
 	console.log("next band " + band.divname);
 	// append to div bands
-	var divid = 'wrapper_cycle_' + band.divname;
+	var divid = band.divname + "_w";
 	var cycleid = 'cycle_' + band.divname;
+	var view_width = $('body').width();
 
-	//if ($("#" + divid + " #" + cycleid).length > 0)
-		if ($("#bands #" + cycleid).length > 0)
+	// if ($("#" + divid + " #" + cycleid).length > 0)
+	if ($("#bands #" + cycleid).length > 0)
 		console.log("cycle already exists");
 	else {
 		console.log("no pre-existing cycle");
 
-		$("#bands").append('<div class="cyclediv" id="' + cycleid + '">');
+		// $("#bands").append('<div class="cyclediv" id="' + cycleid + '">');
+		$("#bands").append(
+				'<div id ="' + divid + '" class="scalable_wrapper" ><div id="'
+						+ cycleid + '" class="scalable_div">');
 		$('#' + cycleid).css("z-index", band.zindex);
+		$('#' + cycleid).css("margin", "0px auto");
+
+		$('#' + cycleid).width(view_width);
+
+		$('#' + divid).css('margin-top', band.top + "px");
+		$('#' + divid).css('position', 'absolute');
+		$('#' + divid).attr('bandtop', band.top);
 
 	}
 
-	$
-			.each(
-					band.images,
-					function(i, sprite) {
-						// console.log("next image " +
+	$.each(band.images, function(i, sprite) {
+		// console.log("next image " +
 
-						var src = sprite.src;
-						if ($.browser.msie) {
+		var src = sprite.src;
+		if ($.browser.msie) {
 
-						}
+		}
 
-						$('#' + cycleid)
-								.append(
-										'<div  class="scalable_div" style=" margin-top: '
-												+ band.top
-												+ 'px; margin-left: '
-												+ band.left
-												+ 'px; height: '
-												+ band.height
-												+ 'px; width: '
-												+ band.width
-												+ 'px; position:absolute;background-color:transparent;">'
-												+ '<image id="' + sprite.id
-												+ '" class="cycleimg" src="'
-												+ sprite.src // dataurl
-												+ '"></image></div>');
-						$('#' + cycleid + ' div').attr('bandtop', band.top);
-						$('#' + cycleid + ' div').attr('bandleft', band.left);
-						$('#' + cycleid + ' div').attr('bandheight',
-								band.height);
-						$('#' + cycleid + ' div').attr('bandwidth', band.width);
+		$('#' + cycleid).append(
+				'<div><img id="' + sprite.id + '" class="cycleimg" src="'
+						+ sprite.src // dataurl
+						+ '"></image></div>');
+//		$('#' + sprite.id).css('margin', 'auto');
+//		$('#' + sprite.id).css('display', 'block');
 
-						if ($.browser.msie) {
+		$('#' + cycleid).attr('bandtop', band.top);
+		$('#' + cycleid).attr('bandleft', band.left);
+		$('#' + cycleid).attr('bandheight', band.height);
+		$('#' + cycleid).attr('bandwidth', band.width);
 
-							$('#' + sprite.id).each(function() {
-								if (!this.complete) {
-									this.onload = function() {
-										// fixPng(this);
-									};
-								} else {
-									// fixPng(this);
-								}
-							});
+		// if ($.browser.msie) {
+		//
+		// $('#' + sprite.id).each(function() {
+		// if (!this.complete) {
+		// this.onload = function() {
+		// // fixPng(this);
+		// };
+		// } else {
+		// // fixPng(this);
+		// }
+		// });
+		//
+		// }
+	});
 
-						}
-					});
-
-	$('#' + cycleid).append('</div>');
-
-	// $('#' + cycleid).addCycle(band.divname);
+	$('#' + cycleid).append('</div></div>');
+	$('#' + cycleid + " div").width(view_width + "px");
+	$('#' + cycleid + " div").css("height", band.height);
 	$('#' + cycleid).data('currSlide', 0);
 
 	// if cycle previously had images saved, then just append new ones, else
@@ -467,8 +466,10 @@ jQuery.processPackJson = function(json) {
 
 function readyToResize() {
 
-	$.resizeImages();
+	$.resizeImages(afterResizeImages);
+}
 
+function afterResizeImages() {
 	$('#donebtn').unbind('click');
 	$('#donebtn').click(
 			function(e) {
@@ -508,14 +509,14 @@ function readyToResize() {
 								+ '<canvas id="' + canvasName
 								+ '" height="300"></canvas></div></div>');
 
-//				if ($.browser.msie) {
-//					var el = document.createElement(canvasName);
-//					G_vmlCanvasManager.initElement(el);
-//					var context = el.getContext('2d');
-//				} else {
-//					var drawingCanvas = document.getElementById(canvasName);
-//					var context = drawingCanvas.getContext('2d');
-//				}
+				// if ($.browser.msie) {
+				// var el = document.createElement(canvasName);
+				// G_vmlCanvasManager.initElement(el);
+				// var context = el.getContext('2d');
+				// } else {
+				// var drawingCanvas = document.getElementById(canvasName);
+				// var context = drawingCanvas.getContext('2d');
+				// }
 
 				var scaleBy = 3.5;
 				var lmargin = 170;
@@ -620,7 +621,7 @@ function readyToResize() {
 	$.mobile.hidePageLoadingMsg();
 
 	$.mobile.changePage("#build", {
-		transition : "flip"
+		transition : "fade"
 	});
 
 };
@@ -647,15 +648,14 @@ jQuery.resizeHome = function() {
 
 $(window).load(function() {
 	// 
-//	$('#btn_vault').attr('origtop', $('#btn_vault').css('top'));
-//	$('#btn_packs').attr('origtop', $('#btn_packs').css('top'));
-//	$('#btn_build').attr('origtop', $('#btn_build').css('top'));
+	// $('#btn_vault').attr('origtop', $('#btn_vault').css('top'));
+	// $('#btn_packs').attr('origtop', $('#btn_packs').css('top'));
+	// $('#btn_build').attr('origtop', $('#btn_build').css('top'));
 	// $.resizeHome();
 });
 
-jQuery.resizeImages = function() {
-	return;
-	
+jQuery.resizeImages = function(callback) {
+
 	var o = $(this[0]); // It's your element
 
 	// $.resizeHome();
@@ -666,51 +666,88 @@ jQuery.resizeImages = function() {
 	console.log("build height " + bandheight);
 	console.log("banks-nav-bar height " + $('#banks-nav-bar').outerHeight());
 	var bankheight = $('#banks-nav-bar').outerHeight();
-	var hdrheight = $('#buildhdr').outerHeight();
+	var hdrheight = $('#buildhdr').outerHeight() + parseInt($('#buildhdr').css("border-top-width"))  + parseInt($('#buildhdr').css("border-bottom-width")) ;
+	var buildbar_height = $('#buildhdr').outerHeight();
+	var body_height = $('body').height();
 
-	if (bankheight == 0 || bandheight == 0)
+	if (hdrheight == 0 || buildbar_height == 0 || body_height == 0) {
+		if (callback != undefined && callback != null) {
+			callback();
+		}
+
 		return;
+	}
 
-	$('#band_wrapper').height(Math.min(1024, buildheight) - bankheight);// -
+	var nusize = body_height - hdrheight - buildbar_height;
+
+	$('#band_wrapper').height(Math.min(1024, nusize));
 	// $('#btn_done').height());
 
 	var divwidth = $("#bands").outerWidth();
 	var wfactor = Math.min(divwidth / 768, 1);
-	var hfactor = Math.min(bandheight / 1024, 1);
+
+	var hfactor = Math.min(nusize / 1024, 1);
+
 	var factor = Math.min(wfactor, hfactor);
 
-	console.log("resizeImages divwidth " + divwidth + ' factor ' + factor);
-	console.log("resizeImages band_wrapper " + $('#band_wrapper').width() + ' '
-			+ $('#band_wrapper').height());
+	console.log("resizeImages hfactor " + hfactor + " nusize " + nusize
+			+ " body_height " + body_height);
+
+	// console.log("resizeImages band_wrapper " + $('#band_wrapper').width() + '
+	// '
+	// + $('#band_wrapper').height());
+
+	$(".scalable_wrapper").each(function() {
+		// console.log("scalable div ");
+
+		var band = $(this).attr('band');
+		var normtop = $(this).attr('bandtop');
+		var normleft = $(this).attr('bandleft');
+		var h = Math.min(normtop * hfactor, normtop);
+		$(this).css('margin-top', h + "px");
+	});
 
 	$(".scalable_div").each(function() {
 		// console.log("scalable div ");
+
 		var band = $(this).attr('band');
 		var normtop = $(this).attr('bandtop');
 		var normleft = $(this).attr('bandleft');
 
-		$(this).css('margin-top', normtop * hfactor);
-		$(this).css('margin-left', normleft * wfactor);
+//		$(this).css('margin-top', normtop * hfactor);
+//		$(this).css('margin-left', normleft * wfactor);
 
 		var normwidth = $(this).attr('bandwidth');
 		var normheight = $(this).attr('bandheight');
 
-		var w = Math.min(normwidth * wfactor, $('#band_wrapper').width());
+		var w = Math.min(normwidth * hfactor, $('#band_wrapper').width());
 		var h = Math.min(normheight * hfactor, $('#band_wrapper').height());
-		$(this).width(w);
+		
+
+//		$(this).width(w);
 		$(this).height(h);
+		
+		
+		// set new width of each image
+		$(this).find("img").each(function() {
+			$(this).height(h);
+			$(this).width(w);
+		});
 	});
 
-//	$('#btn_build').css('top', $btn_build_top * hfactor);
-//	$('#btn_packs').css('top', $btn_packs_top * hfactor);
-//	$('#btn_vault').css('top', $btn_vault_top * hfactor);
+	if (callback != undefined && callback != null)
+		callback();
+
+	// $('#btn_build').css('top', $btn_build_top * hfactor);
+	// $('#btn_packs').css('top', $btn_packs_top * hfactor);
+	// $('#btn_vault').css('top', $btn_vault_top * hfactor);
 
 	// $("#bands").trigger('create');
 };
 
 function myWaitForImages(finishedCallback, eachCallback) {
 	var eventNamespace = 'myWaitForImages';
-	var allImgs = $('.scalable_div').find('img');
+	var allImgs = $('#build').find('img');
 	var allImgsLength = allImgs.length, allImgsLoaded = 0;
 
 	// If no images found, don't bother.

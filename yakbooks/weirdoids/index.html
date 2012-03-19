@@ -20,7 +20,8 @@
 
 <link rel="stylesheet" href="css/jquery.mobile-1.0.min.css" />
 <link href="css/reveal.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" 	href="css/jquery.mobile.simpledialog.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="css/jquery.mobile.simpledialog.min.css" />
 
 <link href="css/weirdoids.css" rel="stylesheet" type="text/css" />
 <!--[if lt IE 9]>
@@ -29,16 +30,19 @@
 <script src="script/libs/jquery-1.6.4.min.js"></script>
 <script src="script/libs/jquery.mobile-1.0.js"></script>
 
-<script src="script/libs/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+<script src="script/libs/jquery-ui-1.8.16.custom.min.js"
+	type="text/javascript"></script>
 <script src="script/libs/jquery.cycle.all.js" type="text/javascript"></script>
 <script src="script/libs/jquery.reveal.js" type="text/javascript"></script>
 <script src="script/libs/jquery.waitforimages.js" type="text/javascript"></script>
-<script src="script/libs/jquery.cookies.2.2.0.min.js" type="text/javascript"></script>
-<script src="script/libs/jquery.mobile.simpledialog.min.js" type="text/javascript"></script>
+<script src="script/libs/jquery.cookies.2.2.0.min.js"
+	type="text/javascript"></script>
+<script src="script/libs/jquery.mobile.simpledialog.min.js"
+	type="text/javascript"></script>
 <script src="script/libs/json2.js" type="text/javascript"></script>
 <!--[if IE]><script type="text/javascript" src="script/excanvas.js"></script><![endif]-->
 
-<script src="script/loadPack2.js" type="text/javascript"></script>
+<script src="script/loadPack3.js" type="text/javascript"></script>
 <script src="script/user_data_mgmt.js" type="text/javascript"></script>
 <script src="script/prodmgmt.js" type="text/javascript"></script>
 <script src="script/weirdoids.js" type="text/javascript"></script>
@@ -59,26 +63,29 @@
 
 			<div id="homemain">
 				<img id="homebg" alt="alt" src="imgs/bkgd_home.jpg" class="bg">
-				<div id="btn_build">
+				<div id="home_btns">
+					<div id="btn_build">
 					<!--a href="#" id="bldbtn" data-role="button" ></a-->
 					<input id="bldbtn" type="image" src="imgs/btn_build.jpg"
 						alt="Build" />
 				</div>
-				<div id="btn_vault">
-					<input id="vaultbtn" type="image" src="imgs/btn_vault.jpg"
-						alt="Vault" />
-				</div>
+			
+					<div id="btn_vault">
+						<input id="vaultbtn" type="image" src="imgs/btn_vault.jpg"
+							alt="Vault" />
+					</div>
 
-				<div id="btn_packs">
-					<input id="packsbtn" type="image" src="imgs/btn_packs.jpg"
-						alt="Packs" />
+					<div id="btn_packs">
+						<input id="packsbtn" type="image" src="imgs/btn_packs.jpg"
+							alt="Packs" />
+					</div>
 				</div>
 				<div id="homefooter">
 					<div id="homefooterbtns">
-						<a href="#" data-role="button" class="online-only"
-							id="home_login_btn" data-inline="true">Log In</a> <a href="#"
-							data-role="button" class="online-only" id="home_signup_btn"
-							data-inline="true">Sign Up</a>
+					<input id="home_login_btn" type="image" src="imgs/btn_login.png"
+							alt="Log In" />
+					<input id="home_signup_btn" type="image" src="imgs/btn_signup.png"
+							alt="Sign Up" />
 					</div>
 				</div>
 			</div>
@@ -93,24 +100,29 @@
 					class="nav-glyphish-example" data-grid="d">
 					<ul>
 						<li><a href="#" id="headbtn" data-iconpos="notext"
-							data-icon="custom"></a>
-						</li>
+							data-icon="custom"></a></li>
 						<li><a href="#" id="bodybtn" data-iconpos="notext"
-							data-icon="custom"></a>
-						</li>
+							data-icon="custom"></a></li>
 						<li><a href="#" id="legbtn" data-iconpos="notext"
-							data-icon="custom"></a>
-						</li>
+							data-icon="custom"></a></li>
 						<li><a href="#" id="xtrabtn" data-iconpos="notext"
-							data-icon="custom"></a>
-						</li>
+							data-icon="custom"></a></li>
 						<li><a href="#" id="bkgdbtn" data-iconpos="notext"
-							data-icon="custom"></a>
-						</li>
+							data-icon="custom"></a></li>
 					</ul>
 				</div>
 			</div>
 
+			<div id="band_wrapper">
+				<div id="btn_prev_head" class="browser-nav-btn">
+					<a href="#" id="prev_heads"></a>
+				</div>
+				<div id="btn_next_head" class="browser-nav-btn">
+					<a href="#" id="next_heads" class="browser-nav-btn"></a>
+				</div>
+
+				<div id="bands"></div>
+			</div>
 
 
 			<div id="buildbar">
@@ -122,15 +134,9 @@
 
 				<div id="changepacks">
 					<ul>
-						<li><a href="#"><img src="imgs/icon_pack1.png" />
-						</a>
-						</li>
-						<li><a href="#"><img src="imgs/icon_pack2.png" />
-						</a>
-						</li>
-						<li><a href="#"><img src="imgs/icon_pack3.png" />
-						</a>
-						</li>
+						<li><a href="#"><img src="imgs/icon_pack1.png" /> </a></li>
+						<li><a href="#"><img src="imgs/icon_pack2.png" /> </a></li>
+						<li><a href="#"><img src="imgs/icon_pack3.png" /> </a></li>
 					</ul>
 				</div>
 
@@ -145,16 +151,6 @@
 
 			</div>
 
-			<div id="band_wrapper">
-				<div id="btn_prev_head" class="browser-nav-btn">
-					<a href="#" id="prev_heads"></a>
-				</div>
-				<div id="btn_next_head" class="browser-nav-btn">
-					<a href="#" id="next_heads" class="browser-nav-btn"></a>
-				</div>
-
-				<div id="bands"></div>
-			</div>
 
 
 		</div>
@@ -213,8 +209,8 @@
 			<div data-role="header" data-position="inline">
 				<a href="#home">Home</a>
 				<h1>VAULT</h1>
-				<div id="vault_btn_bar" data-type="horizontal"
-					align="right" class="ui-btn-right">
+				<div id="vault_btn_bar" data-type="horizontal" align="right"
+					class="ui-btn-right">
 					<a href="#" data-icon="delete" data-role="button"
 						id="clearcachebtn">Clear Cache</a> <a href="#build"
 						id="btn_vault_to_build" data-role="button">Build</a>
@@ -222,7 +218,7 @@
 			</div>
 			<!-- /header -->
 
-			<div id="vaultcontent" data-role="content" class="content" >
+			<div id="vaultcontent" data-role="content" class="content">
 
 				<div>
 					<img src="imgs/hdr_vault.jpg" />

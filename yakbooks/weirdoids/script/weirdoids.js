@@ -1658,8 +1658,16 @@ $(document)
 																						+ '", sizingMethod="scale";');
 															});
 										}
+										
 									});
 
+					$('#build')
+					.live(
+							'pageshow',function(event)
+							{
+								$.resizeImages();
+							});
+					
 					$('#headbtn').click(function(e) {
 
 						$active_cycle = $('#cycle_heads');
@@ -1732,9 +1740,16 @@ $(document)
 										e.preventDefault();
 									});
 
+					$('#cancelbtn').click(function(e) {
+
+						history.back();
+						e.preventDefault();
+						return true;
+					});
+					
 					$(window).resize(function() {
 						console.log("in resize");
-						$.resizeImages();
+						$.resizeImages(null);
 					});
 				});
 
