@@ -109,7 +109,9 @@ function checkInstalledProducts() {
 			alert("Pack referenced in packlist missing in $items: " + packid);
 		} else {
 			// look for pack id in user prodkeys
-			if (userHasPurchased(packid)) {
+			var prev_installed =  ($.inArray(curpack.id, $loadedpacks) >= 0) ;
+
+			if (userHasPurchased(packid) || prev_installed) {
 				$(this).html('Installed');
 			} else {
 				$(this).html(curpack.cost_str);
@@ -132,9 +134,6 @@ function processProductList(json) {
 						console.log("processProductList: family "
 								+ family.familyid + " " + family.familyname);
 
-						// $("#packlist").append(
-						// '<li data-role="list-divider" role="heading">'
-						// + family.familyname + '</li>');
 						$
 								.each(
 										family.items,
@@ -142,15 +141,7 @@ function processProductList(json) {
 											console.log("next item " + item.id);
 											$items["familyid"] = family.familyid;
 											$items[item.id] = item;
-											// <li>
-											// <div
-											// class="packprice">$1.99</div>
-											// <div class="packdesc">Free
-											// Original Starter Set</div> <a
-											// href="#"><img
-											// src="imgs/icon_pack1.png" />
-											// </a></li>
-											//										
+
 											var nuli = '<li class="packprice-li" passed-parameter="'
 													+ item.id
 													+ '"><div class="packprice" passed-parameter="'
@@ -165,38 +156,10 @@ function processProductList(json) {
 											// console.log("nuli:" + nuli);
 
 											$("#packlist").append(nuli);
-											// console.log("packlist count: " +
-											// $("#packlist").length + " " +
-											// $("#packlist").children().length);
-											// $("#packlist")
-											// .append(
-											// '<li class="catalog-list-item"
-											// passed-parameter="'
-											// + item.id
-											// + '"><div
-											// class="catalog-item"><img
-											// class="inline preview-thumbnail"
-											// src="'
-											// + item.thumbnail
-											// + '" />'
-											// + '<h3>'
-											// + item.item_type
-											// + ' - '
-											// + item.heading1
-											// + '</h3>'
-											// + item.heading2
-											// + '</div>'
-											// + '<div id="cost_str_div">'
-											// + '<a href="#" id="btn_get_pack"
-											// data-role="button"
-											// passed-parameter="'
-											// + item.id
-											// + '">'
-											// + item.cost_str
-											// + '</a></div>'
-											// + '</li>');
+
 										});
 						// $("#packlist").listview("refresh");
+						loadCarousel($items);
 
 						$("#bldbtn,#packsbtn").button('enable').css('opacity',
 								'1');
@@ -237,20 +200,6 @@ function processProductList(json) {
 				beginPackPurchase(currentPack, $userid);
 			}
 			return false;
-			// if (currentPack.cost == undefined) {
-			// alert("No cost found for currentPack");
-			// } else if (currentPack.cost > 0) {
-			// console.log("Current pack not installed and costs "
-			// + currentPack.cost);
-			// $.mobile.changePage("#buypreview", {
-			// transition : "flip"
-			// });
-			// return false;
-			// } else {
-			// e.preventDefault();
-			// $('#bldbtn').trigger('click');
-			//
-			// }
 		});
 	});
 
@@ -331,8 +280,8 @@ function process_band(i, band) {
 				'<div><img id="' + sprite.id + '" class="cycleimg" src="'
 						+ sprite.src // dataurl
 						+ '"></image></div>');
-//		$('#' + sprite.id).css('margin', 'auto');
-//		$('#' + sprite.id).css('display', 'block');
+		// $('#' + sprite.id).css('margin', 'auto');
+		// $('#' + sprite.id).css('display', 'block');
 
 		$('#' + cycleid).attr('bandtop', band.top);
 		$('#' + cycleid).attr('bandleft', band.left);
@@ -666,7 +615,9 @@ jQuery.resizeImages = function(callback) {
 	console.log("build height " + bandheight);
 	console.log("banks-nav-bar height " + $('#banks-nav-bar').outerHeight());
 	var bankheight = $('#banks-nav-bar').outerHeight();
-	var hdrheight = $('#buildhdr').outerHeight() + parseInt($('#buildhdr').css("border-top-width"))  + parseInt($('#buildhdr').css("border-bottom-width")) ;
+	var hdrheight = $('#buildhdr').outerHeight()
+			+ parseInt($('#buildhdr').css("border-top-width"))
+			+ parseInt($('#buildhdr').css("border-bottom-width"));
 	var buildbar_height = $('#buildhdr').outerHeight();
 	var body_height = $('body').height();
 
@@ -681,6 +632,7 @@ jQuery.resizeImages = function(callback) {
 	var nusize = body_height - hdrheight - buildbar_height;
 
 	$('#band_wrapper').height(Math.min(1024, nusize));
+	$('#band_wrapper').css("min-height",Math.min(1024, nusize));
 	// $('#btn_done').height());
 
 	var divwidth = $("#bands").outerWidth();
@@ -714,20 +666,18 @@ jQuery.resizeImages = function(callback) {
 		var normtop = $(this).attr('bandtop');
 		var normleft = $(this).attr('bandleft');
 
-//		$(this).css('margin-top', normtop * hfactor);
-//		$(this).css('margin-left', normleft * wfactor);
+		// $(this).css('margin-top', normtop * hfactor);
+		// $(this).css('margin-left', normleft * wfactor);
 
 		var normwidth = $(this).attr('bandwidth');
 		var normheight = $(this).attr('bandheight');
 
 		var w = Math.min(normwidth * hfactor, $('#band_wrapper').width());
 		var h = Math.min(normheight * hfactor, $('#band_wrapper').height());
-		
 
-//		$(this).width(w);
+		// $(this).width(w);
 		$(this).height(h);
-		
-		
+
 		// set new width of each image
 		$(this).find("img").each(function() {
 			$(this).height(h);
@@ -803,3 +753,46 @@ function fixPng(png) {
 	png.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"
 			+ src + "',sizingMethod='scale')";
 }
+
+function loadCarousel(items) {
+	// Simply add all items at once and set the size accordingly.
+	var itemcnt = 0;
+
+	jQuery.each(items, function(i, item) {
+		if (item != undefined) {
+			var packid = 'build_packid_' + item.id;
+			$('#mycarousel').append(mycarousel_getItemHTML(item, packid));
+			$('#' + packid).data('item', item);
+			itemcnt++;
+		}
+	});
+
+	jQuery('#mycarousel').jcarousel({
+		scroll : 1,
+		size : itemcnt
+	});
+
+	$('.build_pack').click(function(e) {
+		var item = $(this).data('item');
+		console.log("clicked build pack: item = " + item.id);
+		e.preventDefault();
+
+		// see if newPack in loadedpacks
+		if ($.inArray(item.id, $loadedpacks) < 0) {
+			console.log("Pack not previously loaded");
+			$.mobile.changePage("#packs", {
+				transition : "fade"
+			});
+			return;
+		}
+
+		// pack already loaded. Now what?
+		console.log("Pack already loaded");
+	});
+};
+
+function mycarousel_getItemHTML(item, packid) {
+
+	return '<li><a href="#" id="' + packid + '" class="build_pack"><img src="'
+			+ item.thumbnail + '"  alt="' + item.heading1 + '" /></a></li>';
+};

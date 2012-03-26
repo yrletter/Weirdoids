@@ -33,6 +33,12 @@ var $local_user_id = 0;
 
 var iWebkit;
 
+if (typeof console == "undefined" || typeof console.log == "undefined")
+	var console = {
+		log : function() {
+		}
+	};
+
 jQuery.processNameJson = function(json, url) {
 
 	console.log("processNameJson " + url);
@@ -121,7 +127,8 @@ $(document)
 					var packs = [];
 
 					if ($online) {
-						$.ajax({
+						$
+								.ajax({
 									url : $fnames_url,
 									type : 'get',
 									dataType : 'json',
@@ -210,6 +217,8 @@ $(document)
 
 						return false;
 					});
+
+					$('#homefooterbtns_afterlogin').children().hide();
 
 					$('#btn_getpwd').click(function(e) {
 						console.log("btn_getpwd button clicked");
@@ -452,6 +461,7 @@ function afterYakLogin(isloggedin, msg) {
 
 	afterLogin($userid);
 	$('.logged-in-only').attr('disabled', '');
+
 	var nuid = "Logged in with Facebook";
 	if ($fbdata.first_name)
 		nuid = $fbdata.first_name;
@@ -529,7 +539,7 @@ function loginToYak() {
 				if (json.userid) {
 					$userid = json.userid;
 				}
-				alert("User " + name + " logged in! userid=" + $userid);
+				myalert("User " + name + " logged in! userid=" + $userid);
 
 				$('.logged-in-only').attr('disabled', '');
 				displayUserName(name);
@@ -566,7 +576,7 @@ function resetpwd() {
 					// process the result
 					if (json.errorcode == 0) {
 						console.log("Pwd reset request completed.");
-						alert("An email was sent to you to complete the reset process.");
+						myalert("An email was sent to you to complete the reset process.");
 					} else {
 						serverAlert("Pwd reset request error", json);
 						console.log("Pwd reset request error");
@@ -574,11 +584,11 @@ function resetpwd() {
 					}
 				},
 				failure : function(data) {
-					alert("Pwd reset request failure");
+					myalert("Pwd reset request failure");
 				},
 				complete : function(xhr, data) {
 					if (xhr.status != 0 && xhr.status != 200)
-						alert('Error calling server to make Pwd reset request. Status='
+						myalert('Error calling server to make Pwd reset request. Status='
 								+ xhr.status + " " + xhr.statusText);
 				}
 			});
@@ -638,7 +648,7 @@ function signupToYak() {
 				if (json.userid) {
 					$userid = json.userid;
 				}
-				alert("User " + name + " signed up! userid=" + $userid);
+				myalert("User " + name + " signed up! userid=" + $userid);
 
 				$('.logged-in-only').attr('disabled', '');
 				displayUserName(name);
@@ -657,16 +667,31 @@ function signupToYak() {
 		},
 		complete : function(xhr, data) {
 			if (xhr.status != 0 && xhr.status != 200)
-				alert('Error calling server to sign up. Status=' + xhr.status
+				myalert('Error calling server to sign up. Status=' + xhr.status
 						+ " " + xhr.statusText);
 		}
 	});
 }
 
 function displayUserName(uname) {
-	$('#homefooterbtns').empty()
-			.append('<p class="username">' + uname + '</p>');
+	$('#homefooterbtns').hide();
+	$('#homefooterbtns').children().hide();
+	$('#homefooterbtns_afterlogin').show();
+	$('#homefooterbtns_afterlogin #user_name').html(uname);
+	$('#homefooterbtns_afterlogin').children().show();
+	$('#home_logout_btn').show();
 
+	$('#home_logout_btn').click(function(e) {
+		myalert("Log the user out");
+
+		$userid = null;
+		$is_logged_in = false;
+
+		$('#homefooterbtns').show();
+		$('#homefooterbtns').children().show();
+		$('#homefooterbtns_afterlogin').hide();
+		$('#home_logout_btn').hide();
+	});
 }
 
 function afterFBLogin(success, msg) {
@@ -678,7 +703,7 @@ function afterFBLogin(success, msg) {
 function chgPageAfterLoginOrShare() {
 
 	if ($srcPage == null) {
-		alert("chgPageAfterLoginOrShare: null $srcPage");
+		myalert("chgPageAfterLoginOrShare: null $srcPage");
 		return;
 	}
 
@@ -696,7 +721,7 @@ function chgPageAfterLoginOrShare() {
 	console.log("$srcPage - " + $srcPage);
 
 	if ($afterLoginPage == null) {
-		alert("Null $afterLoginPage");
+		myalert("Null $afterLoginPage");
 
 	} else if ($afterLoginPage == 'back') {
 		history.back();
@@ -712,7 +737,7 @@ function chgPageAfterLoginOrShare() {
 			transition : "fade"
 		});
 	} else {
-		alert("Unknown $afterLoginPage " + $afterLoginPage);
+		myalert("Unknown $afterLoginPage " + $afterLoginPage);
 	}
 
 	$afterLoginPage = null;
@@ -733,7 +758,7 @@ function gotoPage(page) {
  * ($($afterFBLoginPage).length > 0) {
  * 
  * $.mobile.changePage($afterFBLoginPage, { transition : "fade" }); } else {
- * alert("Unknown $afterFBLoginPage " + $afterFBLoginPage); }
+ * myalert("Unknown $afterFBLoginPage " + $afterFBLoginPage); }
  * 
  * $afterLoginPage = null; }
  */
@@ -743,7 +768,7 @@ function afterFBLoginBeforeShare(success, msg) {
 		console.log("afterFBLoginBeforeShare");
 		shareClickHandler(false, $toSaveWeirdoid);
 	} else
-		alert("Failed to log in to FB before sharing: " + msg);
+		myalert("Failed to log in to FB before sharing: " + msg);
 }
 
 function shareClickHandler(isFromPreview, $tmpWeirdoid) {
@@ -757,7 +782,7 @@ function shareClickHandler(isFromPreview, $tmpWeirdoid) {
 
 	if (!navigator.onLine) {
 		// user must log in first
-		alert("Not online.");
+		myalert("Not online.");
 		return;
 	}
 
@@ -798,7 +823,7 @@ function drawPreview(event, target) {
 	canvasname = "preview-canvas";
 	bkgdname = "preview-canvas-background";
 	canvasdiv = "preview-canvas-div";
-	
+
 	var name = getWeirdoidName($lastweirdoid);
 
 	if (target == "previewshare") {
@@ -835,16 +860,16 @@ function drawPreview(event, target) {
 
 	$('#' + canvasname).hide();
 
-	if ($.browser.msie && parseInt($.browser.version, 10) < 9){ 
- 
+	if ($.browser.msie && parseInt($.browser.version, 10) < 9) {
+
 		$('#' + canvasdiv).empty();
 		var el = document.createElement(canvasname);
-		el.setAttribute("width", 150); 
-		el.setAttribute("height", 300); 
-		el.setAttribute("class", "mapping"); 	
-		
+		el.setAttribute("width", 220);
+		el.setAttribute("height", 300);
+		el.setAttribute("class", "mapping");
+
 		$('#' + canvasdiv).append(el);
-		
+
 		G_vmlCanvasManager.initElement(el);
 		var ctx = el.getContext('2d');
 	} else {
@@ -853,34 +878,38 @@ function drawPreview(event, target) {
 	}
 
 	// var drawingCanvasBkgd = document.getElementById(bkgdname);
-//	var back_height = 1024;
-//	var back_width = 768;
-	
-	if ($.browser.msie && parseInt($.browser.version, 10) < 9){ 
-		var back_height = 1024;
-		var back_width = 768;
+	// var back_height = 1024;
+	// var back_width = 768;
 
-//		var back_el = document.createElement(bkgdname);
-//		back_el.setAttribute("width", 150); 
-//		back_el.setAttribute("height", 300); 
-//		back_el.setAttribute("class", "mapping"); 	
-//		
-//		$('#' + canvasdiv).append(back_el);
-//		G_vmlCanvasManager.initElement(back_el);
-//		
-//		var back_ctx = back_el.getContext('2d');
+	if ($.browser.msie && parseInt($.browser.version, 10) < 9) {
+		var back_height = 300;
+		// var back_width = 768;
+
+		// var back_el = document.createElement(bkgdname);
+		// back_el.setAttribute("width", 150);
+		// back_el.setAttribute("height", 300);
+		// back_el.setAttribute("class", "mapping");
+		//		
+		// $('#' + canvasdiv).append(back_el);
+		// G_vmlCanvasManager.initElement(back_el);
+		//		
+		// var back_ctx = back_el.getContext('2d');
 	} else {
-		var drawingCanvasBkgd = document.getElementById(bkgdname);
-//		var back_ctx = drawingCanvas.getContext('2d');
 
-		var back_height = drawingCanvasBkgd.height;
-		var back_width = drawingCanvasBkgd.width;
+		var back_height = 1024;
+		// var back_width = drawingCanvasBkgd.width;
 	}
 
-	ctx.clearRect(0, 0, back_width, back_height);
-	//back_ctx.clearRect(0, 0, back_width, back_height);
+	// back_ctx.clearRect(0, 0, back_width, back_height);
+	var target_height = parseInt($('#' + canvasdiv).height());
+	$('#' + canvasname).height(target_height);
 
-	var scaleBy = Math.max(1024 / back_height, 4.5);
+	var target_width = parseInt($('#' + canvasdiv).width());
+	$('#' + canvasname).width(target_width);
+
+	ctx.clearRect(0, 0, target_width, target_height);
+
+	var scaleBy = target_height / $lastweirdoid.bkgd.sprite.height;
 	var lmargin = 170;
 
 	queueDraw(ctx, $lastweirdoid.bkgd, scaleBy, 0);
@@ -897,6 +926,9 @@ function drawPreview(event, target) {
 
 function drawVault(event) {
 	$('#vaultgrid').empty();
+	
+	$('body').addClass('ui-loading');
+
 	$vaultCnt = 0;
 	$drawingqueue = [];
 	var reversedWeirdoids = new Array();
@@ -947,22 +979,25 @@ function drawVault(event) {
 						}
 
 						var canvasdiv = canvasName + '_div';
-						
+
 						$('#vaultgrid')
 								.append(
 										'<div class="'
 												+ classname
-												+ '"><div id="' + canvasdiv + '" class="ui-bar vault-canvas-div vaultcanvas-hidden" data-theme="b">'
+												+ '"><div id="'
+												+ canvasdiv
+												+ '" class="ui-bar vault-canvas-div vaultcanvas-hidden" data-theme="b">'
 												+ '<canvas id="'
 												+ canvasName
-												+ '" height=300" class="vaultcanvas"></canvas>'
-												+  '</div><div class="vault-name">' + fullname + '</div></div>');
+												+ '" class="vaultcanvas" height="300" width="222"></canvas>'
+												+ '</div><div class="vault-name">'
+												+ fullname + '</div></div>');
 
 						// var drawingCanvas =
 						// document.getElementById(canvasName);
 
-						$('#' + canvasName).data('weirdoid', savedWeirdoid);
-						$('#' + canvasName).unbind('click').click(function(e) {
+						$('#' + canvasdiv).data('weirdoid', savedWeirdoid);
+						$('#' + canvasdiv).unbind('click').click(function(e) {
 							$lastweirdoid = $(this).data('weirdoid');
 							console.log("clicked vault weirdoid");
 							$srcPage = "#vault";
@@ -970,20 +1005,29 @@ function drawVault(event) {
 							e.preventDefault();
 						});
 
-						var scaleBy = 3.5;
-						// var lmargin = 170;
+						var target_height = parseInt($('#' + canvasdiv)
+								.height());
+						var target_width = parseInt($('#' + canvasdiv).width());
+
+						$('#' + canvasName).height(target_height);
+						$('#' + canvasName).width(target_width);
+
+						// var scaleBy = 3.5;
+						var scaleBy = target_height
+								/ savedWeirdoid.bkgd.sprite.height;
 
 						// pass context
-						if ($.browser.msie && parseInt($.browser.version, 10) < 9){ 
-							 
+						if ($.browser.msie
+								&& parseInt($.browser.version, 10) < 9) {
+
 							$('#' + canvasdiv).empty();
 							var el = document.createElement(canvasName);
-							el.setAttribute("width", 150); 
-							el.setAttribute("height", 300); 
-							el.setAttribute("class", "mapping"); 	
-							
+							el.setAttribute("width", 220);
+							el.setAttribute("height", 300);
+							el.setAttribute("class", "mapping");
+
 							$('#' + canvasdiv).append(el);
-							
+
 							G_vmlCanvasManager.initElement(el);
 							var context = el.getContext('2d');
 						} else {
@@ -1016,7 +1060,7 @@ function readyToCreateImage() {
 		console.log("Ready to create image file on server.");
 		if (!$is_logged_in || $userid == null) {
 			// we need user to select among possible user keys if more than 1
-			alert("You must log in before you can save your Weirdoid!");
+			myalert("You must log in before you can save your Weirdoid!");
 			return false;
 		}
 		// send user id and weirdoid to server
@@ -1056,13 +1100,13 @@ function readyToCreateImage() {
 			},
 			complete : function(xhr, data) {
 				if (xhr.status != 0 && xhr.status != 200)
-					alert('Error calling server to create image. Status='
+					myalert('Error calling server to create image. Status='
 							+ xhr.status + " " + xhr.statusText);
 			}
 		});
 
 	} catch (e) {
-		alert("Error creating image on server: " + e.message);
+		myalert("Error creating image on server: " + e.message);
 
 	}
 
@@ -1072,7 +1116,7 @@ function imgCreatedOnServer() {
 
 	if (typeof $toSaveWeirdoid.serverUrl == undefined
 			|| $toSaveWeirdoid.serverUrl == null) {
-		alert("imgCreatedOnServerf: saveclick serverUrl undefined");
+		myalert("imgCreatedOnServerf: saveclick serverUrl undefined");
 		if ($srcPage != null)
 			gotoPage($srcPage);
 		return;
@@ -1083,7 +1127,7 @@ function imgCreatedOnServer() {
 		console.log("Ready to share on facebook: " + $toSaveWeirdoid.serverUrl);
 		if (!$is_logged_in || $userid == null) {
 			// we need user to select among possible user keys if more than 1
-			alert("You must log in before you can share your Weirdoid!");
+			myalert("You must log in before you can share your Weirdoid!");
 			if ($srcPage != null)
 				gotoPage($srcPage);
 			return;
@@ -1092,7 +1136,7 @@ function imgCreatedOnServer() {
 		readyToShare($toSaveWeirdoid);
 
 	} catch (e) {
-		alert("Error saving weirdoid to Server database: " + e.message);
+		myalert("Error saving weirdoid to Server database: " + e.message);
 		if ($srcPage != null)
 			gotoPage($srcPage);
 	}
@@ -1112,7 +1156,7 @@ function shareComplete(wasShared) {
 	if (wasShared) {
 		console.log("Image Shared!");
 	} else {
-		alert("Image share failed.");
+		myalert("Image share failed.");
 	}
 	gotoPage("#previewshare");
 }
@@ -1268,7 +1312,7 @@ function onSavedWeirdoidInDB(savedok, id) {
 function saveWeirdoidInDB(callback) {
 
 	if (typeof $toSaveWeirdoid == undefined || $toSaveWeirdoid == null) {
-		alert("saveWeirdoidInDB $toSaveWeirdoid undefined");
+		myalert("saveWeirdoidInDB $toSaveWeirdoid undefined");
 		return;
 	}
 
@@ -1276,50 +1320,52 @@ function saveWeirdoidInDB(callback) {
 		console.log("Ready to save in database.");
 		if (!$is_logged_in || $userid == null) {
 			// we need user to select among possible user keys if more than 1
-			alert("You must log in before you can save your Weirdoid!");
+			myalert("You must log in before you can save your Weirdoid!");
 			return false;
 		}
 		// send user id and weirdoid to server
 		$toSaveWeirdoid.userid = $userid;
 		var datastr = JSON.stringify($toSaveWeirdoid);
-		$.ajax({
-			url : 'server/save_weirdoid.php',
-			type : 'post',
-			dataType : 'json',
-			data : {
-				data : datastr
-			}, // store,
-			success : function(json) {
-				// process the result
-				if (json.errorcode == 0) {
-					console.log("saved the weirdoid!");
-					alert("Saved the weiroid. ID = " + json.user_weirdoid_id);
-					$toSaveWeirdoid.user_weirdoid_id = json.user_weirdoid_id;
-					// call callback function;
-					if (callback != null)
-						callback(true, json.user_weirdoid_id);
-				} else {
-					serverAlert("Error saving weirdoid in DB", json);
-					console.log("Error saving weirdoid in DB");
-					console.log(json.errormsg);
-					if (callback != null)
-						callback(false, -1);
-				}
-			},
-			failure : function(data) {
-				console.log("saving weirdoid in DB failure");
-				if (callback != null)
-					callback(false, -1);
-			},
-			complete : function(xhr, data) {
-				if (xhr.status != 0 && xhr.status != 200)
-					alert('Error calling server to save weirdoid. Status='
-							+ xhr.status + " " + xhr.statusText);
-			}
-		});
+		$
+				.ajax({
+					url : 'server/save_weirdoid.php',
+					type : 'post',
+					dataType : 'json',
+					data : {
+						data : datastr
+					}, // store,
+					success : function(json) {
+						// process the result
+						if (json.errorcode == 0) {
+							console.log("saved the weirdoid!");
+							myalert("Saved the weiroid. ID = "
+									+ json.user_weirdoid_id);
+							$toSaveWeirdoid.user_weirdoid_id = json.user_weirdoid_id;
+							// call callback function;
+							if (callback != null)
+								callback(true, json.user_weirdoid_id);
+						} else {
+							serverAlert("Error saving weirdoid in DB", json);
+							console.log("Error saving weirdoid in DB");
+							console.log(json.errormsg);
+							if (callback != null)
+								callback(false, -1);
+						}
+					},
+					failure : function(data) {
+						console.log("saving weirdoid in DB failure");
+						if (callback != null)
+							callback(false, -1);
+					},
+					complete : function(xhr, data) {
+						if (xhr.status != 0 && xhr.status != 200)
+							myalert('Error calling server to save weirdoid. Status='
+									+ xhr.status + " " + xhr.statusText);
+					}
+				});
 
 	} catch (e) {
-		alert("Error saving weirdoid to Server database: " + e.message);
+		myalert("Error saving weirdoid to Server database: " + e.message);
 
 	}
 };
@@ -1388,7 +1434,7 @@ function saveWeirdoidsLocal() {
 		}
 
 	} catch (e) {
-		alert("Error saving to local storage: " + e.message);
+		myalert("Error saving to local storage: " + e.message);
 		return false;
 	}
 	return true;
@@ -1398,7 +1444,7 @@ function saveWeirdoidsLocal() {
 function saveWeirdoidLocal() {
 
 	if (typeof $toSaveWeirdoid == undefined || $toSaveWeirdoid == null) {
-		alert("saveWeirdoidLocal $toSaveWeirdoid undefined");
+		myalert("saveWeirdoidLocal $toSaveWeirdoid undefined");
 		return false;
 	}
 	if ($.inArray($toSaveWeirdoid, $weirdoids) < 0)
@@ -1463,7 +1509,7 @@ $(document)
 						getProductList();
 
 					} else {
-						alert("Not online and no packlist info available for "
+						myalert("Not online and no packlist info available for "
 								+ packlist_url + " key " + $packlist_key);
 					}
 
@@ -1658,16 +1704,13 @@ $(document)
 																						+ '", sizingMethod="scale";');
 															});
 										}
-										
+
 									});
 
-					$('#build')
-					.live(
-							'pageshow',function(event)
-							{
-								$.resizeImages();
-							});
-					
+					$('#build').live('pageshow', function(event) {
+						$.resizeImages();
+					});
+
 					$('#headbtn').click(function(e) {
 
 						$active_cycle = $('#cycle_heads');
@@ -1746,7 +1789,7 @@ $(document)
 						e.preventDefault();
 						return true;
 					});
-					
+
 					$(window).resize(function() {
 						console.log("in resize");
 						$.resizeImages(null);
@@ -1774,8 +1817,11 @@ function drawFromQueue() {
 		drawing = $drawingqueue.shift();
 		drawInCanvas(drawing.context, drawing.weirdoid, drawing.scaleBy,
 				drawing.lmargin);
-	} else
+	} else {
+
+		$('body').removeClass('ui-loading');
 		$('#vault .vaultcanvas-hidden').removeClass('vaultcanvas-hidden');
+	}
 }
 
 function drawInCanvas(context, weirdoid, scaleBy, lmargin) {
@@ -1809,14 +1855,18 @@ function drawInCanvas(context, weirdoid, scaleBy, lmargin) {
 
 		var scaleBy = img.scaleBy;
 
-		var nu_x = Math.round(lmargin / scaleBy);
-		var nu_y = Math.round(weirdoid.topoffset / scaleBy);
-		var nu_w = Math.round(sprite.width / scaleBy);
-		var nu_h = Math.round(sprite.height / scaleBy);
+		var nu_x = Math.round(lmargin * scaleBy);
+		var nu_y = Math.round(weirdoid.topoffset * scaleBy);
+		var nu_w = Math.round(sprite.width * scaleBy);
+		var nu_h = Math.round(sprite.height * scaleBy);
+		// var nu_x = Math.round(lmargin / scaleBy);
+		// var nu_y = Math.round(weirdoid.topoffset / scaleBy);
+		// var nu_w = Math.round(sprite.width / scaleBy);
+		// var nu_h = Math.round(sprite.height / scaleBy);
 		if (ximg == null)
-			alert("null img in drawInCanvas");
+			myalert("null img in drawInCanvas");
 		if (nu_w == undefined || nu_h == undefined || nu_w <= 0 || nu_h <= 0)
-			alert("Bad image values: offset=" + weirdoid.topoffset
+			myalert("Bad image values: offset=" + weirdoid.topoffset
 					+ " scaleBy=" + scaleBy + " width=" + sprite.width
 					+ " height=" + sprite.height)
 
@@ -1828,8 +1878,27 @@ function drawInCanvas(context, weirdoid, scaleBy, lmargin) {
 
 	img.src = img.sprite.src;// weirdoid.src;
 
-
 };
+
+function onAfterClickPack(curr, next, opts) {
+	var index = opts.currSlide;
+
+	var cycle = opts.$cont;
+
+	// if (typeof $active_cycle == undefined || $active_cycle == '') {
+	// console.log("$active_cycle undefined");
+	// return;
+	// }
+	if (typeof cycle == undefined || cycle == '') {
+		console.log("onAfter: cycle undefined");
+		return;
+	}
+
+	cycle.currSlide = index;
+	cycle.data('currSlide', index);
+	console.log('Build Pack slide = ' + index + ' curr ' + cycle.currSlide);
+
+}
 
 function onAfter(curr, next, opts) {
 	var index = opts.currSlide;
@@ -1882,5 +1951,21 @@ function serverAlert(error, json) {
 		});
 
 	}
-	alert(alertmsg);
+	myalert(alertmsg, "Error on Server");
+}
+
+function myalert(message, title) {
+
+	var msg_html = "";
+	if (title != null) {
+		msg_html += "<h1>" + title + "</h1>";
+	}
+	if (message != null) {
+		msg_html += "<p>" + message + "</p>";
+	}
+	msg_html += '<a class="close-reveal-modal">&#215;</a>';
+	$('#myModal').html(msg_html);
+
+	$('#myModal').reveal();
+
 }

@@ -80,33 +80,30 @@ body {
 
 .packprice {
 	background-color: #665944;
-	height: 20px;
+	height: 25px;
 	line-height: 20px;
 	margin-left: 20px;
 	margin-top: 10px;
 	position: relative;
 	text-align: center;
-	width: 50px;
+	width: 70px;
 	z-index: 20;
 	float: left;
+	color: white;
+	padding: 5px 10px;
+	font-size: 20px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
 }
 
-.packprice-li { /*background-color: #665944;
-	    height: 20px;
-	    line-height: 20px;
-	    margin-left: 20px;
-	    margin-top: 10px;
-	    position: relative;
-	    text-align: center;
-	    width: 50px;
-	    */
+.packprice-li { 
 	text-align: center;
 	z-index: 20;
 	float: left;
 }
 
 .packdesc {
-	background-color: rgba(99, 99, 99, .25);
+	background-color: none;
 	float: left;
 	height: 40px;
 	line-height: 20px;
@@ -115,6 +112,7 @@ body {
 	position: relative;
 	width: 220px;
 	z-index: 20;
+	font-size: 18px;
 }
 
 .catalogdiv {
@@ -195,6 +193,7 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	height: 300px;
+	min-height: 300px;
 	width: 230px;
 	clear: both;
 	position: relative;
@@ -211,6 +210,25 @@ body {
 	position: relative;
 }
 
+#preview-share-canvas {
+	position: absolute; 
+	left: 0; 
+	top: 0; 
+	z-index: 1; 
+	height: 300px;
+	}
+	
+#preview-canvas {
+	height: 100%;
+	 z-index: 1; 
+	 display: block;
+	 width: 100%;
+	}
+	
+	#preview-canvas-background {
+	height: 100%;
+	 z-index: 0; 
+	}
 #packlist { //
 	padding-top: 20px;
 }
@@ -357,6 +375,7 @@ body {
 	margin: 0 auto;
 	width: 768px;
 	position: relative;
+	min-height: 838px;
 	//overflow: hidden;
 }
 
@@ -381,18 +400,18 @@ body {
 	padding: 0;
 }
 
-#changepacks li {
+#changepackss li {
 	list-style: none;
 	display: inline-block;
-	width: 70px;
+	width: auto;
 	background-color: #ccc;
 	height: 70px;
 	margin-right: 10px;
 }
 
 #changepacks li img {
-	height: 70px;
-	width: 70px;
+	height: 100%;
+	width: auto;
 }
 
 #btn_cancel {
@@ -558,10 +577,39 @@ body {
 	width: 350px;
 	margin-left: auto;
 	margin-right: auto;
+	display: block;
 }
 
+
+#homefooterbtns_afterlogin 
+ {
+	text-align: center;
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+	display: none;
+}
+	
+
+#homefooterbtns_afterlogin #user_name {
+		font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 30px;
+	color: white;
+	margin-right: 15px;
+	vertical-align: middle;
+	}
+	
 #home_login_btn {
 	margin-right: 20px;
+	display: inline;
+}
+
+
+
+#home_logout_btn {
+	display:inline;
+	vertical-align: middle;
 }
 
 #item_desc_div {
@@ -645,9 +693,10 @@ div.inline {
 }
 
 .vault-canvas-div {
-	height: auto;
+	height: 300px;
 	width: 230px;
 	margin: 0px auto;
+	cursor: pointer;
 }
 
 .vault-name {
@@ -655,6 +704,18 @@ div.inline {
 	text-align: center;
 }
 
+#myModal {
+	height: 500px;
+	width: 450px;
+		font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 30px;
+	color: #071e3a;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 40px;
+	
+	}
 #confirm_clear_pg {
 	position: absolute;
 	left: 50px;
