@@ -21,7 +21,8 @@
                         "preview_small": "imgs/icon_pack1.png",
                         "preview_large": "imgs/icon_pack1.png",
                         "preview_text": "this is the preview_text_description",
-                        "packfile": "../imgs/p1_bands.txt"
+                        "packfile": "../imgs/p1_bands.txt",
+                        "cycle_counts" : "6|6|6|5|2|2428"
                     },
                     {
                         "id": 2,
@@ -37,7 +38,8 @@
                         "preview_small": "imgs/icon_pack2.png",
                         "preview_large": "imgs/icon_pack2.png",
                         "preview_text": "this is the preview_text_description",
-                        "packfile": "../imgs/p2_bands.txt"
+                        "packfile": "../imgs/p2_bands.txt",
+                        "cycle_counts" : "5|4|3|5|2|1234"
                     },
                     {
                         "id": "3",
@@ -56,7 +58,8 @@
                         "preview_small": "imgs/icon_pack3.png",
                         "preview_large": "imgs/icon_pack3.png",
                         "preview_text": "this is the preview_text_description",
-                        "packfile": "../imgs/p3_bands.txt"
+                        "packfile": "../imgs/p3_bands.txt",
+                        "cycle_counts" : "12|12|12|10|4|69120"
                     },
                     {
                         "id": 4,
@@ -72,7 +75,8 @@
                         "preview_small": "imgs/icon_pack4.png",
                         "preview_large": "imgs/icon_pack4.png",
                         "preview_text": "this is the preview_text_description",
-                        "packfile": "../imgs/p4_bands.txt"
+                        "packfile": "../imgs/p4_bands.txt",
+                        "cycle_counts" : "6|6|6|5|2|2428"
                     },
                     {
                         "id": 5,
@@ -88,26 +92,25 @@
                         "preview_small": "imgs/icon_pack5.png",
                         "preview_large": "imgs/icon_pack5.png",
                         "preview_text": "this is the preview_text_description",
-                        "packfile": "../imgs/p5_bands.txt"
+                        "packfile": "../imgs/p5_bands.txt",
+                        "cycle_counts" : "6|6|6|5|2|2428"
                     },
                     {
                         "id": "6",
-                        "item_type": "set",
-                        "pack_ids": [
-                            1,
-                            2,4
-                        ],
+                        "item_type": "pack",
+                        "pack_id": 6,
                         "heading1": "Pack 6",
                         "heading2": "Get packs 1 and 2 for special price!",
-                        "cost_str": "$199.99",
-                        "cost": "199.99",
+                        "cost_str": "Free",
+                        "cost": "0",
                         "listorder": 2,
                         "special_img": "imgs/icon_pack6.png",
                         "thumbnail": "imgs/icon_pack6.png",
                         "preview_small": "imgs/icon_pack6.png",
                         "preview_large": "imgs/icon_pack6.png",
                         "preview_text": "this is the preview_text_description",
-                        "packfile": "../imgs/p6_bands.txt"
+                        "packfile": "../imgs/p6_bands.txt",
+                        "cycle_counts" : "6|6|6|5|2|2428"
                     }
                 ]
             }

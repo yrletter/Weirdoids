@@ -25,10 +25,10 @@ body {
 	padding: 0;
 }
 
-.ui-page .ui-header, .ui-page .ui-footer {
-    margin: 0 auto;
-    max-width: 768px;
-    position: relative;
+.ui-page .ui-header,.ui-page .ui-footer {
+	margin: 0 auto;
+	max-width: 768px;
+	position: relative;
 }
 
 .floatrightonly {
@@ -72,9 +72,9 @@ body {
 
 .packgrid a .ui-btn-inner {
 	padding: 0
-	}
+}
 
-.packgrid a img{
+.packgrid a img {
 	height: 100%;
 }
 
@@ -96,7 +96,7 @@ body {
 	border-radius: 10px 10px 10px 10px;
 }
 
-.packprice-li { 
+.packprice-li {
 	text-align: center;
 	z-index: 20;
 	float: left;
@@ -170,6 +170,11 @@ body {
 	width: 200px;
 }
 
+#logged_in_msg {
+	width: 80%;
+	margin: 10px auto;
+	text-align: center;
+}
 
 .preview-weirdoid-name {
 	width: 100%;
@@ -183,9 +188,10 @@ body {
 }
 
 #preview-share-buttons {
-	width: 500px;
+	width: 400px;
 	margin-left: auto;
 	margin-right: auto;
+	text-align: center;
 }
 
 #preview-canvas-div {
@@ -211,45 +217,189 @@ body {
 }
 
 #preview-share-canvas {
-	position: absolute; 
-	left: 0; 
-	top: 0; 
-	z-index: 1; 
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
 	height: 300px;
-	}
-	
+}
+
 #preview-canvas {
 	height: 100%;
-	 z-index: 1; 
-	 display: block;
-	 width: 100%;
-	}
-	
-	#preview-canvas-background {
+	z-index: 1;
+	display: block;
+	width: 100%;
+}
+
+#preview-canvas-background {
 	height: 100%;
-	 z-index: 0; 
-	}
+	z-index: 0;
+}
+
+#saved_or_shared_msg_previewshare {
+	width: 80%;
+	margin: 10px auto;
+	text-align: center;
+}
+
+#shared_msg_previewshare {
+	width: 80%;
+	margin: 10px auto;
+	text-align: center;
+}
+
+#saved_or_shared_msg {
+	width: 80%;
+	margin: 10px auto;
+	text-align: center;
+}
+
 #packlist { //
 	padding-top: 20px;
 }
 
-
 #buypreview {
 	background-color: #000000;
 	color: #999999;
+	margin: 0 auto;
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	height: 100%;
 }
 
 #pack_preview_small {
-	width: 350px;
-	margin-left: auto;
-	margin-right: auto;
+	width: 25%;
+	margin-left: 10px;
+	margin-right: 10px;
+	float: left;
+}
+
+#pack_preview_hdr {
+	display: block;
+	height: 16%;
+	width: 100%;
+	position: relative;
+}
+
+#pack_preview_hdr img {
+	height: auto %;
+	width: 100%;
+}
+
+#pack_preview_content {
+	height: 92%;
+	overflow: hidden;
+	background-color: #252525;
+}
+
+#pack_preview_content_top_right {
+	float: left;
+	display: inline;
+	text-align: left;
+}
+
+#pack_preview_content_top {
+	display: block;
+	height: 20%;
+	width: 100%;
+	position: relative;
+	clear: both;
+	background-color: #252525;
+}
+
+.pack_cycle_count {
+	height: 20px;
+	width: 20px;
+	background-color: black;
+	color: white;
+	font-size: 15px;
+	position: relative;
+	top: 0;
+	float: right;
+	padding-top: 3px;
+	text-align: center;
+}
+
+.pack_total_count {
+	height: 100%;
+	width: 100%;
+	padding: 3px;
+	background-color: black;
+	color: white;
+	font-size: 45px;
+	text-align: center;
+}
+
+#pack_preview_footer {
+	width: 98%;
+	height: 12%;
+	margin: 0 auto;
+	display: block;
+}
+
+#pack_preview_combinations {
+	width: 15%;
+	height: 100%;
+	padding: 3px;
+	float: left;
+	display: inline;
+	background-color: black;
+	overflow: hidden;
+}
+
+.pack_cycle_count_wrapper {
+	width: 15%;
+	height: 100%;
+	margin-right: 5px;
+	padding: 3px;
+	float: left;
+	display: inline;
+	background: #666666 url('../imgs/nav_icons.png') no-repeat;
+	overflow: hidden;
+	background-position: center;
+}
+
+#pack_preview_head_count {
+	
+}
+
+#pack_preview_body_count {
+	
+}
+
+#pack_preview_leg_count {
+	
+}
+
+#pack_preview_xtra_count {
+	
+}
+
+#pack_preview_bkgd_count {
+	
+}
+
+#pack_preview_total_count {
+	height: 55%;
+	text-align: center;
+	font-size: 40px;
+	width: 100%;
+}
+
+#pack_preview_total_text {
+	height: 40%;
+	text-align: center;
+	font-size: 16px;
+	color: #666666;
+	width: 100%;
 }
 
 #pack_heading1 {
 	font-weight: bold;
-	font-size: 28px;
-	color: #999999;
-	text-align: center;
+	font-size: 34px;
+	color: white;
+	text-align: left;
 	margin-top: 20px;
 	clear: both;
 }
@@ -265,22 +415,30 @@ body {
 
 #pack_preview_text {
 	font-weight: bold;
-	font-size: 28px;
+	font-size: 20px;
 	color: #999999;
 	text-align: center;
 	margin-top: 20px;
 	clear: both;
 }
 
-#pack_preview_cost {
+.pack_preview_cost {
 	font-weight: bold;
 	font-size: 28px;
-	color: #999999;
+	color: black;
 	text-align: center;
-	margin-top: 20px;
+	margin-top: 10px;
 	clear: both;
+	float: left;
+	width: 40%;
+	padding: 5px;
+	background-color: #1961A7;
 }
 
+.pack_preview_cost .ui-btn-inner {
+	padding: 5px;
+	}
+	
 #pack_preview_buy_div {
 	width: 150px;
 	margin-left: auto;
@@ -290,11 +448,12 @@ body {
 }
 
 #pack_preview_large {
-	width: 600px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 20px;
+	width: 98%;
+	height: 48%;
+	margin: 10px auto;
+	background-color: black;
 	clear: both;
+	text-align: center;
 }
 
 #btn_prev_head {
@@ -371,20 +530,19 @@ body {
 }
 
 #band_wrapper {
-	
 	margin: 0 auto;
 	width: 768px;
 	position: relative;
-	min-height: 838px;
-	//overflow: hidden;
+	min-height: 838px; //
+	overflow: hidden;
 }
 
-#buildhdr {
-	//width: 100%;
+#buildhdr { //
+	width: 100%;
 }
 
-#banks-nav-bar .ui-navbar ul, #buildhdr .ui-navbar-expanded ul {
-	//width: 100%;
+#banks-nav-bar .ui-navbar ul,#buildhdr .ui-navbar-expanded ul { //
+	width: 100%;
 }
 
 #changepacks {
@@ -412,6 +570,10 @@ body {
 #changepacks li img {
 	height: 100%;
 	width: auto;
+}
+
+.notloaded_pack {
+	opacity: 0.5;
 }
 
 #btn_cancel {
@@ -481,24 +643,24 @@ body {
 	width: 150px;
 }
 
-#nav_icon_1 {
-	background-position: 0 0;
+.nav_icon_1 {
+	background-position: -15px center;
 }
 
-#nav_icon_2 {
-	background-position: -150px 0;
+.nav_icon_2 {
+	background-position: -165px center;
 }
 
-#nav_icon_3 {
-	background-position: -300px 0;
+.nav_icon_3 {
+	background-position: -315px center;
 }
 
-#nav_icon_4 {
-	background-position: -450px 0;
+.nav_icon_4 {
+	background-position: -465px center;
 }
 
-#nav_icon_5 {
-	background-position: -600px 0;
+.nav_icon_5 {
+	background-position: -615px center;
 }
 
 #build {
@@ -515,8 +677,8 @@ body {
 	width: 100%;
 	overflow: hidden;
 	height: 100%;
-	}
-	
+}
+
 #homediv {
 	background: transparent url('../imgs/bkgd_home.jpg') no-repeat;
 	/* 	width: 768px;
@@ -532,7 +694,7 @@ body {
 	top: 400px;
 	margin-left: 10px;
 	overflow: hidden;
-	}
+}
 
 #btn_build {
 	width: 200px;
@@ -563,7 +725,6 @@ body {
 	width: 768px;
 	margin: 0 auto;
 } /* must be same height as the footer */
-
 #homefooter {
 	position: relative;
 	top: -100px; /* negative value of footer height */
@@ -580,35 +741,30 @@ body {
 	display: block;
 }
 
-
-#homefooterbtns_afterlogin 
- {
+#homefooterbtns_afterlogin {
 	text-align: center;
 	width: 350px;
 	margin-left: auto;
 	margin-right: auto;
 	display: none;
 }
-	
 
 #homefooterbtns_afterlogin #user_name {
-		font-family: Arial, Helvetica, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	font-size: 30px;
 	color: white;
 	margin-right: 15px;
 	vertical-align: middle;
-	}
-	
+}
+
 #home_login_btn {
 	margin-right: 20px;
 	display: inline;
 }
 
-
-
 #home_logout_btn {
-	display:inline;
+	display: inline;
 	vertical-align: middle;
 }
 
@@ -616,7 +772,6 @@ body {
 	width: 65%;
 	padding-left: 20px;
 }
-
 
 .packcost {
 	float: right;
@@ -673,7 +828,6 @@ div.inline {
 	height: 85%;
 	overflow-y: auto;
 	overflow-x: hidden;
-	
 }
 
 #vaultcontent {
@@ -705,17 +859,39 @@ div.inline {
 }
 
 #myModal {
-	height: 500px;
-	width: 450px;
-		font-family: Arial, Helvetica, sans-serif;
+	height: 100%;
+	width: 100%;
+	background-color: #ccc;
+}
+
+#modalcontent {
+	height: 300px;
+	width: 350px;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: normal;
 	font-size: 30px;
-	color: #071e3a;
+	color: white;
 	text-align: center;
 	vertical-align: middle;
-	padding-top: 40px;
+	margin: 0 auto;
+}
+
+#modal_wrapper {
+	padding: 40px;
+	margin: 40px auto;
+	background-color: #234567;
+	width: 75%;
+}
+
+#modal_btn_div {
+	margin: 0px auto;
+	width: 250px;
+}
+
+#btn_myModal {
 	
-	}
+}
+
 #confirm_clear_pg {
 	position: absolute;
 	left: 50px;
@@ -753,9 +929,9 @@ div.inline {
 	visibility: hidden;
 }
 
-#vault .ui-grid-b canvas {
-	//width: auto;
-	//height: auto;
+#vault .ui-grid-b canvas { //
+	width: auto; //
+	height: auto;
 }
 
 .nav-glyphish-example .ui-btn .ui-btn-inner {
@@ -825,11 +1001,9 @@ div.inline {
 	background: transparent;
 	margin: auto;
 	display: block;
-
 	zoom: 1; //
 	width: 100%; //
 	height: 100%;
-
 }
 
 .cyclediv {

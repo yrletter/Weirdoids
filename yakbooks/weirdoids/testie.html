@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JQuery Cycle Plugin - Basic Demo</title>
+<style type="text/css">
+.slideshow {
+	height: 232px;
+	width: 800px;
+	margin: 0px auto;
+}
+
+.slideshow img {
+	padding: 15px;
+	width: 200px;
+	height: 200px;
+	margin: 0px auto;
+	border: 1px solid #ccc;
+}
+
+.wrapper {
+	float: left;
+	width: 500px;
+	min-width: 500px;
+}
+</style>
+<!-- include jQuery library -->
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<!-- include Cycle plugin -->
+<script type="text/javascript"
+	src="http://cloud.github.com/downloads/malsup/cycle/jquery.cycle.all.latest.js"></script>
+<script type="text/javascript">
+	var blank = new Image();
+	blank.src = 'imgs/blank.gif';
+
+	$(document).ready(function() {
+		/*
+		 $('.slideshow img').each(function() {
+		 if (!this.complete) {
+		 this.onload = function() {
+		 fixPng(this)
+		 };
+		 } else {
+		 fixPng(this);
+		 }
+		 })
+		 */
+		$('.slideshow').cycle({
+			fx : 'scrollHorz',
+			cleartype : true
+		// choose your transition type, ex: fade, scrollUp, shuffle, etc...
+		});
+
+	});
+
+	function fixPng(png) {
+		// get src
+
+		var src = png.src;
+		if (!src.match(/png$/))
+			return;
+
+		// set width and height
+		if (!png.style.width) {
+			png.style.width = $(png).width();
+		}
+		if (!png.style.height) {
+			png.style.height = $(png).height();
+		}
+		// replace by blank image
+		png.onload = function() {
+		};
+		png.src = blank.src;
+		// set filter (display original image)
+		var filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"
+				+ src + "',sizingMethod='scale')";
+		png.runtimeStyle.filter = filter;
+	}
+
+	/* Ca-Phun Ung < caphun at tofugear dot com>  * Support for fullscreen horizontal scroll transitions.  */
+	$.fn.cycle.transitions.scrollMaxHoriz = function($cont, $slides, opts) {
+		var w = $(window).width();
+		if (opts.minWidth && w < opts.minWidth)
+			w = opts.minWidth;
+		opts.before.push(function(curr, next, opts, fwd) {
+			if (opts.rev)
+				fwd = !fwd;
+			curr.cycleW = next.cycleW = w;
+			$.fn.cycle.commonReset(curr, next, opts);
+			opts.cssBefore.left = fwd ? (next.cycleW - 1) : (1 - next.cycleW);
+			opts.animOut.left = fwd ? -curr.cycleW : curr.cycleW;
+		});
+		opts.cssFirst.left = 0;
+		opts.cssBefore.top = 0;
+		opts.animIn.left = 0;
+		opts.animOut.top = 0;
+	};
+</script>
+</head>
+<body>
+
+	<div class="slideshow">
+
+			<img src="imgs/p1_head_1.png"  />
+			<img src="imgs/p1_head_1.png"  />
+			<img src="imgs/p1_head_1.png"  />
+			<img src="imgs/p1_head_1.png"  />
+			<img src="imgs/p1_head_1.png"  />
+			<img src="imgs/p1_head_1.png"  />
+	</div>
+</body>
+</html>

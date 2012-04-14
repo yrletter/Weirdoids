@@ -30,7 +30,7 @@ $(document)
 															nxtimg = this;
 															$('#homewrap')
 																	.append(
-																			'<div>')
+																			'<div>');
 															$('#homewrap')
 																	.append(
 																			'<img src="'
@@ -41,7 +41,7 @@ $(document)
 															var wholename = "";
 															if (nxtimg.fname
 																	&& nxtimg.fname.length > 0)
-																wholename += nxtimg.lname;
+																wholename += nxtimg.fname;
 															if (nxtimg.lname
 																	&& nxtimg.lname.length > 0) {
 																if (wholename.length > 0) {

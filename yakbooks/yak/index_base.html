@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Yak</title>
+<meta name="viewport"
+	content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon" href="imgs/apple-touch-icon.png" />
+
+<link rel="stylesheet" href="css/jquery.mobile-1.0.css" />
+<link rel="stylesheet" href="css/site.css" />
+
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+
+<script type="text/javascript" src="script/yak.js"></script>
+<script type="text/javascript" src="script/site.js"></script>
+<script src="script/jquery.cycle.all.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+	<div id="leftnav">
+
+		<a href="#new"> <img src="img/logo_yak.png" alt="Yak" /> </a>
+
+		<div id="btn_new">
+			<a href="#new" data-role="button" data-icon="star"><img
+				src="img/btn_whatsnew.png" alt="" /> </a>
+		</div>
+
+		<div id="btn_books">
+			<a href="#books" data-role="button" data-icon="star"><img
+				src="img/btn_books.png" alt="" /> </a>
+		</div>
+
+		<div id="btn_games">
+			<a href="#games" data-role="button" data-icon="star"><img
+				src="img/btn_games.png" alt="" /> </a>
+		</div>
+
+		<div id="footer">
+			<ul>
+				<li><a href="#myaccount" class="loggedaccount"><img
+						src="img/app_weirdoids.png" /> </a></li>
+				<li><a href="#signuppg"><img src="img/btn_signup_sm.png" />
+				</a></li>
+				<li><a href="#loginaccount"><img src="img/btn_login_sm.png" />
+				</a></li>
+			</ul>
+		</div>
+
+	</div>
+
+
+
+	<div id="loginpg" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+			<div id="sectionbar" class="new">
+				<img src="img/icon_star.png" />
+				<h1>Choose Your Account</h1>
+			</div>
+
+			<div class="content">
+
+				<ul class="login">
+					<li><a href="#loginaccount"><img
+							src="img/app_weirdoids.png" />yrletter</a></li>
+					<li><a href="#loginaccount"><img
+							src="img/app_sophisticrits.png" />jlbrowni</a></li>
+					<li><a href="#loginaccount"><img
+							src="img/app_sagetrail.png" />newcombannie</a></li>
+					<li><a href="#loginaccount"><img
+							src="img/app_tophatapple.png" />bkeenan99</a></li>
+					<li><a href="#loginaccount"><img
+							src="img/app_weirdoids.png" />yrletter</a></li>
+					<li><a href="#loginaccount"><img
+							src="img/app_sophisticrits.png" />jlbrowni</a></li>
+					<li><a href="#loginaccount"><img
+							src="img/app_sagetrail.png" />newcombannie</a></li>
+					<li><a href="#loginaccount"><img
+							src="img/app_weirdoids.png" />bkeenan99</a></li>
+					<li><a href="#loginaccount"><img
+							src="img/app_weirdoids.png" />yrletter</a></li>
+					<li><a href="#loginaccount"><img
+							src="img/app_sophisticrits.png" />jlbrowni</a></li>
+					<li><a href="#loginaccount"><img
+							src="img/app_sagetrail.png" />newcombannie</a></li>
+					<li><a href="#loginaccount"><img
+							src="img/app_weirdoids.png" />bkeenan99</a></li>
+				</ul>
+			</div>
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+	<div id="loginaccount" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+
+				<h1>Log In</h1>
+			</div>
+
+			<div class="content">
+
+
+				<div>
+					<form id="loginform" action="">
+						<fieldset>
+
+							<div data-role="fieldcontain">
+								<label for="name">Username</label> <input type="text"
+									name="login" id="name" value="ddd" /> <label class="error"
+									for="name" id="name_error">This field is required.</label>
+							</div>
+
+							<div data-role="fieldcontain">
+								<label for="password">Password</label> <input type="password"
+									name="password" id="password" value="ddd" /><label class="error"
+									for="password" id="password_error">This field is required.</label>
+							</div>
+							<div>
+								<div id="btn_login">
+									<a href="#" data-transition="fade"><img
+										src="img/btn_login.png" alt="" /> </a>
+								</div>
+
+
+
+							</div>
+
+						</fieldset>
+					</form>
+				</div>
+				<hr />
+				<div>
+					Don't have a login? <a href="register.html">Sign Up</a>
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+	<div id="signuppg" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>Sign Up</h1>
+			</div>
+
+
+			<div class="content">
+
+				<ul class="signup">
+					<li><a href="#signupkidpg"><img
+							src="img/app_weirdoids.png" />Kid</a></li>
+					<li><a href="#signupgrownuppg"><img
+							src="img/app_sophisticrits.png" />Grown Up</a></li>
+
+				</ul>
+			</div>
+
+
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+	<div id="signupkidpg" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>Sign Up</h1>
+			</div>
+
+
+			<div class="content">
+
+				<h1>Hello youngster!</h1>
+
+				<form id="signup_kid_form" action="">
+					<fieldset>
+						<div data-role="fieldcontain">
+							<label for="child_name">Username</label> <input type="text" name="name"
+								id="child_name" value="" /> 
+								<label class="error" for="child_name"
+								id="child_name_error">This field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="child_password">Password</label> <input type="password"
+								name="password" id="child_password" value="" />
+								<label class="error" for="child_password"
+								id="child_password_error">This field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="child_cpassword">Password</label> <input type="password"
+								name="cpassword" id="child_cpassword" value="" />
+								<label class="error" for="child_cpassword"
+								id="child_cpassword_error">This field is required.</label>
+						</div>
+
+
+						<div>
+							Choose an Avatar
+							<ul class="avatars">
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_sophisticrits.png" />
+								</a></li>
+								<li><a href="#"><img src="img/app_sagetrail.png" /> </a></li>
+								<li><a href="#"><img src="img/app_tophatapple.png" />
+								</a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+							</ul>
+						</div>
+
+						<div id="btn_signup_kid">
+							<a href="#" data-transition="fade"><img
+								src="img/btn_signup.png" alt="" /> </a>
+						</div>
+
+					</fieldset>
+				</form>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+	<div id="signupgrownuppg" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>Sign Up</h1>
+			</div>
+
+
+			<div class="content">
+
+				<h1>Hey there old timer!</h1>
+
+				<form id="signup_adult_form" action="">
+					<fieldset>
+						<div data-role="fieldcontain">
+							<label for="email">Email</label> <input type="text" name="email"
+								id="email" value="" /> <label class="error" for="email"
+								id="email_error">This field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="adult_name">Username</label> <input type="text"
+								name="name" id="adult_name" value="" /> <label class="error"
+								for="name" id="adult_name_error">This field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="adult_password">Password</label> <input
+								type="password" name="password" id="adult_password" value="" />
+							<label class="error" for="adult_password"
+								id="adult_password_error">This field is required.</label>
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="adult_cpassword">Password</label> <input
+								type="password" name="cpassword" id="adult_cpassword" value="" />
+							<label class="error" for="adult_cpassword"
+								id="adult_cpassword_error">This field is required.</label>
+						</div>
+
+
+						<div>
+							Choose an Avatar
+							<ul class="avatars">
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_sophisticrits.png" />
+								</a></li>
+								<li><a href="#"><img src="img/app_sagetrail.png" /> </a></li>
+								<li><a href="#"><img src="img/app_tophatapple.png" />
+								</a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+								<li><a href="#"><img src="img/app_weirdoids.png" /> </a></li>
+							</ul>
+						</div>
+
+						<div id="btn_signup_adult">
+							<a href="#" data-transition="fade"><img
+								src="img/btn_signup.png" alt="" /> </a>
+						</div>
+					</fieldset>
+				</form>
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+
+
+
+	<div id="myaccount" data-role="page">
+
+		<div id="content" data-role="content">
+
+
+
+			<div id="sectionbar" class="new">
+				<h1>My Account</h1>
+			</div>
+
+			<div class="content">
+
+				<h1>This is my account page</h1>
+
+				Account Page
+
+
+			</div>
+
+
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+
+	<div id="new" data-role="page">
+
+		<div id="content" data-role="content">
+
+			<div>
+
+
+
+				<ul id="cyclebook">
+					<li><img src="img/feature_weirdoids.jpg" alt="" /></li>
+					<li><img src="img/feature_sagetrail.jpg" alt="" /></li>
+					<li class="spread"><img src="img/3_4.jpg" alt="" /></li>
+				</ul>
+			</div>
+			<!--
+		  <div class="nav"><a id="prev2" href="#">Prev</a> <a id="next2" href="#">Next</a></div>
+		-->
+			<div id="sectionbar" class="new">
+				<img src="img/icon_star.png" />
+				<h1>New Releases</h1>
+			</div>
+
+			<div class="content">
+
+				<ul class="apps">
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+					<li><a href="#detail"><img src="img/app_sophisticrits.png" />Sophisticrits</a>
+					</li>
+					<li><a href="#detail"><img src="img/app_sagetrail.png" />The
+							Sage Trail</a></li>
+					<li><a href="#detail"><img src="img/app_tophatapple.png" />Top
+							Hat Apple</a></li>
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+				</ul>
+			</div>
+
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+
+
+
+	<div id="books" data-role="page">
+
+		<div id="content" data-role="content">
+
+			<div id="sectionbar" class="books">
+				<img src="img/icon_book.png" />
+				<h1>Books</h1>
+			</div>
+
+			<div id="sectionbar" class="norm">
+
+				<h2>Featured Books</h2>
+			</div>
+
+			<div class="content">
+				<ul class="featuredapps">
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+					<li><img src="img/app_sophisticrits.png" />Sophisticrits</li>
+					<li><img src="img/app_sagetrail.png" />The Sage Trail</li>
+				</ul>
+			</div>
+
+			<div id="sectionbar" class="norm">
+				<h2>All Books</h2>
+			</div>
+
+			<div class="content">
+
+				<ul class="apps">
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+					<li><img src="img/app_tophatapple.png" />Top Hat Apple</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+				</ul>
+			</div>
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+
+	<div id="games" data-role="page">
+
+		<div id="content" data-role="content">
+
+			<div id="sectionbar" class="games">
+				<img src="img/icon_games.png" />
+				<h1>Games</h1>
+			</div>
+
+			<div id="sectionbar" class="norm">
+				<h2>Featured Games</h2>
+			</div>
+
+			<div class="content">
+				<ul class="featuredapps">
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+				</ul>
+			</div>
+
+			<div id="sectionbar" class="norm">
+				<h2>All Books</h2>
+			</div>
+
+			<div class="content">
+
+				<ul class="apps">
+					<li><a href="#detail"><img src="img/app_weirdoids.png" />Weirdoids</a>
+					</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+					<li><img src="img/app_weirdoids.png" />Weirdoids</li>
+				</ul>
+			</div>
+
+		</div>
+		<!-- /content -->
+
+	</div>
+
+	<div id="detail" data-role="page">
+
+
+
+		<div id="content" data-role="content">
+
+			<div data-role="header">
+				<h1>Weirdoids</h1>
+				<a href="#new">Back</a>
+			</div>
+			<!-- /header -->
+
+			<div class="content">
+
+
+				<div id="apphdr">
+					<img src="img/app_weirdoids.png" />
+					<div id="btn_buy">
+						<a href="#" data-role="button" data-icon="star">Free</a>
+					</div>
+				</div>
+
+				<div id="description">
+					<h1>Weirdoids</h1>
+					<p>Accusamus terry richardson tattooed, ea nostrud keffiyeh
+						cardigan proident american apparel fixie mixtape vegan brunch
+						gluten-free magna. Four loko fugiat consectetur, DIY irure
+						locavore sed excepteur laborum mollit tattooed. Et echo park
+						nesciunt raw denim, fixie art party viral est nisi non. Pitchfork
+						banksy hoodie letterpress, four loko dolore twee viral. Banh mi
+						sustainable craft beer, PBR aute four loko velit placeat ut
+						farm-to-table do magna adipisicing.</p>
+				</div>
+
+				<div id="ss_ctr">
+					<ul id="screenshots">
+						<li><img src="img/feature_weirdoids.jpg" alt="" /></li>
+						<li><img src="img/feature_sagetrail.jpg" alt="" /></li>
+						<li class="spread"><img src="img/3_4.jpg" alt="" /></li>
+					</ul>
+				</div>
+
+			</div>
+
+		</div>
+		<!-- /content -->
+
+	</div>
+	<!-- /page -->
+
+
+
+</body>
+</html>

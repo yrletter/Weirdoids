@@ -19,27 +19,26 @@
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <link rel="stylesheet" href="css/jquery.mobile-1.0.min.css" />
-<link href="css/reveal.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css"
-	href="css/jquery.mobile.simpledialog.min.css" />
-<link rel="stylesheet" type="text/css"
-	href="css/jcarousel.css" />
+	href="css/jquery.mobile.simpledialog.css" />
+<link rel="stylesheet" type="text/css" href="css/jcarousel.css" />
 
 <link href="css/weirdoids.css" rel="stylesheet" type="text/css" />
 <!--[if lt IE 9]>
 <link href="css/weirdoids.ie.css" rel="stylesheet" type="text/css" />
 <![endif]-->
 <script src="script/libs/jquery-1.6.4.min.js"></script>
-<script src="script/libs/jquery.mobile-1.0.js"></script>
-
+<script
+	src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
 <script src="script/libs/jquery-ui-1.8.16.custom.min.js"
 	type="text/javascript"></script>
 <script src="script/libs/jquery.cycle.all.js" type="text/javascript"></script>
-<script src="script/libs/jquery.reveal.js" type="text/javascript"></script>
 <script src="script/libs/jquery.waitforimages.js" type="text/javascript"></script>
 <script src="script/libs/jquery.cookies.2.2.0.min.js"
 	type="text/javascript"></script>
-<script src="script/libs/jquery.mobile.simpledialog.min.js"
+<script
+	src="http://dev.jtsage.com/cdn/simpledialog/latest/jquery.mobile.simpledialog.min.js"
+	"
 	type="text/javascript"></script>
 <script src="script/libs/json2.js" type="text/javascript"></script>
 <!--[if IE]><script type="text/javascript" src="script/excanvas.js"></script><![endif]-->
@@ -69,9 +68,9 @@
 
 				<div id="home_btns">
 					<div id="btn_build">
-						<!--a href="#" id="bldbtn" data-role="button" ></a-->
+						<!--a href="#" id="bldbtn" data-role="button"  ></a-->
 						<input id="bldbtn" type="image" src="imgs/btn_build.jpg"
-							alt="Build" />
+							alt="Build" class="build_button" />
 					</div>
 
 					<div id="btn_vault">
@@ -190,19 +189,47 @@
 			</div>
 			<!-- /header -->
 
-			<div data-role="content">
+			<div data-role="content" id="pack_preview_content">
 
+				<div id="pack_preview_hdr">
+					<img src="imgs/hdr_packs.jpg" />
+				</div>
 
-				<div id="pack_preview_small"></div>
-				<h1 id="pack_heading1">Original Weirdoids</h1>
-				<h2 id="pack_heading2">Creatures from the castle!</h2>
-				<div id="pack_preview_text">Lora ipsum etc.</div>
-				<div id="pack_cost"></div>
-				<div id="pack_preview_large">
-					<div></div>
-					<!-- /content -->
+				<div id="pack_preview_content_top">
+					<div id="pack_preview_small"></div>
+					<div id="pack_preview_content_top_right">
+						<h1 id="pack_heading1">Original Weirdoids</h1>
+
+						<div id="pack_preview_text">Lora ipsum etc.</div>
+						<div id="pack_cost" class="pack_preview_cost" data-role="button"></div>
+					</div>
+				</div>
+				<div id="pack_preview_large"></div>
+				<div id="pack_preview_footer">
+
+					<div class="pack_cycle_count_wrapper nav_icon_1">
+						<div id="pack_preview_head_count" class="pack_cycle_count">6</div>
+					</div>
+					<div class="pack_cycle_count_wrapper nav_icon_2">
+						<div id="pack_preview_body_count" class="pack_cycle_count">6</div>
+					</div>
+					<div class="pack_cycle_count_wrapper nav_icon_3">
+						<div id="pack_preview_leg_count" class="pack_cycle_count">6</div>
+					</div>
+					<div class="pack_cycle_count_wrapper nav_icon_4">
+						<div id="pack_preview_xtra_count" class="pack_cycle_count">3</div>
+					</div>
+					<div class="pack_cycle_count_wrapper nav_icon_5">
+						<div id="pack_preview_bkgd_count" class="pack_cycle_count">2</div>
+					</div>
+					<div  id="pack_preview_combinations">
+						<div id="pack_preview_total_count" class="pack_total_count">3642</div>
+						<div id="pack_preview_total_text" >COMBINATIONS</div>
+					</div>
 
 				</div>
+				<!-- /content -->
+
 			</div>
 			<!-- /content -->
 
@@ -216,8 +243,8 @@
 				<div id="vault_btn_bar" data-type="horizontal" align="right"
 					class="ui-btn-right">
 					<a href="#" data-icon="delete" data-role="button"
-						id="clearcachebtn">Clear Cache</a> <a href="#build"
-						id="btn_vault_to_build" data-role="button">Build</a>
+						id="clearcachebtn">Clear Cache</a> <a href="#"
+						id="btn_vault_to_build" class="build_button" data-role="button">Build</a>
 				</div>
 			</div>
 			<!-- /header -->
@@ -276,6 +303,12 @@
 						<!-- a href="#" data-role="button" class="online-only"
 							id="btn_share_on_fb" data-inline="true">Share on Facebook</a-->
 					</div>
+					<div id="saved_or_shared_msg">
+
+						<h1></h1>
+
+					</div>
+
 					<div id="imgs" style="max-height: 0px; height: 0px; width: 0px;"></div>
 				</form>
 			</div>
@@ -303,9 +336,17 @@
 					<a href="#" data-role="button" class="online-only"
 						id="btn_share_on_fb" data-inline="true">Share on Facebook</a> <a
 						href="#" data-role="button" class="online-only"
-						id="btn_post_gallery" data-inline="true">Post to Gallery</a> <a
-						href="#" data-role="button" class="online-only"
-						id="btn_share_email" data-inline="true">Email</a>
+						id="btn_post_gallery" data-inline="true">Post to Gallery</a>
+				</div>
+				<div id="saved_or_shared_msg_previewshare">
+
+					<h1></h1>
+
+				</div>
+				<div id="shared_msg_previewshare">
+
+					<h1></h1>
+
 				</div>
 			</div>
 			<!-- /content -->
@@ -360,6 +401,11 @@
 					</div>
 					<a href="#forgotpwd_pg" id="btn_forgot_pwd" data-inline="true">Forgot
 						Your Password?</a>
+				</div>
+				<div id="logged_in_msg">
+
+					<h1>You have successfully logged in to Yakhq!</h1>
+
 				</div>
 			</div>
 			<!-- /content -->
@@ -624,13 +670,16 @@
 				<!-- /header -->
 
 				<div data-role="content">
+					<div>
+						<img src="imgs/hdr_packs.jpg" />
+					</div>
 
 					<div id="pack_details_header_div">
 						<div id="pack_preview_small"></div>
 						<h1 id="pack_heading1">Original Weirdoids</h1>
 						<h2 id="pack_heading2">Creatures from the castle!</h2>
 						<div id="pack_preview_text">Lora ipsum etc.</div>
-						<div id="pack_cost"></div>
+						<div id="pack_cost" class="pack_preview_cost"></div>
 						<div id="pack_preview_large"></div>
 					</div>
 
@@ -649,7 +698,6 @@
 								name="shopping-cart.items.item-1.merchant-item-id"
 								value="1234abcd" /><input type="hidden"
 								name="shopping-cart.merchant-private-data" value="1234abcd" />
-
 							<input
 								name="shopping-cart.items.item-1.digital-content.description"
 								type="hidden" value="these are instructions" /> <input
@@ -684,15 +732,15 @@
 			</div>
 		</div>
 
-		<div id="myModal" class="reveal-modal" data-reveal-id="myModal"
-			data-animation="fadeAndPop" data-animationspeed="300"
-			data-closeonbackgroundclick="true"
-			data-dismissmodalclass="close-reveal-modal">
-			<h1>Modal Title</h1>
-			<p>Any content could go in here.</p>
-			<a class="close-reveal-modal">&#215;</a>
+		<div data-role="page" data-theme="d" id="myModal" data-rel="dialog">
+			<div id="modal_wrapper">
+				<div data-role="content" id="modalcontent"></div>
+				<div id="modal_btn_div">
+					<a href="#" data-theme="d" data-rel="back" id="btn_myModal"
+						data-role="button">Close</a>
+				</div>
+			</div>
 		</div>
-
 	</div>
 
 	<!-- wrapper -->

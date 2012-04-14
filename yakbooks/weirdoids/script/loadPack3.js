@@ -22,7 +22,7 @@ jQuery.loadPack = function(newPack) {
 	if ($.inArray(newPack.id, $loadedpacks) > -1) {
 		console.log("Pack previously loaded");
 		$.mobile.changePage("#build", {
-			transition : "flip"
+			transition : "fade"
 		});
 		return;
 	}
@@ -30,7 +30,7 @@ jQuery.loadPack = function(newPack) {
 	if (newPack.id == lastLoadedPack.id) {
 		console.log("Old pack already loaded");
 		$.mobile.changePage("#build", {
-			transition : "flip"
+			transition : "fade"
 		});
 		return;
 	}
@@ -70,7 +70,7 @@ jQuery.loadPack = function(newPack) {
 				if (json.errorcode == 0) {
 					console.log("Read the pack file!");
 					$loadedpacks.push(currentPack.id);
-					$.processPackJson(json.bands);
+					$.processPackJson(json.bands, currentPack.id);
 				} else {
 					serverAlert("Read pack failure", json);
 					console.log("Read pack failure");
@@ -109,7 +109,7 @@ function checkInstalledProducts() {
 			alert("Pack referenced in packlist missing in $items: " + packid);
 		} else {
 			// look for pack id in user prodkeys
-			var prev_installed =  ($.inArray(curpack.id, $loadedpacks) >= 0) ;
+			var prev_installed = ($.inArray(curpack.id, $loadedpacks) >= 0);
 
 			if (userHasPurchased(packid) || prev_installed) {
 				$(this).html('Installed');
@@ -240,7 +240,33 @@ function getProductList() {
 
 }
 
-function process_band(i, band) {
+function unload_pack(pack) {
+	// iterate through all cycles, delete those that are in this pack
+	$('.cycle_element').each(function() {
+
+		var packid = $(this).attr('packid');
+
+		if (packid == pack.id) {
+			// find parent
+			$(this).remove();
+		}
+
+	});
+
+	// remove from loaded packs
+	$loadedpacks.splice($.inArray(pack.id, $loadedpacks), 1);
+	if (currentPack.id == pack.id) {
+		currentPack = '';
+		lastLoadedPack = '';
+	}
+
+	if ($loadedpacks.length == 0) {
+		console.log("removed last pack from builder");
+	}
+
+}
+
+function process_band(i, band, packid) {
 	console.log("next band " + band.divname);
 	// append to div bands
 	var divid = band.divname + "_w";
@@ -277,31 +303,16 @@ function process_band(i, band) {
 		}
 
 		$('#' + cycleid).append(
-				'<div><img id="' + sprite.id + '" class="cycleimg" src="'
-						+ sprite.src // dataurl
+				'<div class="cycle_element" packid="' + packid + '" ><img id="'
+						+ sprite.id + '" class="cycleimg" src="' + sprite.src // dataurl
 						+ '"></image></div>');
-		// $('#' + sprite.id).css('margin', 'auto');
-		// $('#' + sprite.id).css('display', 'block');
 
-		$('#' + cycleid).attr('bandtop', band.top);
-		$('#' + cycleid).attr('bandleft', band.left);
-		$('#' + cycleid).attr('bandheight', band.height);
-		$('#' + cycleid).attr('bandwidth', band.width);
-
-		// if ($.browser.msie) {
-		//
-		// $('#' + sprite.id).each(function() {
-		// if (!this.complete) {
-		// this.onload = function() {
-		// // fixPng(this);
-		// };
-		// } else {
-		// // fixPng(this);
-		// }
-		// });
-		//
-		// }
 	});
+
+	$('#' + cycleid).attr('bandtop', band.top);
+	$('#' + cycleid).attr('bandleft', band.left);
+	$('#' + cycleid).attr('bandheight', band.height);
+	$('#' + cycleid).attr('bandwidth', band.width);
 
 	$('#' + cycleid).append('</div></div>');
 	$('#' + cycleid + " div").width(view_width + "px");
@@ -317,21 +328,23 @@ function process_band(i, band) {
 		$('#' + cycleid).data('band', $oldband);
 	}
 
-	$('#' + cycleid).cycle({
-		speed : 500,
-		fx : 'scrollHorz',
-		timeout : 0,
-		cleartype : false,
-		cleartypeNoBg : true,
-		after : onAfter,
-		slideResize : 0
-	});
-	if ($active_cycle == '')
-		$active_cycle = $('#' + cycleid);
+	if ($('#' + cycleid).children().length > 0) {
+		$('#' + cycleid).cycle({
+			speed : 500,
+			fx : 'scrollHorz',
+			timeout : 0,
+			cleartype : false,
+			cleartypeNoBg : true,
+			after : onAfter,
+			slideResize : 0
+		});
+		if ($active_cycle == '')
+			$active_cycle = $('#' + cycleid);
+	}
 
 };
 
-jQuery.processPackJson = function(json) {
+jQuery.processPackJson = function(json, packid) {
 
 	console.log("processPackJson ");
 
@@ -354,7 +367,7 @@ jQuery.processPackJson = function(json) {
 	$active_cycle = '';
 
 	$.each(json.bands, function(i, band) {
-		process_band(i, band);
+		process_band(i, band, packid);
 	});
 
 	// console.log("clicking headbtn");
@@ -370,14 +383,20 @@ jQuery.processPackJson = function(json) {
 
 		$('#btn_next_head').unbind('click');
 		$('#btn_next_head').click(function(e) {
-			$active_cycle.cycle('next');
+			if ($active_cycle.children().length > 0) {
+
+				$active_cycle.cycle('next');
+			}
 			console.log("clicknext");
 			e.preventDefault();
 		});
 
 		$('#btn_prev_head').unbind('click');
 		$('#btn_prev_head').click(function(e) {
-			$active_cycle.cycle('prev');
+			if ($active_cycle.children().length > 0) {
+
+				$active_cycle.cycle('prev');
+			}
 			console.log("clickprev");
 			e.preventDefault();
 		});
@@ -401,16 +420,6 @@ jQuery.processPackJson = function(json) {
 
 	});
 
-	/*
-	 * $('#banks-nav-bar').waitForImages( function() { console.log('Before
-	 * readyToResize, all images loaded.'); readyToResize(); }, function(loaded,
-	 * count, success) {
-	 * 
-	 * console.log($(this).attr("id") + " " + loaded + ' of ' + count + ' images
-	 * has ' + (!success ? 'failed to load' : 'loaded') + '.');
-	 * 
-	 * });
-	 */
 };
 
 function readyToResize() {
@@ -565,8 +574,7 @@ function afterResizeImages() {
 				e.preventDefault();
 				return true;
 			});
-	// $.mobile.changePage( "#build", { transition: "flip"}
-	// );
+
 	$.mobile.hidePageLoadingMsg();
 
 	$.mobile.changePage("#build", {
@@ -632,7 +640,7 @@ jQuery.resizeImages = function(callback) {
 	var nusize = body_height - hdrheight - buildbar_height;
 
 	$('#band_wrapper').height(Math.min(1024, nusize));
-	$('#band_wrapper').css("min-height",Math.min(1024, nusize));
+	$('#band_wrapper').css("min-height", Math.min(1024, nusize));
 	// $('#btn_done').height());
 
 	var divwidth = $("#bands").outerWidth();
@@ -762,6 +770,12 @@ function loadCarousel(items) {
 		if (item != undefined) {
 			var packid = 'build_packid_' + item.id;
 			$('#mycarousel').append(mycarousel_getItemHTML(item, packid));
+			if ($.inArray(item.id, $loadedpacks) < 0) {
+
+				$('#' + packid).addClass('notloaded_pack');
+			} else
+				$('#' + packid).removeClass('notloaded_pack');
+
 			$('#' + packid).data('item', item);
 			itemcnt++;
 		}
@@ -780,14 +794,27 @@ function loadCarousel(items) {
 		// see if newPack in loadedpacks
 		if ($.inArray(item.id, $loadedpacks) < 0) {
 			console.log("Pack not previously loaded");
-			$.mobile.changePage("#packs", {
-				transition : "fade"
-			});
+			currentPack = item;
+//			if (userHasPurchased(currentPack.id) || currentPack.cost == 0) {
+//				// all loading done in build screen click handler
+//				$('#bldbtn').trigger('click');
+//			} else {
+
+				beginPackPurchase(item, $userid);
+//			}
+
 			return;
+		} else {
+			// pack already loaded. Now what?
+			console.log("Pack already loaded");
+			console.log("unloading pack");
+			unload_pack(item);
+			$(this).addClass('notloaded_pack');
+
+			return;
+
 		}
 
-		// pack already loaded. Now what?
-		console.log("Pack already loaded");
 	});
 };
 

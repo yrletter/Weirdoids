@@ -127,6 +127,10 @@ $(document)
 					var packs = [];
 
 					if ($online) {
+						checkAutoLogin();
+					}
+
+					if ($online) {
 						$
 								.ajax({
 									url : $fnames_url,
@@ -151,6 +155,7 @@ $(document)
 									}
 
 								});
+
 					} else if (localStorage.getItem($fnames_url) === null) {
 						alert("Not online and no local version of JSON for "
 								+ $fnames_url);
@@ -187,6 +192,14 @@ $(document)
 						shareClickHandler(true, $lastweirdoid);
 						return false;
 					});
+					$('#btn_post_gallery').click(function(e) {
+						console.log("post to gallery clicked");
+						$savingFromPreview = true;
+						$saveSuccessFunction = null;
+						$afterLoginPage = "#previewpage";
+						postGalleryClickHandler(true, $lastweirdoid);
+						return false;
+					});
 
 					$('#btn_login_with_fb')
 							.click(
@@ -211,6 +224,7 @@ $(document)
 						$srcPage = "#home";
 
 						$afterLoginPage = "#home";
+						$('#logged_in_msg').hide();
 						$.mobile.changePage("#loginaccount", {
 							transition : "fade"
 						});
@@ -251,11 +265,14 @@ $(document)
 					});
 
 					$('#previewpage').live('pagebeforeshow', function(event) {
+						$('#saved_or_shared_msg').hide();
 						drawPreview(event, "previewpage");
 
 					});
 
 					$('#previewshare').live('pagebeforeshow', function(event) {
+						$('#saved_or_shared_msg_previewshare').hide();
+						$('#shared_msg_previewshare').hide();
 						drawPreview(event, "previewshare");
 
 					});
@@ -303,8 +320,14 @@ $(document)
 									theme : "c"
 								}
 							}
-						})
+						});
 					});
+
+					$('#myModal').click(function(e) {
+						e.preventDefault();
+						return;
+					});
+
 					$("#btn_clear_vault_yes").click(function(e) {
 						console.log("clearing cache");
 						localStorage.removeItem($current_user_key);
@@ -499,6 +522,63 @@ function getPassword() {
 
 }
 
+function checkAutoLogin() {
+
+	// cache the form element for use in this
+	// function
+	// var $this = $(this);
+
+	// prevent the default submission of the form
+
+	if ($is_logged_in) {
+		console.log("checkAutoLogin: already logged in");
+		return;
+	}
+
+	$.ajax({
+		url : '../yak/controllers/checklogin.php',
+		type : 'post',
+		dataType : 'json',
+		success : function(json) {
+			// process the result
+			if (json.errorcode == 0) {
+				console.log(" auto logged in!");
+				$is_logged_in = true;
+
+				if (json.userid) {
+					$userid = json.userid;
+				}
+
+				$('#logged_in_msg').show();
+				// myalert("User " + name + " logged in! userid=" + $userid);
+
+				$('.logged-in-only').attr('disabled', '');
+				if (json.yakname)
+					displayUserName(json.yakname);
+
+				// synch up user data
+				afterLogin($userid);
+
+			} else if (json.errorcode == 1) {
+				console.log("No previous login");
+				console.log(json.errormsg)
+			} else {
+				serverAlert("Login check error", json);
+				console.log("Login check error");
+				console.log(json.errormsg);
+			}
+		},
+		failure : function(data) {
+			console.log("login check failure");
+		},
+		complete : function(xhr, data) {
+			if (xhr.status != 0 && xhr.status != 200)
+				alert('Error calling server to check login up. Status='
+						+ xhr.status + " " + xhr.statusText);
+		}
+	});
+}
+
 function loginToYak() {
 
 	$('.error').hide();
@@ -539,15 +619,19 @@ function loginToYak() {
 				if (json.userid) {
 					$userid = json.userid;
 				}
-				myalert("User " + name + " logged in! userid=" + $userid);
+
+				$('#logged_in_msg').show();
+				// myalert("User " + name + " logged in! userid=" + $userid);
 
 				$('.logged-in-only').attr('disabled', '');
 				displayUserName(name);
 
 				// synch up user data
 				afterLogin($userid);
+				window.setTimeout(function() {
+					chgPageAfterLoginOrShare();
+				}, 2000);
 
-				chgPageAfterLoginOrShare();
 			} else {
 				serverAlert("Login failure", json);
 				console.log("Login failure");
@@ -682,7 +766,7 @@ function displayUserName(uname) {
 	$('#home_logout_btn').show();
 
 	$('#home_logout_btn').click(function(e) {
-		myalert("Log the user out");
+		// myalert("Log the user out");
 
 		$userid = null;
 		$is_logged_in = false;
@@ -769,6 +853,35 @@ function afterFBLoginBeforeShare(success, msg) {
 		shareClickHandler(false, $toSaveWeirdoid);
 	} else
 		myalert("Failed to log in to FB before sharing: " + msg);
+}
+
+function postGalleryClickHandler(isFromPreview, tmpWeirdoid) {
+
+	$toSaveWeirdoid = tmpWeirdoid;
+
+	if (typeof $toSaveWeirdoid == undefined || $toSaveWeirdoid == null) {
+		console.log("postGalleryClickHandler $lastweirdoid undefined");
+		return;
+	}
+
+	if (!navigator.onLine) {
+		// user must log in first
+		myalert("You cannot post to the gallery unless you are online.");
+		return;
+	}
+
+	// was weirdoid previously saved on server?
+	if (typeof $toSaveWeirdoid.user_weirdoid_id == undefined
+			|| $toSaveWeirdoid.user_weirdoid_id == null) {
+		// first save the weirdoid
+		$saveSuccessFunction = readyToPostToGallery;
+		saveBeforeShare();
+
+	} else {
+		// create image on server
+		// calls share it when done
+		readyToPostToGallery();
+	}
 }
 
 function shareClickHandler(isFromPreview, $tmpWeirdoid) {
@@ -913,20 +1026,34 @@ function drawPreview(event, target) {
 	var lmargin = 170;
 
 	queueDraw(ctx, $lastweirdoid.bkgd, scaleBy, 0);
-
-	queueDraw(ctx, $lastweirdoid.head, scaleBy, $lastweirdoid.head.sprite.xloc);
-	queueDraw(ctx, $lastweirdoid.body, scaleBy, $lastweirdoid.body.sprite.xloc);
 	queueDraw(ctx, $lastweirdoid.leg, scaleBy, $lastweirdoid.leg.sprite.xloc);
+	queueDraw(ctx, $lastweirdoid.body, scaleBy, $lastweirdoid.body.sprite.xloc);
+	queueDraw(ctx, $lastweirdoid.head, scaleBy, $lastweirdoid.head.sprite.xloc);
 	queueDraw(ctx, $lastweirdoid.xtra, scaleBy, $lastweirdoid.xtra.sprite.xloc);
 	drawFromQueue();
 
 	$('#' + canvasname).show();
 
+	// var user_weirdoid_id = $lastweirdoid.user_weirdoid_id;
+	//
+	// if (user_weirdoid_id != undefined && user_weirdoid_id > 0) {
+	// $('#saved_or_shared_msg_previewshare h1').html(
+	// "Your Weirdoid was saved at Yakhq!");
+	// $('#saved_or_shared_msg_previewshare').show();
+	// }
+
+	if ($previewLastMessage != null) {
+
+		$('#shared_msg_previewshare h1').html($previewLastMessage);
+		$('#shared_msg_previewshare').show();
+		$previewLastMessage = null;
+	}
+
 }
 
 function drawVault(event) {
 	$('#vaultgrid').empty();
-	
+
 	$('body').addClass('ui-loading');
 
 	$vaultCnt = 0;
@@ -998,6 +1125,7 @@ function drawVault(event) {
 
 						$('#' + canvasdiv).data('weirdoid', savedWeirdoid);
 						$('#' + canvasdiv).unbind('click').click(function(e) {
+							$previewLastMessage = null;
 							$lastweirdoid = $(this).data('weirdoid');
 							console.log("clicked vault weirdoid");
 							$srcPage = "#vault";
@@ -1037,12 +1165,12 @@ function drawVault(event) {
 						}
 
 						queueDraw(context, savedWeirdoid.bkgd, scaleBy, 0);
-						queueDraw(context, savedWeirdoid.head, scaleBy,
-								savedWeirdoid.head.sprite.xloc);
-						queueDraw(context, savedWeirdoid.body, scaleBy,
-								savedWeirdoid.body.sprite.xloc);
 						queueDraw(context, savedWeirdoid.leg, scaleBy,
 								savedWeirdoid.leg.sprite.xloc);
+						queueDraw(context, savedWeirdoid.body, scaleBy,
+								savedWeirdoid.body.sprite.xloc);
+						queueDraw(context, savedWeirdoid.head, scaleBy,
+								savedWeirdoid.head.sprite.xloc);
 						queueDraw(context, savedWeirdoid.xtra, scaleBy,
 								savedWeirdoid.xtra.sprite.xloc);
 
@@ -1128,8 +1256,11 @@ function imgCreatedOnServer() {
 		if (!$is_logged_in || $userid == null) {
 			// we need user to select among possible user keys if more than 1
 			myalert("You must log in before you can share your Weirdoid!");
-			if ($srcPage != null)
-				gotoPage($srcPage);
+			window.setTimeout(function() {
+				if ($srcPage != null)
+					gotoPage($srcPage);
+			}, 1000);
+
 			return;
 		}
 
@@ -1143,8 +1274,78 @@ function imgCreatedOnServer() {
 
 }
 
+var $previewLastMessage = null;
+
+function readyToPostToGallery() {
+	// create image on server (if it doesn't already exist), retrieve image url
+	console.log("Posting previously saved weirdoid "
+			+ $toSaveWeirdoid.user_weirdoid_id);
+
+	// call server command
+	try {
+		console.log("Ready to post to gallery.");
+		if (!$is_logged_in || $userid == null) {
+			// we need user to select among possible user keys if more than 1
+			myalert("You must log in before you can Post to the Gallery!");
+			return false;
+		}
+		// send user id and weirdoid to server
+		$toSaveWeirdoid.userid = $userid;
+		var datastr = JSON.stringify($toSaveWeirdoid);
+
+		$
+				.ajax({
+					url : 'server/post_to_gallery.php',
+					type : 'post',
+					dataType : 'json',
+					data : {
+						data : datastr
+					}, // store,
+					success : function(json) {
+						// process the result
+						if (json.errorcode == 0) {
+							console.log("Weirdoid poseted: " + " msg: "
+									+ json.errormsg);
+							$previewLastMessage = "Your Weiroid was posted to the gallery!";
+							$('#shared_msg_previewshare h1').html(
+									$previewLastMessage);
+							$('#shared_msg_previewshare').show();
+
+							gotoPage("#previewshare");
+						} else {
+							serverAlert("Error posting to gallery", json);
+							console.log("Error posting to gallery");
+							console.log(json.errormsg);
+							if ($srcPage != null)
+								gotoPage($srcPage);
+							return;
+						}
+					},
+					failure : function(data) {
+						console.log("Post to gallery failure");
+						if ($srcPage != null)
+							gotoPage($srcPage);
+					},
+					complete : function(xhr, data) {
+						if (xhr.status != 0 && xhr.status != 200)
+							myalert('Error calling server to post to gallery. Status='
+									+ xhr.status + " " + xhr.statusText);
+					}
+				});
+
+	} catch (e) {
+		myalert("Error posting to gallery on server: " + e.message);
+
+	}
+
+}
+
+var $last_shared_weirdoid = null;
+var $previewLastMessage = null;
+
 function readyToShare(weirdoid) {
 	// share on facebook
+
 	var name = getWeirdoidName(weirdoid);
 	name = (name.length > 0) ? name : 'My Weirdoid';
 	shareImageOnFB("Check out my newest Weirdoid", 'http://www.weirdoids.com',
@@ -1154,8 +1355,13 @@ function readyToShare(weirdoid) {
 function shareComplete(wasShared) {
 	console.log("Back from sharing. wasShared = " + wasShared);
 	if (wasShared) {
+		$previewLastMessage = "Your Weirdoid was shared on Facebook!";
+
 		console.log("Image Shared!");
+		$('#shared_msg_previewshare h1').html($previewLastMessage);
+		$('#shared_msg_previewshare').show();
 	} else {
+
 		myalert("Image share failed.");
 	}
 	gotoPage("#previewshare");
@@ -1163,6 +1369,11 @@ function shareComplete(wasShared) {
 
 function afterPreviewSave(myweirdoid) {
 	console.log("Saved Weirdoid on server, now in callback afterPreviewSave");
+	$previewLastMessage = "Your Weirdoid was saved on Yakhq!";
+
+	$('#saved_or_shared_msg_preview h1').html($previewLastMessage);
+	$('#saved_or_shared_msg_preview').show();
+
 	$.mobile.changePage("#previewshare", {
 		transition : "fade"
 	});
@@ -1337,13 +1548,20 @@ function saveWeirdoidInDB(callback) {
 					success : function(json) {
 						// process the result
 						if (json.errorcode == 0) {
-							console.log("saved the weirdoid!");
-							myalert("Saved the weiroid. ID = "
+							console.log("saved the weirdoid! "
 									+ json.user_weirdoid_id);
+
+							// myalert("Saved the weiroid. ID = "+
+							// json.user_weirdoid_id);
+							$previewLastMessage = "Your Weirdoid was saved on Yakhq!";
+
 							$toSaveWeirdoid.user_weirdoid_id = json.user_weirdoid_id;
 							// call callback function;
-							if (callback != null)
-								callback(true, json.user_weirdoid_id);
+							window.setTimeout(function() {
+								if (callback != null)
+									callback(true, json.user_weirdoid_id);
+							}, 2000);
+
 						} else {
 							serverAlert("Error saving weirdoid in DB", json);
 							console.log("Error saving weirdoid in DB");
@@ -1522,6 +1740,7 @@ $(document)
 
 					$('#loginaccount').live('pagebeforeshow', function(event) {
 						// hide errors
+						$('#logged_in_msg').hide();
 						$('.error').hide();
 
 					});
@@ -1534,34 +1753,57 @@ $(document)
 
 					});
 
-					$('#bldbtn').click(function(event) {
+					$('.build_button')
+							.each(
+									function() {
+										$(this)
+												.click(
+														function(event) {
 
-						console.log("in bldbt click");
-						if (currentPack == '') {
-							$.mobile.changePage("#packs", {
-								transition : "fade"
-							});
-							event.preventDefault();
-							return true;
-						} else {
-							// Test plugin
-							$('#build').waitForImages(function() {
-								console.log('bldbtn: All images are loaded.');
-								setTimeout(function() {
-									// load the pack, when all are loaded,
-									// transition to
-									// build
-									console.log("before build show");
-									$.loadPack(currentPack);
-									// $.mobile.changePage("#build", {
-									// transition : "flip"
-									// });
-								}, 1000);
-							});
-						}
+															console
+																	.log("in bldbt click");
+															if (currentPack == '') {
+																$.mobile
+																		.changePage(
+																				"#packs",
+																				{
+																					transition : "fade"
+																				});
+																event
+																		.preventDefault();
+																return true;
+															} else {
+																// Test plugin
+																$('#build')
+																		.waitForImages(
+																				function() {
+																					console
+																							.log('bldbtn: All images are loaded.');
+																					setTimeout(
+																							function() {
+																								// load
+																								// the
+																								// pack,
+																								// when
+																								// all
+																								// are
+																								// loaded,
+																								// transition
+																								// to
+																								// build
+																								console
+																										.log("before build show");
+																								$
+																										.loadPack(currentPack);
 
-						return true;
-					});
+																							},
+																							1000);
+																				});
+															}
+
+															return true;
+														});
+									});
 
 					$('#packsbtn').click(function(event) {
 
@@ -1685,6 +1927,60 @@ $(document)
 									function(event) {
 										$('#headbtn').trigger('click');
 
+										var clist_items = $('#mycarousel')
+												.children();
+
+										jQuery
+												.each(
+														clist_items,
+														function(i, item) {
+															if (item != undefined) {
+																var packobj = $(
+																		item)
+																		.find(
+																				'a');
+
+																if (packobj != undefined) {
+																	var packitem = $(
+																			packobj)
+																			.data(
+																					'item');
+																	if (packitem != undefined
+																			&& packitem.id) {
+																		var packitemid = packitem.id;
+																		if ($
+																				.inArray(
+																						packitemid,
+																						$loadedpacks) < 0) {
+
+																			$(
+																					packobj)
+																					.addClass(
+																							'notloaded_pack');
+																			$(
+																					packobj)
+																					.attr(
+																							'title',
+																							'Click to load');
+																		} else {
+
+																			$(
+																					packobj)
+																					.removeClass(
+																							'notloaded_pack');
+																			$(
+																					packobj)
+																					.attr(
+																							'title',
+																							'Loaded');
+																		}
+
+																	}
+																}
+
+															}
+														});
+
 										// set all the images
 										if ($.browser.msie) {
 
@@ -1762,7 +2058,10 @@ $(document)
 													.log("swipeleft $active_cycle undefined");
 											return;
 										}
-										$active_cycle.cycle('next');
+										if ($active_cycle.children().length > 0) {
+
+											$active_cycle.cycle('next');
+										}
 										console.log("swipeleft");
 
 										e.preventDefault();
@@ -1778,7 +2077,10 @@ $(document)
 											return;
 										}
 
-										$active_cycle.cycle('prev');
+										if ($active_cycle.children().length > 0) {
+
+											$active_cycle.cycle('prev');
+										}
 										console.log("swiperight");
 										e.preventDefault();
 									});
@@ -1963,9 +2265,18 @@ function myalert(message, title) {
 	if (message != null) {
 		msg_html += "<p>" + message + "</p>";
 	}
-	msg_html += '<a class="close-reveal-modal">&#215;</a>';
-	$('#myModal').html(msg_html);
 
-	$('#myModal').reveal();
+	// $(document).simpledialog({
+	// mode: 'blank',
+	// headerText: 'Alert',
+	// headerClose: true,
+	// blankContent :
+	// msg_html
+	// });
+	$('#modalcontent').html(msg_html);
+	//
+	$.mobile.changePage("#myModal", {
+		transition : "pop"
+	});
 
 }

@@ -69,7 +69,7 @@ $qry=sprintf("SELECT w.user_id, yaklogin, w.user_weirdoid_id, w.fname,
 	w.created, unix_timestamp(w.created) as unix_created, unix_timestamp(now()) as unix_now
 	FROM user_weirdoid w, weirdoid_sprite s, users u
 	WHERE  w.user_weirdoid_id = s.user_weirdoid_id and unix_timestamp(w.created) > (unix_timestamp(now())-(86400*12))
-	and u.user_id = w.user_id
+	and u.user_id = w.user_id and isPosted = 1
 	ORDER BY w.created desc, w.user_weirdoid_id, s.cyclename");
 
 //echo $sql;
