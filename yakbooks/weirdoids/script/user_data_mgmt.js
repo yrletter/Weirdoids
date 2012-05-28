@@ -83,9 +83,7 @@ function afterRetrieval(serverWeirdoids) {
 											if (localWeirdoid.user_weirdoid_id
 													&& serverWeirdoid.user_weirdoid_id
 													&& serverWeirdoid.user_weirdoid_id == localWeirdoid.user_weirdoid_id) {
-												console
-														.log("Found remote weirdoid in localstorage: "
-																+ localWeirdoid.user_weirdoid_id);
+												//console.log("Found remote weirdoid in localstorage: " + localWeirdoid.user_weirdoid_id);
 												foundit = true;
 												return false;
 											}
@@ -116,9 +114,7 @@ function afterRetrieval(serverWeirdoids) {
 											var serverWeirdoid = this;
 											if (localWeirdoid.user_weirdoid_id
 													&& (serverWeirdoid.user_weirdoid_id == localWeirdoid.user_weirdoid_id)) {
-												console
-														.log("Found local weirdoid in remote list: "
-																+ localWeirdoid.user_weirdoid_id);
+												//console.log("Found local weirdoid in remote list: " + localWeirdoid.user_weirdoid_id);
 												foundit = true;
 												return false;
 											}

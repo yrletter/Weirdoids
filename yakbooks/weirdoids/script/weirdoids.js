@@ -12,6 +12,15 @@ var $saved_new_weirdoid = false;
 
 var $packs = [];
 
+var STD_HEIGHT = 1024;
+var STD_WIDTH = 768;
+var WIDTH_TO_HEIGHT = STD_WIDTH / STD_HEIGHT;
+var STD_VAULT_HEIGHT = 300;
+var NARROW_VAULT_HEIGHT = 150;
+var NARROW_WIDTH = 600;
+
+var VAULT_DISPLAY_COUNT = 6;
+
 var $btn_build_top = 400;
 var $btn_vault_top = 500;
 var $btn_packs_top = 600;
@@ -31,6 +40,11 @@ var $facebook_userid = null;
 var $userkey_prefix = "myWeirdoids_";
 var $local_user_id = 0;
 
+// easter egg variables
+var $random_cycle = false;
+var $random_eggs = 0;
+var $current_eastereggs = [];
+
 var iWebkit;
 
 if (typeof console == "undefined" || typeof console.log == "undefined")
@@ -48,14 +62,34 @@ jQuery.processNameJson = function(json, url) {
 	}
 	console.log("processNameJson " + url);
 
-	var selector = (url == $fnames_url)
-			? $("#select-choice-firstname")
-			: $("#select-choice-lastname");
+	var is_first_name = (url == $fnames_url);
+	var selector = is_first_name
+			? $("#firstname_listview")
+			: $("#lastname_listview");
+	// var selector = is_first_name
+	// ? $("#select-choice-firstname")
+	// : $("#select-choice-lastname");
+
+	var cnt = 10;
 	$.each(json, function(i, name) {
 		// console.log("next first name " + name);
-		selector.append('<option value="' + name + '"> ' + name + '</option>');
+		if (--cnt > 0) {
+
+			if (is_first_name)
+				selector.append('<li name="' + name
+						+ '"><a href="#" class="firstname_link" name="' + name
+						+ '">' + name + '</a></li>');
+			else
+				selector.append('<li name="' + name
+						+ '"><a href="#" class="lastname_link" name="' + name
+						+ '">' + name + '</a></li>');
+			// selector.append('<option value="' + name + '"> ' + name
+			// + '</option>');
+		}
+
 	});
-	console.log("select length " + selector[0].length);
+
+	// console.log("select length " + selector[0].length);
 };
 
 $(document)
@@ -70,6 +104,16 @@ $(document)
 
 					// localStorage.clear();
 
+					if (navigator.userAgent.match(/iPad/i)) {
+						console.log('on ipad');
+						// if (window.navigator.standalone == true) {
+						// $('body').height("1004px");
+						// } else {
+						// $('body').height("984px");
+						// }
+
+					}
+
 					document.ontouchmove = function(event) {
 						// event.preventDefault();
 					};
@@ -78,7 +122,8 @@ $(document)
 							'#vault',
 							'pageshow',
 							function() {
-								var mh = Math.min(1024, $(window).height());
+								var mh = Math.min(STD_HEIGHT, $(window)
+										.height());
 								var the_height = (mh
 										- $(this).find('[data-role="header"]')
 												.height()
@@ -119,6 +164,36 @@ $(document)
 						synchProdKeys();
 					});
 
+					$(document)
+							.delegate(
+									'#opendialog',
+									'click',
+									function() {
+										// NOTE: The selector can be whatever
+										// you like, so long as it is an HTML
+										// element.
+										// If you prefer, it can be a member of
+										// the current page, or an anonymous div
+										// like shown.
+										$('<div>')
+												.simpledialog2(
+														{
+															mode : 'blank',
+															headerText : 'Some Stuff',
+															headerClose : true,
+															blankContent : "<ul data-role='listview'><li>Some</li><li>List</li><li>Items</li></ul>"
+																	+
+																	// NOTE: the
+																	// use of
+																	// rel="close"
+																	// causes
+																	// this
+																	// button to
+																	// close the
+																	// dialog.
+																	"<a rel='close' data-role='button' href='#'>Close</a>"
+														})
+									});
 					// get the json file
 
 					$("#bldbtn,#packsbtn").button('disable').css('opacity',
@@ -179,6 +254,35 @@ $(document)
 						$.processNameJson(JSON.parse(localStorage
 								.getItem($lnames_url)), $lnames_url);
 					}
+
+					$('.firstname_link').live('click', function(event) {
+						var target = $(this);
+						var name = target.attr('name');
+						console.log("Clicked a fname " + name);
+						$('#firstname_value').html(name);
+						combine_names();
+					});
+
+					$('.lastname_link').live('click', function(event) {
+						var target = $(this);
+						var name = target.attr('name');
+						console.log("Clicked a lname " + name);
+						$('#lastname_value').html(name);
+						combine_names();
+
+					});
+
+					$('#btn_random_fname').click(function(event) {
+						var name = random_name($('#firstname_listview'));
+						$('#firstname_value').html(name);
+						combine_names();
+					});
+
+					$('#btn_random_lname').click(function(event) {
+						var name = random_name($('#lastname_listview'));
+						$('#lastname_value').html(name);
+						combine_names();
+					});
 
 					$('#home').live('pagebeforeshow', function(event) {
 						$.resizeHome();
@@ -371,10 +475,38 @@ $(document)
 												$('meta[name="viewport"]')
 														.attr('content',
 																'height=device-width,width=device-height,initial-scale=1.0,maximum-scale=1.0');
+												// if
+												// (navigator.userAgent.match(/iPad/i))
+												// {
+												// console.log('on ipad');
+												// if
+												// (window.navigator.standalone
+												// == true) {
+												// $('body').height("1004px");
+												// } else {
+												// $('body').height("984px");
+												// }
+												//													
+												//
+												// }
+
 											} else {
 												$('meta[name="viewport"]')
 														.attr('content',
 																'height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0');
+												// if
+												// (navigator.userAgent.match(/iPad/i))
+												// {
+												// console.log('on ipad');
+												// if
+												// (window.navigator.standalone
+												// == true) {
+												// $('body').height("748px");
+												// } else {
+												// $('body').height("728px");
+												// }
+												//
+												// }
 											}
 
 											// $('html, body').animate({
@@ -434,8 +566,39 @@ $(document)
 
 					$('#vault').live('pagebeforeshow', function(event) {
 						// draw all the saved weirdoids
-						drawVault(event);
+						$vault_start_idx = 0;
+						$('#btn_vault_prev').button('disable');
+						$('#btn_vault_more').button('disable');
+						drawVault();
+
 					});
+
+					$('#btn_vault_prev').click(
+							function(event) {
+
+								if ($vault_start_idx > 0) {
+									$vault_start_idx = Math.max(0,
+											$vault_start_idx
+													- getVaultDivCount());
+									drawVault();
+								}
+
+								event.preventDefault();
+							});
+
+					$('#btn_vault_more').click(
+							function(event) {
+
+								if ($vault_start_idx < $weirdoids.length) {
+									$vault_start_idx = Math.min(
+											$weirdoids.length - 1,
+											$vault_start_idx
+													+ getVaultDivCount());
+									drawVault();
+								}
+
+								event.preventDefault();
+							});
 
 					$('#saveInVaultBtn').click(function() {
 						$srcPage = "#previewpage";
@@ -444,6 +607,7 @@ $(document)
 						if (!$saved_new_weirdoid)
 							storeLocalWeirdoid($lastweirdoid);
 						gotoPage("#previewshare");
+						return false;
 					});
 
 					$('#btn_previewpage_save').click(function() {
@@ -457,6 +621,7 @@ $(document)
 						$srcPage = "#previewpage";
 						$afterLoginPage = '#previewshare';
 						saveWeirdoid($lastweirdoid);
+						return false;
 					});
 				});
 
@@ -926,7 +1091,7 @@ function drawPreview(event, target) {
 	//
 	// draw the current
 	//
-	console.log("drawing preview canvas " + target);
+	console.log("drawPreview - target = " + target);
 
 	if (typeof $lastweirdoid == undefined || $lastweirdoid == null) {
 		console.log(" $lastweirdoid undefined");
@@ -939,6 +1104,8 @@ function drawPreview(event, target) {
 
 	var name = getWeirdoidName($lastweirdoid);
 
+	var showimage = (target == "previewshare");
+
 	if (target == "previewshare") {
 
 		canvasname = "preview-share-canvas";
@@ -947,101 +1114,142 @@ function drawPreview(event, target) {
 		$('#preview-share-weirdoid-name').html(name);
 
 	} else {
-		var myselect = $('#select-choice-firstname');
-		myselect[0].selectedIndex = 0;
+		// var myselect = $('#select-choice-firstname');
+		// myselect[0].selectedIndex = 0;
+
+		var fname = '';
+		var lname = '';
 
 		if (name.length == 0) {
-			var idx = Math.floor(Math.random() * myselect[0].length - 1);
-			$('#select-choice-firstname option').eq(idx).attr('selected',
-					'selected');
-		}
-		myselect.selectmenu("refresh");
 
-		myselect = $('#select-choice-lastname');
-		myselect[0].selectedIndex = 0;
+			fname = random_name($('#firstname_listview'));
+
+			$('#firstname_value').html(fname);
+			// $('#select-choice-firstname option').eq(idx).attr('selected',
+			// 'selected');
+		}
+		// myselect.selectmenu("refresh");
+
+		// myselect = $('#select-choice-lastname');
+		// myselect[0].selectedIndex = 0;
 
 		if (name.length == 0) {
-			idx = Math.floor(Math.random() * myselect[0].length - 1);
+			lname = random_name($('#lastname_listview'));
 
-			$('#select-choice-lastname option').eq(idx).attr('selected',
-					'selected');
+			$('#lastname_value').html(lname);
+			// $('#select-choice-lastname option').eq(idx).attr('selected',
+			// 'selected');
 		}
-		myselect.selectmenu("refresh");
+		// myselect.selectmenu("refresh");
 
-		$('#previewpage-weirdoid-name').html(name);
+		if (name.length == 0) {
+			combine_names();
+		}
 	}
 
-	$('#' + canvasname).hide();
+	if (target == "previewshare") {
 
-	if ($.browser.msie && parseInt($.browser.version, 10) < 9) {
+		var btarget = $('#previewshare_body_wrapper');
+		btarget.empty();
 
-		$('#' + canvasdiv).empty();
-		var el = document.createElement(canvasname);
-		el.setAttribute("width", 220);
-		el.setAttribute("height", 300);
-		el.setAttribute("class", "mapping");
+		// queueImageDraw( $lastweirdoid.bkgd,0);
 
-		$('#' + canvasdiv).append(el);
+		var body_width = btarget.width();
+		var body_height = $('body').height();
 
-		G_vmlCanvasManager.initElement(el);
-		var ctx = el.getContext('2d');
-	} else {
-		var drawingCanvas = document.getElementById(canvasname);
-		var ctx = drawingCanvas.getContext('2d');
+		var hdrheight = $('#previewshare_header').outerHeight()
+				+ parseInt($('#previewshare_header').css("border-top-width"))
+				+ parseInt($('#previewshare_header').css("border-bottom-width"));
+
+		var footer_height = $('#previewshare_footer').outerHeight();
+
+		if (hdrheight == 0 || footer_height == 0) {
+
+		}
+
+		var nusize = $('body').height() - hdrheight - footer_height;
+		var previewsize = nusize * 0.8; // 80% of space
+		var previewpct = (nusize / body_height) * 100.0;
+		// btarget.height(previewpct + '%');
+		btarget.height(previewsize + 'px');
+
+		var body_width = $('body').width();
+		var factor = previewsize / STD_HEIGHT;
+		var nuwidth = STD_WIDTH * factor;
+
+		var wpct = (nuwidth / body_width) * 100.0;
+		// btarget.width(wpct + '%');
+		btarget.width(nuwidth + 'px');
+
+		composeWeirdoid($lastweirdoid, btarget, true);
 	}
 
-	// var drawingCanvasBkgd = document.getElementById(bkgdname);
-	// var back_height = 1024;
-	// var back_width = 768;
+	showimage = false;
+	if (showimage) {
 
-	if ($.browser.msie && parseInt($.browser.version, 10) < 9) {
-		var back_height = 300;
-		// var back_width = 768;
+		$('#' + canvasname).hide();
 
-		// var back_el = document.createElement(bkgdname);
-		// back_el.setAttribute("width", 150);
-		// back_el.setAttribute("height", 300);
-		// back_el.setAttribute("class", "mapping");
-		//		
-		// $('#' + canvasdiv).append(back_el);
-		// G_vmlCanvasManager.initElement(back_el);
-		//		
-		// var back_ctx = back_el.getContext('2d');
-	} else {
+		if ($.browser.msie && parseInt($.browser.version, 10) < 9) {
 
-		var back_height = 1024;
-		// var back_width = drawingCanvasBkgd.width;
+			$('#' + canvasdiv).empty();
+			var el = document.createElement(canvasname);
+			el.setAttribute("width", 220);
+			el.setAttribute("height", 300);
+			el.setAttribute("class", "mapping");
+
+			$('#' + canvasdiv).append(el);
+
+			G_vmlCanvasManager.initElement(el);
+			var ctx = el.getContext('2d');
+		} else {
+			var drawingCanvas = document.getElementById(canvasname);
+			var ctx = drawingCanvas.getContext('2d');
+		}
+		// var drawingCanvasBkgd = document.getElementById(bkgdname);
+		// var back_height = STD_HEIGHT;
+		// var back_width = STD_WIDTH;
+
+		if ($.browser.msie && parseInt($.browser.version, 10) < 9) {
+			var back_height = 300;
+			// var back_width = STD_WIDTH;
+			// var back_el = document.createElement(bkgdname);
+			// back_el.setAttribute("width", 150);
+			// back_el.setAttribute("height", 300);
+			// back_el.setAttribute("class", "mapping");
+			// 
+			// $('#' + canvasdiv).append(back_el);
+			// G_vmlCanvasManager.initElement(back_el); //
+			// var back_ctx = back_el.getContext('2d');
+		} else {
+
+			var back_height = STD_HEIGHT;
+			// var back_width = drawingCanvasBkgd.width;
+		}
+		// back_ctx.clearRect(0, 0, back_width, back_height);
+		var target_height = parseInt($('#' + canvasdiv).height());
+		$('#' + canvasname).height(target_height);
+
+		var target_width = parseInt($('#' + canvasdiv).width());
+		$('#' + canvasname).width(target_width);
+
+		ctx.clearRect(0, 0, target_width, target_height);
+
+		var scaleBy = target_height / $lastweirdoid.bkgd.sprite.height;
+		var lmargin = 170;
+
+		queueDraw(ctx, $lastweirdoid.bkgd, scaleBy, 0);
+		queueDraw(ctx, $lastweirdoid.leg, scaleBy,
+				$lastweirdoid.leg.sprite.xloc);
+		queueDraw(ctx, $lastweirdoid.body, scaleBy,
+				$lastweirdoid.body.sprite.xloc);
+		queueDraw(ctx, $lastweirdoid.head, scaleBy,
+				$lastweirdoid.head.sprite.xloc);
+		queueDraw(ctx, $lastweirdoid.xtra, scaleBy,
+				$lastweirdoid.xtra.sprite.xloc);
+		drawFromQueue();
+
+		$('#' + canvasname).show();
 	}
-
-	// back_ctx.clearRect(0, 0, back_width, back_height);
-	var target_height = parseInt($('#' + canvasdiv).height());
-	$('#' + canvasname).height(target_height);
-
-	var target_width = parseInt($('#' + canvasdiv).width());
-	$('#' + canvasname).width(target_width);
-
-	ctx.clearRect(0, 0, target_width, target_height);
-
-	var scaleBy = target_height / $lastweirdoid.bkgd.sprite.height;
-	var lmargin = 170;
-
-	queueDraw(ctx, $lastweirdoid.bkgd, scaleBy, 0);
-	queueDraw(ctx, $lastweirdoid.leg, scaleBy, $lastweirdoid.leg.sprite.xloc);
-	queueDraw(ctx, $lastweirdoid.body, scaleBy, $lastweirdoid.body.sprite.xloc);
-	queueDraw(ctx, $lastweirdoid.head, scaleBy, $lastweirdoid.head.sprite.xloc);
-	queueDraw(ctx, $lastweirdoid.xtra, scaleBy, $lastweirdoid.xtra.sprite.xloc);
-	drawFromQueue();
-
-	$('#' + canvasname).show();
-
-	// var user_weirdoid_id = $lastweirdoid.user_weirdoid_id;
-	//
-	// if (user_weirdoid_id != undefined && user_weirdoid_id > 0) {
-	// $('#saved_or_shared_msg_previewshare h1').html(
-	// "Your Weirdoid was saved at Yakhq!");
-	// $('#saved_or_shared_msg_previewshare').show();
-	// }
-
 	if ($previewLastMessage != null) {
 
 		$('#shared_msg_previewshare h1').html($previewLastMessage);
@@ -1051,131 +1259,291 @@ function drawPreview(event, target) {
 
 }
 
+function random_name(selector) {
+	if (selector == undefined) {
+		console.log("random_name: null selector");
+		return null;
+	}
+	var idx = Math.floor(Math.random() * selector.children().length - 1);
+	var element = selector.children()[idx];
+	return $(element).attr('name');
+
+}
+
+// pass in weirdoid and div target. Must set height and width of target.
+function composeWeirdoid(weirdoid, btarget, is_centered) {
+	var std_height = (weirdoid.std_height) ? weirdoid.std_height : STD_HEIGHT;
+	var std_width = (weirdoid.std_width) ? weirdoid.std_width : STD_WIDTH;
+
+	is_centered = typeof is_centered !== 'undefined' ? is_centered : false;
+
+	// var width_to_height = (weirdoid.width_to_height)
+	// ? weirdoid.width_to_height
+	// : WIDTH_TO_HEIGHT;
+	//
+	// var yfactor = std_height * 100.0;
+	// var xfactor = std_width * 100.0;
+
+	compose_band(weirdoid.bkgd, "bkgd", btarget, std_height, std_width,
+			is_centered);
+	compose_band(weirdoid.leg, "leg", btarget, std_height, std_width,
+			is_centered);
+	compose_band(weirdoid.body, "body", btarget, std_height, std_width,
+			is_centered);
+	compose_band(weirdoid.head, "head", btarget, std_height, std_width,
+			is_centered);
+	compose_band(weirdoid.xtra, "xtra", btarget, std_height, std_width,
+			is_centered);
+
+	// add any eastereggs
+	if (weirdoid.eastereggs) {
+		$.each(weirdoid.eastereggs, function(i, easteregg) {
+
+			compose_easteregg(easteregg, btarget, std_height, std_width);
+
+		});
+
+	}
+}
+
+function compose_easteregg(easteregg, target, std_height, std_width) {
+	var divname = target.attr('id') + '_' + easteregg.divname;
+	var divid = '#' + divname;
+
+	var location_class = (easteregg.location_class != undefined && easteregg.location_class.length > 0)
+			? easteregg.location_class
+			: "none";
+	var showit = (target.find('.' + location_class).length == 0);
+
+	if (!showit) {
+		console.log("already have an egg with this class");
+		return;
+	}
+
+	console.log("Adding easteregg: " + easteregg.src + " at top_pct: "
+			+ easteregg.top_pct + " left_pct: " + easteregg.left_pct);
+
+	target.append('<div id="' + divname + '" class="easteregg '
+			+ location_class + '"><img src="' + easteregg.src
+			+ '"></img></div>');
+	$(divid).hide();
+	$(divid).css('background-color', 'transparent');
+	$(divid).css('top', easteregg.top_pct + '%');
+	$(divid).css('left', easteregg.left_pct + '%');
+	$(divid).width(easteregg.width_pct + '%');
+	$(divid).height(easteregg.height_pct + '%');
+	$(divid).css("position", "absolute");
+
+	$(divid).fadeIn('slow', function() {
+		// Animation complete.
+		$(this).css('background-color', 'transparent');
+	});
+
+}
+
+var div_ctr = 0;
+function compose_band(band, bandname, btarget, std_height, std_width,
+		is_centered) {
+	var top_pct = (band.topoffset / std_height) * 100;
+	var left_pct = (band.sprite.xloc / std_width) * 100;
+	var divname = 'preview_' + bandname + '_' + div_ctr;
+
+	is_centered = typeof is_centered !== 'undefined' ? is_centered : false;
+
+	div_ctr++;
+
+	btarget.append('<div id="' + divname + '" class="preview_div"><img src="'
+			+ band.sprite.src + '"></img></div>');
+
+	$('#' + divname).css("top", top_pct + '%');
+
+	if (!is_centered)
+		$('#' + divname).css("left", left_pct + '%');
+
+	var cycle_height = (band.sprite.height / std_height) * 100.0;
+	$('#' + divname).height(cycle_height + '%');
+}
+
+function combine_names() {
+	var fname = $("#firstname_value").html();
+	var lname = $("#lastname_value").html();
+
+	var combined = (fname) ? fname : '';
+	if (lname) {
+		combined += ' ' + lname;
+	}
+	$('#previewpage-weirdoid-name').html(combined);
+}
+
+var $vault_start_idx = 0;
+
+function getVaultDivCount() {
+	var view_width = $(window).width();
+	var vaultDivCount = VAULT_DISPLAY_COUNT;
+	if (view_width <= NARROW_WIDTH) {
+		vaultDivCount = 1;
+	}
+	return vaultDivCount;
+}
+
 function drawVault(event) {
-	$('#vaultgrid').empty();
+	$('#vaultcontent').empty();
+
+	var view_width = $(window).width();
+	var vaultHeight = STD_VAULT_HEIGHT;
+	var vaultDivCount = getVaultDivCount();
+	var gridname = "vaultgrid";
+	if (view_width > NARROW_WIDTH) {
+		$('#vaultcontent')
+				.append(
+						'<div class="ui-grid-b" id="vaultgrid" data-scroll="true"></div>');
+	} else {
+		vaultHeight = NARROW_VAULT_HEIGHT;
+		vaultCount = 1;
+		var gridname = "vault_narrow_wrapper";
+		$('#vaultcontent')
+				.append(
+						'<div class="narrow_vault_grid" id="vault_narrow_wrapper" data-scroll="true"></div>');
+	}
 
 	$('body').addClass('ui-loading');
 
-	$vaultCnt = 0;
+	var vaultCnt = 0;
+
 	$drawingqueue = [];
 	var reversedWeirdoids = new Array();
 	if ($weirdoids == null) {
 		console.log("$weirdoids is null, can't draw");
-	} else
-		reversedWeirdoids = $weirdoids.slice();
-	jQuery
-			.each(
-					reversedWeirdoids.reverse(),
-					function() {
-						var savedWeirdoid = this;
+		$('body').removeClass('ui-loading');
+	} else {
+		var eidx = Math
+				.min($vault_start_idx + vaultDivCount, $weirdoids.length);
+		reversedWeirdoids = $weirdoids.slice(); // make a copy
+		reversedWeirdoids = reversedWeirdoids.reverse().slice($vault_start_idx,
+				eidx); // reverse it, then slice
+		if ($vault_start_idx > 0)
+			$('#btn_vault_prev').button('enable');
 
-						// canvas is a
-						// reference to a
-						// <canvas> element
+		else
+			$('#btn_vault_prev').button('disable');
 
-						// add a new grid
-						// element in vault
-						// and add canvas
-						console.log("added from weirdoid array");
+		if (eidx >= $weirdoids.length)
+			$('#btn_vault_more').button('disable');
 
-						var canvasName = "nmodalCanvas" + $vaultCnt;
-						var idx = $vaultCnt % 3;
+		else
+			$('#btn_vault_more').button('enable');
 
-						$vaultCnt += 1;
+		jQuery
+				.each(
+						reversedWeirdoids,
+						function() {
+							var savedWeirdoid = this;
 
-						var classname;
+							// canvas is a
+							// reference to a
+							// <canvas> element
 
-						switch (idx) {
-							case 2 :
-								classname = "ui-block-c";
-								break;
-							case 1 :
-								classname = "ui-block-b";
-								break;
-							default :
-								classname = "ui-block-a";
-						}
-						var fullname = "";
-						if (savedWeirdoid.hasOwnProperty("fname")) {
-							if (savedWeirdoid.fname.length > 0)
-								fullname = savedWeirdoid.fname + " ";
-						}
-						if (savedWeirdoid.hasOwnProperty("lname")) {
-							if (savedWeirdoid.lname.length > 0)
-								fullname += savedWeirdoid.lname;
-						}
+							// add a new grid
+							// element in vault
+							// and add canvas
+							// console.log("added from weirdoid array");
 
-						var canvasdiv = canvasName + '_div';
+							var canvasName = "nmodalCanvas" + vaultCnt;
 
-						$('#vaultgrid')
-								.append(
-										'<div class="'
-												+ classname
-												+ '"><div id="'
-												+ canvasdiv
-												+ '" class="ui-bar vault-canvas-div vaultcanvas-hidden" data-theme="b">'
-												+ '<canvas id="'
-												+ canvasName
-												+ '" class="vaultcanvas" height="300" width="222"></canvas>'
-												+ '</div><div class="vault-name">'
-												+ fullname + '</div></div>');
+							if (view_width > NARROW_WIDTH) {
 
-						// var drawingCanvas =
-						// document.getElementById(canvasName);
+								var idx = vaultCnt % 3;
 
-						$('#' + canvasdiv).data('weirdoid', savedWeirdoid);
-						$('#' + canvasdiv).unbind('click').click(function(e) {
-							$previewLastMessage = null;
-							$lastweirdoid = $(this).data('weirdoid');
-							console.log("clicked vault weirdoid");
-							$srcPage = "#vault";
-							gotoPage("#previewshare");
-							e.preventDefault();
+								var classname;
+								switch (idx) {
+									case 2 :
+										classname = "ui-block-c";
+										break;
+									case 1 :
+										classname = "ui-block-b";
+										break;
+									default :
+										classname = "ui-block-a";
+								}
+							} else
+								classname = "vault_cycle_div";
+
+							vaultCnt += 1;
+							var fullname = "";
+							if (savedWeirdoid.hasOwnProperty("fname")) {
+								if (savedWeirdoid.fname.length > 0)
+									fullname = savedWeirdoid.fname + " ";
+							}
+							if (savedWeirdoid.hasOwnProperty("lname")) {
+								if (savedWeirdoid.lname.length > 0)
+									fullname += savedWeirdoid.lname;
+							}
+
+							if (fullname.length == 0)
+								fullname = " ";
+
+							var canvasdiv = canvasName + '_div';
+							if (view_width <= NARROW_WIDTH) {
+								$('#vault_narrow_wrapper')
+										.append(
+												'<div id="'
+														+ canvasdiv
+														+ '" class="vault_cycle_inner_div" data-theme="b"></div><div class="vault-narrow-name">'
+														+ fullname + '</div>');
+
+							} else {
+
+								$('#vaultgrid')
+										.append(
+												'<div class="'
+														+ classname
+														+ '"><div id="'
+														+ canvasdiv
+														+ '" class=" vault_div" data-theme="b"></div><div class="vault-name">'
+														+ fullname
+														+ '</div></div>');
+								$('#vaultgrid').page();
+							}
+
+							// var drawingCanvas =
+							// document.getElementById(canvasName);
+
+							$('#' + canvasdiv).data('weirdoid', savedWeirdoid);
+							$('#' + canvasdiv).unbind('click').click(
+									function(e) {
+										$previewLastMessage = null;
+										$lastweirdoid = $(this)
+												.data('weirdoid');
+										console.log("clicked vault weirdoid");
+										$srcPage = "#vault";
+										gotoPage("#previewshare");
+										e.preventDefault();
+									});
+
+							// var target_height = parseInt($('#' + canvasdiv)
+							// .height());
+							// var target_width = parseInt($('#' +
+							// canvasdiv).width());
+							//
+
+							if (view_width > NARROW_WIDTH) {
+								var vaultheight = STD_VAULT_HEIGHT;
+								var vaultwidth = (vaultheight / STD_HEIGHT)
+										* STD_WIDTH;
+
+								$('#' + canvasdiv).height(vaultheight + "px");
+								$('#' + canvasdiv).width(vaultwidth + "px");
+							}
+
+							var btarget = $('#' + canvasdiv);
+							composeWeirdoid(savedWeirdoid, btarget, true);
+
 						});
 
-						var target_height = parseInt($('#' + canvasdiv)
-								.height());
-						var target_width = parseInt($('#' + canvasdiv).width());
+		$('body').removeClass('ui-loading');
 
-						$('#' + canvasName).height(target_height);
-						$('#' + canvasName).width(target_width);
-
-						// var scaleBy = 3.5;
-						var scaleBy = target_height
-								/ savedWeirdoid.bkgd.sprite.height;
-
-						// pass context
-						if ($.browser.msie
-								&& parseInt($.browser.version, 10) < 9) {
-
-							$('#' + canvasdiv).empty();
-							var el = document.createElement(canvasName);
-							el.setAttribute("width", 220);
-							el.setAttribute("height", 300);
-							el.setAttribute("class", "mapping");
-
-							$('#' + canvasdiv).append(el);
-
-							G_vmlCanvasManager.initElement(el);
-							var context = el.getContext('2d');
-						} else {
-							var drawingCanvas = document
-									.getElementById(canvasName);
-							var context = drawingCanvas.getContext('2d');
-						}
-
-						queueDraw(context, savedWeirdoid.bkgd, scaleBy, 0);
-						queueDraw(context, savedWeirdoid.leg, scaleBy,
-								savedWeirdoid.leg.sprite.xloc);
-						queueDraw(context, savedWeirdoid.body, scaleBy,
-								savedWeirdoid.body.sprite.xloc);
-						queueDraw(context, savedWeirdoid.head, scaleBy,
-								savedWeirdoid.head.sprite.xloc);
-						queueDraw(context, savedWeirdoid.xtra, scaleBy,
-								savedWeirdoid.xtra.sprite.xloc);
-
-					});
-	drawFromQueue();
+		// drawFromQueue();
+	}
 };
 
 function readyToCreateImage() {
@@ -1382,8 +1750,10 @@ function afterPreviewSave(myweirdoid) {
 
 function setWeirdoidNameFromSelect(weirdoid) {
 	// dont overwrite a prev selection unless something is selected
-	fname = $('#select-choice-firstname option:selected').val();
-	lname = $('#select-choice-lastname option:selected').val();
+	// fname = $('#select-choice-firstname option:selected').val();
+	// lname = $('#select-choice-lastname option:selected').val();
+	fname = $('#firstname_value').html();
+	lname = $('#lastname_value').html();
 
 	if (weirdoid.fname == undefined || weirdoid.fname.length == 0)
 		weirdoid.fname = (fname === null || fname == '') ? '' : fname;
@@ -1692,6 +2062,16 @@ $(window).load(
 					console.log('got bg');
 				}, 1000);
 			});
+
+			// Set a timeout...
+			if (navigator.userAgent.match(/iPad/i)) {
+
+				setTimeout(function() {
+					// Hide the address bar!
+					window.scrollTo(0, 100);
+
+				}, 400);
+			}
 		});
 
 var currentPack = '';
@@ -1779,6 +2159,7 @@ $(document)
 																				function() {
 																					console
 																							.log('bldbtn: All images are loaded.');
+
 																					setTimeout(
 																							function() {
 																								// load
@@ -1793,6 +2174,7 @@ $(document)
 																								// build
 																								console
 																										.log("before build show");
+
 																								$
 																										.loadPack(currentPack);
 
@@ -1840,10 +2222,12 @@ $(document)
 									function(event) {
 
 										console.log("click randombtn");
-
+										$random_cycle = true;
+										$random_eggs = 0;
 										// for each cycle, find count of images,
 										// go to random
 										// one
+
 										if ($('#cycle_legs').data('band') != undefined) {
 											var band = $('#cycle_legs').data(
 													'band');
@@ -1926,6 +2310,9 @@ $(document)
 									'pagebeforeshow',
 									function(event) {
 										$('#headbtn').trigger('click');
+										// $('#randombtn').trigger('click');
+
+										$current_eastereggs = [];
 
 										var clist_items = $('#mycarousel')
 												.children();
@@ -2004,7 +2391,10 @@ $(document)
 									});
 
 					$('#build').live('pageshow', function(event) {
+
 						$.resizeImages();
+						$.mobile.hidePageLoadingMsg();
+						$('#band_wrapper').fadeIn('fast');
 					});
 
 					$('#headbtn').click(function(e) {
@@ -2059,7 +2449,7 @@ $(document)
 											return;
 										}
 										if ($active_cycle.children().length > 0) {
-
+											$random_cycle = false;
 											$active_cycle.cycle('next');
 										}
 										console.log("swipeleft");
@@ -2078,7 +2468,7 @@ $(document)
 										}
 
 										if ($active_cycle.children().length > 0) {
-
+											$random_cycle = false;
 											$active_cycle.cycle('prev');
 										}
 										console.log("swiperight");
@@ -2104,6 +2494,7 @@ jQuery.saveCreation = function() {
 };
 
 $drawingqueue = [];
+$drawingImageQueue = [];
 
 function queueDraw(context, weirdoid, scaleBy, lmargin) {
 	var drawing = [];
@@ -2112,6 +2503,80 @@ function queueDraw(context, weirdoid, scaleBy, lmargin) {
 	drawing.scaleBy = scaleBy;
 	drawing.lmargin = lmargin;
 	$drawingqueue.push(drawing);
+}
+
+function queueImageDraw(weirdoid, lmargin) {
+	var drawing = [];
+	drawing.context = context;
+	drawing.weirdoid = weirdoid;
+	drawing.lmargin = lmargin;
+	$drawingImageQueue.push(drawing);
+}
+
+function drawFromImageQueue() {
+	if ($drawingImageQueue.length > 0) {
+		drawing = $drawingImageQueue.shift();
+		drawInDiv(drawing.weirdoid, drawing.lmargin);
+	} else {
+
+		$('body').removeClass('ui-loading');
+		$('#vault .vaultcanvas-hidden').removeClass('vaultcanvas-hidden');
+	}
+}
+
+function drawInDiv(weirdoid, lmargin) {
+
+	var img = new Image();
+
+	img.sprite = weirdoid.sprite;
+	img.scaleBy = scaleBy;
+	img.lmargin = lmargin;
+
+	img.onload = function() {
+		var ximg = this;
+		var sprite = ximg.sprite;
+		var context = img.context;
+		// console.log("drawinCanvas " + this.id + " " + sprite.xloc + " ");
+
+		// if (img.sprite.dataurl != null) {
+
+		// console.log("drawinCanvas loaded " + img.src + " h " + sprite.height
+		// + " w " + sprite.width + " scaleby " + scaleBy + ' lmargin '
+		// + lmargin + ' ' + img.height + ' ' + img.width);
+		// console.log(sprite.width + ' ' + sprite.height + ' ' + lmargin
+		// / scaleBy + ' ' + weirdoid.topoffset / scaleBy + ' '
+		// + sprite.width / scaleBy + ' ' + sprite.height / scaleBy);
+
+		if (img.lmargin == undefined || img.lmargin == null) {
+			img.lmargin = 0;
+			console.log("lmargin not set");
+		}
+
+		var scaleBy;
+
+		var nu_x = Math.round(lmargin * scaleBy);
+		var nu_y = Math.round(weirdoid.topoffset * scaleBy);
+		var nu_w = Math.round(sprite.width * scaleBy);
+		var nu_h = Math.round(sprite.height * scaleBy);
+		// var nu_x = Math.round(lmargin / scaleBy);
+		// var nu_y = Math.round(weirdoid.topoffset / scaleBy);
+		// var nu_w = Math.round(sprite.width / scaleBy);
+		// var nu_h = Math.round(sprite.height / scaleBy);
+		if (ximg == null)
+			myalert("null img in drawInCanvas");
+		if (nu_w == undefined || nu_h == undefined || nu_w <= 0 || nu_h <= 0)
+			myalert("Bad image values: offset=" + weirdoid.topoffset
+					+ " scaleBy=" + scaleBy + " width=" + sprite.width
+					+ " height=" + sprite.height);
+
+		context.drawImage(ximg, 0, 0, sprite.width, sprite.height, nu_x, nu_y,
+				nu_w, nu_h);
+		drawFromQueue();
+		// }
+	};
+
+	img.src = img.sprite.src;// weirdoid.src;
+
 }
 
 function drawFromQueue() {
@@ -2202,6 +2667,8 @@ function onAfterClickPack(curr, next, opts) {
 
 }
 
+var egg_cnt = 0;
+
 function onAfter(curr, next, opts) {
 	var index = opts.currSlide;
 
@@ -2220,12 +2687,59 @@ function onAfter(curr, next, opts) {
 	cycle.data('currSlide', index);
 	console.log('current slide = ' + index + ' curr ' + cycle.currSlide);
 
-	// $active_cycle.currSlide = index;
-	// $active_cycle.data('currSlide', index);
-	// console
-	// .log('current slide = ' + index + ' curr '
-	// + $active_cycle.currSlide);
+	var erase_prior = ($random_cycle && ($random_eggs == 0))
+			|| (!$random_cycle);
 
+	if (erase_prior) {
+
+		$current_eastereggs = [];
+
+		$(".easteregg").each(function() {
+			console.log(" fading prior egg " + $(this).attr('id'));
+			if ($(this).css('opacity') == 0) {
+				console.log("removing opaque egg " + $(this).attr('id'));
+				$(this).remove();
+			} else {
+				$(this).fadeOut('slow', function() {
+					// Animation complete.
+					console.log("removing prior egg " + $(this).attr('id'));
+					$(this).remove();
+				});
+			}
+
+		});
+	}
+
+	if ($eastereggs) {
+		var target = $('#bands');
+		$
+				.each(
+						$eastereggs,
+						function(i, easteregg) {
+							var randval = Math.random() * 100.0;
+
+							var location_class = (easteregg.location_class && easteregg.location_class.length > 0)
+									? easteregg.location_class
+									: "none";
+							egg_cnt++;
+
+							if (easteregg.divname == undefined) {
+								var divname = "eastereggdiv" + '_'
+										+ location_class + '_' + egg_cnt;
+								easteregg.divname = divname;
+							}
+
+							var showit = (randval <= easteregg.show_pct)
+									&& (target.find('.' + location_class).length == 0);
+
+							if (showit) {
+								compose_easteregg(easteregg, target,
+										STD_HEIGHT, STD_WIDTH);
+								$random_eggs++;
+								$current_eastereggs.push(easteregg);
+							}
+						});
+	}
 }
 
 function weirdoid(bkgd, head, body, leg, xtra, fname, lname) {

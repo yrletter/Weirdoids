@@ -8,6 +8,7 @@ header('Content-Type: application/json');
 require_once('../../yak/controllers/db_functions.php');
 require_once('weirdoid.php');
 require_once('weirdoid_sprite.php');
+require_once('weirdoid_easteregg.php');
 
 //Array to store validation errors
 $errmsg_arr = array();
@@ -124,6 +125,32 @@ $bkgd->height = clean($obj->bkgd->sprite->height);
 //echo("head src = " + $head->src);
 $elements = array($head, $body, $leg, $xtra, $bkgd);
 
+//print_r($obj->eastereggs);
+
+// add in all the easter eggs
+$arr = $obj->eastereggs;
+
+//print_r($arr);
+
+$eggs = array();
+
+foreach($arr as $easteregg) {
+	$egg = new WeirdoidEasteregg();
+    $egg->id = clean($easteregg->id); //etc
+    $egg->src = clean($easteregg->src); //etc
+    $egg->top_pct = clean($easteregg->top_pct); //etc
+    $egg->left_pct = clean($easteregg->left_pct); //etc
+    $egg->width_pct = clean($easteregg->width_pct); //etc
+    $egg->height_pct = clean($easteregg->height_pct); //etc
+    $egg->show_pct = clean($easteregg->show_pct); //etc
+    $egg->easteregg_id = clean($easteregg->easteregg_id); //etc
+    $egg->divname = clean($easteregg->divname); //etc
+    array_push($eggs,$egg);
+   
+};
+
+ //var_dump($eggs);
+ 
 try {
 	mysql_query('SET AUTOCOMMIT=0');
 	mysql_query('START TRANSACTION');
@@ -201,6 +228,52 @@ try {
 
 	}
 
+	foreach ($eggs as $egg)
+	{
+		// first insert weirdoid, then sprites
+		// TODO ADD zindex
+		$qry = sprintf("insert into weirdoid_easteregg (user_weirdoid_id,egg_id,top_pct,left_pct,width_pct,
+			height_pct,show_pct,easteregg_id,divname,location_class,src) values (%s,%s,%s,%s,%s,%s,'%s','%s','%s','%s','%s')",
+		mysql_real_escape_string($user_weirdoid_id),
+		mysql_real_escape_string($egg->id),
+		mysql_real_escape_string($egg->top_pct),
+		mysql_real_escape_string($egg->left_pct),
+		mysql_real_escape_string($egg->width_pct),
+		mysql_real_escape_string($egg->height_pct),
+		mysql_real_escape_string($egg->show_pct),
+		mysql_real_escape_string($egg->easteregg_id),
+		mysql_real_escape_string($egg->divname),
+		mysql_real_escape_string($egg->location_class),
+		mysql_real_escape_string($egg->src)	);
+
+		$result = mysql_query($qry);
+
+		if (!$result) {
+			//echo "Could not successfully run query ($qry) from DB: " . mysql_error();
+			if (mysql_error($link)) {
+				//Login failed
+				//header("location: login-failed.php");
+				$istatus["errorcode"] = 1;
+				$istatus["errormsg"] = "Error: insert weirdoid_sprite failed ".mysql_errno($link). " ".mysql_error($link);
+				echo json_encode($istatus);
+				throw new Exception($istatus["errormsg"]);
+				
+			} else {
+				$istatus["errorcode"] = 1;
+				$istatus["errormsg"] = "Unknown error insert easteregg.";
+				echo json_encode($istatus);
+				throw new Exception($istatus["errormsg"]);
+			}
+		}
+		else
+		{
+			//echo "saved egg";
+			//echo("save easteregg for ". $sprite->cyclename);
+			//echo("last weirdoid_sprite id = " . mysql_insert_id());
+		}
+
+	}
+	
 	mysql_query('COMMIT');
 	mysql_query('SET AUTOCOMMIT=1');
 

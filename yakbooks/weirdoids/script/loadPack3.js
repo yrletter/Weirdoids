@@ -1,6 +1,7 @@
 var $pack_key = null;
 var $loadedpacks = null;
 var $items = [];
+var $eastereggs = [];
 
 var blank = new Image();
 blank.src = 'imgs/blank.gif';
@@ -35,6 +36,7 @@ jQuery.loadPack = function(newPack) {
 		return;
 	}
 
+	$('#band_wrapper').hide();
 	$.mobile.showPageLoadingMsg();
 
 	currentPack = newPack;
@@ -66,12 +68,13 @@ jQuery.loadPack = function(newPack) {
 			}),
 			success : function(json) {
 				// do something now that the data is loaded
-				$.mobile.hidePageLoadingMsg();
+				
 				if (json.errorcode == 0) {
 					console.log("Read the pack file!");
 					$loadedpacks.push(currentPack.id);
 					$.processPackJson(json.bands, currentPack.id);
 				} else {
+					$.mobile.hidePageLoadingMsg();
 					serverAlert("Read pack failure", json);
 					console.log("Read pack failure");
 					console.log(json.errormsg);
@@ -79,6 +82,7 @@ jQuery.loadPack = function(newPack) {
 			},
 			url : image_manifest_url,
 			complete : function(xhr, data) {
+				$.mobile.hidePageLoadingMsg();
 				if (xhr.status != 0 && xhr.status != 200)
 					alert('Error calling server to read pack. Status='
 							+ xhr.status + " " + xhr.statusText);
@@ -266,7 +270,13 @@ function unload_pack(pack) {
 
 }
 
-function process_band(i, band, packid) {
+function process_easteregg(easteregg) {
+	console.log("Adding an easter egg: src= " + easteregg.src + " pct = " + easteregg.easteregg);
+	$eastereggs.push(easteregg);
+	
+}
+
+function process_band(i, band, packid, pack_easteregg_ids) {
 	console.log("next band " + band.divname);
 	// append to div bands
 	var divid = band.divname + "_w";
@@ -298,14 +308,18 @@ function process_band(i, band, packid) {
 		// console.log("next image " +
 
 		var src = sprite.src;
-		if ($.browser.msie) {
+		var easteregg = (sprite.easteregg) ? sprite.easteregg : 1.0;
+		var easteregg_id = (sprite.easteregg_id) ? sprite.easteregg_id : -1;
+
+		if (check_show_easteregg(easteregg, easteregg_id, pack_easteregg_ids)) {
+
+			$('#' + cycleid).append(
+					'<div class="cycle_element" packid="' + packid
+							+ '" ><img id="' + sprite.id
+							+ '" class="cycleimg" src="' + sprite.src // dataurl
+							+ '"></image></div>');
 
 		}
-
-		$('#' + cycleid).append(
-				'<div class="cycle_element" packid="' + packid + '" ><img id="'
-						+ sprite.id + '" class="cycleimg" src="' + sprite.src // dataurl
-						+ '"></image></div>');
 
 	});
 
@@ -329,6 +343,7 @@ function process_band(i, band, packid) {
 	}
 
 	if ($('#' + cycleid).children().length > 0) {
+		var slidecnt = $('#' + cycleid).children().length;
 		$('#' + cycleid).cycle({
 			speed : 500,
 			fx : 'scrollHorz',
@@ -336,6 +351,7 @@ function process_band(i, band, packid) {
 			cleartype : false,
 			cleartypeNoBg : true,
 			after : onAfter,
+			startingSlide : Math.floor(Math.random() * slidecnt),
 			slideResize : 0
 		});
 		if ($active_cycle == '')
@@ -344,6 +360,28 @@ function process_band(i, band, packid) {
 
 };
 
+function check_show_easteregg(easteregg, easteregg_id, pack_easteregg_ids) {
+	var showit = true;
+
+	if ($.inArray(easteregg_id, pack_easteregg_ids) >= 0) {
+		return true;
+	}
+
+	if (easteregg < 1.0) {
+		var randval = Math.random();
+		showit = (randval <= easteregg);
+
+	}
+
+	if (!showit)
+		console.log("Skipping easteregg image " + easteregg);
+	else if (easteregg < 1.0) {
+		console.log("showing easteregg image " + easteregg);
+		pack_easteregg_ids.push(easteregg_id);
+	}
+
+	return showit;
+}
 jQuery.processPackJson = function(json, packid) {
 
 	console.log("processPackJson ");
@@ -366,10 +404,18 @@ jQuery.processPackJson = function(json, packid) {
 	// $('#bands').empty();
 	$active_cycle = '';
 
+	
+	var pack_easteregg_ids = [];
+	
 	$.each(json.bands, function(i, band) {
-		process_band(i, band, packid);
+		process_band(i, band, packid, pack_easteregg_ids);
 	});
 
+	if (json.eastereggs) {
+		$.each(json.eastereggs, function(i, easteregg) {
+			process_easteregg(easteregg);
+		});
+	}
 	// console.log("clicking headbtn");
 	// $('#headbtn').trigger('click');
 
@@ -384,7 +430,7 @@ jQuery.processPackJson = function(json, packid) {
 		$('#btn_next_head').unbind('click');
 		$('#btn_next_head').click(function(e) {
 			if ($active_cycle.children().length > 0) {
-
+				$random_cycle = false;
 				$active_cycle.cycle('next');
 			}
 			console.log("clicknext");
@@ -394,7 +440,7 @@ jQuery.processPackJson = function(json, packid) {
 		$('#btn_prev_head').unbind('click');
 		$('#btn_prev_head').click(function(e) {
 			if ($active_cycle.children().length > 0) {
-
+				$random_cycle = false;
 				$active_cycle.cycle('prev');
 			}
 			console.log("clickprev");
@@ -412,6 +458,7 @@ jQuery.processPackJson = function(json, packid) {
 	// $(containers).waitForImages(
 	myWaitForImages(function() {
 		console.log('Before show, all images loaded.');
+
 		readyToResize();
 	}, function(loaded, count, success) {
 
@@ -563,8 +610,15 @@ function afterResizeImages() {
 				sprite.width = band.width;
 				myxtra.sprite = sprite;
 				weirdoid.xtra = myxtra;
-				// drawInCanvas(drawingCanvas,
-				// weirdoid.xtra, scaleBy, lmargin);
+
+
+				// save easter eggs
+
+				weirdoid.eastereggs = $current_eastereggs;
+				weirdoid.std_width = STD_WIDTH;
+				weirdoid.std_height = STD_HEIGHT;
+				weirdoid.width_to_height = WIDTH_TO_HEIGHT;
+				
 				$lastweirdoid = weirdoid;
 
 				$.mobile.changePage("#previewpage", {
@@ -592,7 +646,7 @@ jQuery.resizeHome = function() {
 	if (divheight == 0)
 		return;
 
-	var scaleFactor = Math.max(Math.abs(Math.min(divheight / 1024, 1)), 0.5);
+	var scaleFactor = Math.max(Math.abs(Math.min(divheight / STD_HEIGHT, 1)), 0.5);
 	console.log("scalefactor " + scaleFactor + '  divheight ' + divheight);
 
 	$('#btn_vault').css('top',
@@ -619,44 +673,60 @@ jQuery.resizeImages = function(callback) {
 
 	console.log("resizeImages ");
 	var buildheight = $('#build').outerHeight();
+	console.log("#buildheight height " + buildheight);
+	
 	var bandheight = $('#bands').outerHeight();
-	console.log("build height " + bandheight);
-	console.log("banks-nav-bar height " + $('#banks-nav-bar').outerHeight());
-	var bankheight = $('#banks-nav-bar').outerHeight();
+	console.log("#bands height " + bandheight);
+	
+	//console.log("banks-nav-bar height " + $('#banks-nav-bar').outerHeight());
+	//var bankheight = $('#banks-nav-bar').outerHeight();
 	var hdrheight = $('#buildhdr').outerHeight()
 			+ parseInt($('#buildhdr').css("border-top-width"))
 			+ parseInt($('#buildhdr').css("border-bottom-width"));
-	var buildbar_height = $('#buildhdr').outerHeight();
+	
+	var buildbar_height = $('#buildbar').outerHeight();
+	
 	var body_height = $('body').height();
 
-	if (hdrheight == 0 || buildbar_height == 0 || body_height == 0) {
+	console.log("resizeImages: hdr:" + hdrheight + " buildbar:" + buildbar_height + " body: " + body_height);
+
+	if (hdrheight == 0 || hdrheight == 0 || buildbar_height == 0 || body_height == 0) {
 		if (callback != undefined && callback != null) {
 			callback();
 		}
-
+		console.log("bad vals");
 		return;
 	}
 
-	var nusize = body_height - hdrheight - buildbar_height;
+	var nu_bands_height = body_height - hdrheight - buildbar_height;
 
-	$('#band_wrapper').height(Math.min(1024, nusize));
-	$('#band_wrapper').css("min-height", Math.min(1024, nusize));
-	// $('#btn_done').height());
+	
+	$('#band_wrapper').height(Math.min(STD_HEIGHT, nu_bands_height));
+	$('#band_wrapper').css("min-height", Math.min(STD_HEIGHT, nu_bands_height));
 
 	var divwidth = $("#bands").outerWidth();
-	var wfactor = Math.min(divwidth / 768, 1);
+	var wfactor = Math.min(divwidth / STD_WIDTH, 1);
 
-	var hfactor = Math.min(nusize / 1024, 1);
+	var hfactor = Math.min(nu_bands_height / STD_HEIGHT, 1);
 
 	var factor = Math.min(wfactor, hfactor);
 
-	console.log("resizeImages hfactor " + hfactor + " nusize " + nusize
+	console.log("resizeImages hfactor " + hfactor + " nu_bands_height " + nu_bands_height
 			+ " body_height " + body_height);
+	
+	var hpct = (nu_bands_height/body_height) * 100;
+	console.log("calculated band pct = " + hpct);
 
-	// console.log("resizeImages band_wrapper " + $('#band_wrapper').width() + '
-	// '
-	// + $('#band_wrapper').height());
-
+	var width_to_height = STD_WIDTH/STD_HEIGHT;
+	var nu_width = width_to_height * $('#band_wrapper').height();
+	var body_width = $('body').width();
+		
+	var wpct = (nu_width / body_width) * 100.0;
+	console.log("new wrapper width: " + nu_width + " body_width: " + body_width + " wpct" + wpct);
+	$("#band_wrapper").width(wpct + '%');
+	
+	//$("#band_wrapper").width(nu_width);
+	
 	$(".scalable_wrapper").each(function() {
 		// console.log("scalable div ");
 
@@ -664,6 +734,9 @@ jQuery.resizeImages = function(callback) {
 		var normtop = $(this).attr('bandtop');
 		var normleft = $(this).attr('bandleft');
 		var h = Math.min(normtop * hfactor, normtop);
+		
+		// set margin top as pct
+		var toppct = 
 		$(this).css('margin-top', h + "px");
 	});
 
@@ -683,7 +756,7 @@ jQuery.resizeImages = function(callback) {
 		var w = Math.min(normwidth * hfactor, $('#band_wrapper').width());
 		var h = Math.min(normheight * hfactor, $('#band_wrapper').height());
 
-		// $(this).width(w);
+		$(this).width("100%");
 		$(this).height(h);
 
 		// set new width of each image
@@ -691,6 +764,10 @@ jQuery.resizeImages = function(callback) {
 			$(this).height(h);
 			$(this).width(w);
 		});
+	});
+	
+	$(".cycle_element").each(function() {
+		$(this).width("100%");
 	});
 
 	if (callback != undefined && callback != null)
@@ -795,13 +872,13 @@ function loadCarousel(items) {
 		if ($.inArray(item.id, $loadedpacks) < 0) {
 			console.log("Pack not previously loaded");
 			currentPack = item;
-//			if (userHasPurchased(currentPack.id) || currentPack.cost == 0) {
-//				// all loading done in build screen click handler
-//				$('#bldbtn').trigger('click');
-//			} else {
+			// if (userHasPurchased(currentPack.id) || currentPack.cost == 0) {
+			// // all loading done in build screen click handler
+			// $('#bldbtn').trigger('click');
+			// } else {
 
-				beginPackPurchase(item, $userid);
-//			}
+			beginPackPurchase(item, $userid);
+			// }
 
 			return;
 		} else {
